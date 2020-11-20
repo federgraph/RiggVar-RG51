@@ -1,0 +1,10 @@
+object FormTrimmTab: TFormTrimmTab
+  Left = 219
+  Height = 292
+  Top = 155
+  Width = 536
+  Caption = 'Form TrimmTab'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '2.0.8.0'
+end

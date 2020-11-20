@@ -1,3 +1,16 @@
+﻿*.res
+*.ico
+*.exe
+
+MacOS/
+
+rg51.app/
+rg51
+#rg51.lpi
+rg51.lps
+#rg51.lpr
+rg51.ico
+
 # Uncomment these types if you want even more clean repository. But be careful.
 # It can make harm to an existing project source. Read explanations below.
 #
@@ -67,3 +80,9 @@ __recovery/
 
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
+
+# Noise
+*Conversion.log
+.DS_Store
+backup/
+lib/

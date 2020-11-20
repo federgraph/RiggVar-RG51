@@ -1,0 +1,21 @@
+﻿object FormMain: TFormMain
+  Left = 372
+  Height = 738
+  Top = 148
+  Width = 1082
+  Caption = 'FormMain'
+  KeyPreview = True
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnKeyPress = FormKeyPress
+  OnMouseWheel = FormMouseWheel
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '2.0.8.0'
+  object Timer: TTimer
+    Interval = 1
+    OnTimer = TimerTimer
+    left = 157
+    top = 56
+  end
+end

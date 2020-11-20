@@ -1,0 +1,11 @@
+object FormDiagramE: TFormDiagramE
+  Left = 1520
+  Height = 240
+  Top = 119
+  Width = 320
+  Caption = 'FormDiagramE'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  LCLVersion = '2.0.8.0'
+end

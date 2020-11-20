@@ -1,0 +1,10 @@
+object FormAction: TFormAction
+  Left = 233
+  Height = 240
+  Top = 110
+  Width = 320
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '2.0.8.0'
+end

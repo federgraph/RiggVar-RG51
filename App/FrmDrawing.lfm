@@ -1,0 +1,14 @@
+object FormDrawing: TFormDrawing
+  Left = 134
+  Height = 353
+  Top = 101
+  Width = 596
+  KeyPreview = True
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnKeyPress = FormKeyPress
+  OnKeyUp = FormKeyUp
+  OnMouseWheel = FormMouseWheel
+  OnShow = FormShow
+  LCLVersion = '2.0.8.0'
+end

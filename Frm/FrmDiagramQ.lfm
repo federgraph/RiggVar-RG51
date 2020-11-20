@@ -1,0 +1,11 @@
+object FormDiagramQ: TFormDiagramQ
+  Left = 295
+  Height = 240
+  Top = 172
+  Width = 320
+  Caption = 'FormDiagramQ'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  LCLVersion = '2.0.8.0'
+end

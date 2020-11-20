@@ -1,0 +1,11 @@
+﻿object FormConfig: TFormConfig
+  Left = 443
+  Height = 327
+  Top = 217
+  Width = 551
+  Caption = 'Form Config'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  LCLVersion = '2.0.8.0'
+end

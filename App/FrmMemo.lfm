@@ -1,0 +1,10 @@
+object FormMemo: TFormMemo
+  Left = 205
+  Height = 263
+  Top = 207
+  Width = 375
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '2.0.8.0'
+end

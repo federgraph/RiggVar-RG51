@@ -1,0 +1,150 @@
+object YAuswahlDlg: TYAuswahlDlg
+  Left = 1176
+  Height = 276
+  Top = 282
+  Width = 364
+  Caption = 'Form Auswahl'
+  ClientHeight = 276
+  ClientWidth = 364
+  LCLVersion = '2.0.8.0'
+  object SrcLabel: TLabel
+    Left = 9
+    Height = 16
+    Top = 8
+    Width = 145
+    AutoSize = False
+    Caption = 'verfügbar'
+    ParentColor = False
+  end
+  object DstLabel: TLabel
+    Left = 191
+    Height = 16
+    Top = 8
+    Width = 145
+    AutoSize = False
+    Caption = 'ausgewählt'
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    ParentColor = False
+    ParentFont = False
+  end
+  object IncludeBtn: TSpeedButton
+    Left = 160
+    Height = 25
+    Top = 32
+    Width = 25
+    Caption = '>'
+    Enabled = False
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    OnClick = IncludeBtnClick
+    ParentFont = False
+  end
+  object IncAllBtn: TSpeedButton
+    Left = 160
+    Height = 25
+    Top = 64
+    Width = 25
+    Caption = '>>'
+    Enabled = False
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    OnClick = IncAllBtnClick
+    ParentFont = False
+  end
+  object ExcludeBtn: TSpeedButton
+    Left = 160
+    Height = 25
+    Top = 96
+    Width = 25
+    Caption = '<'
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    OnClick = ExcludeBtnClick
+    ParentFont = False
+  end
+  object ExAllBtn: TSpeedButton
+    Left = 160
+    Height = 25
+    Top = 128
+    Width = 25
+    Caption = '<<'
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    OnClick = ExcAllBtnClick
+    ParentFont = False
+  end
+  object OKBtn: TBitBtn
+    Left = 64
+    Height = 27
+    Top = 232
+    Width = 69
+    Caption = 'OK'
+    Kind = bkOK
+    Margin = 2
+    NumGlyphs = 2
+    Spacing = -1
+    TabOrder = 0
+  end
+  object CancelBtn: TBitBtn
+    Left = 144
+    Height = 27
+    Top = 232
+    Width = 97
+    Caption = 'Cancel'
+    Kind = bkCancel
+    Margin = 2
+    NumGlyphs = 2
+    Spacing = -1
+    TabOrder = 1
+  end
+  object HelpBtn: TBitBtn
+    Left = 248
+    Height = 27
+    Top = 232
+    Width = 77
+    Caption = 'Hilfe'
+    Kind = bkHelp
+    Margin = 2
+    NumGlyphs = 2
+    Spacing = -1
+    TabOrder = 2
+  end
+  object SrcList: TListBox
+    Left = 10
+    Height = 185
+    Top = 32
+    Width = 144
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    ItemHeight = 0
+    MultiSelect = True
+    ParentFont = False
+    Sorted = True
+    TabOrder = 3
+  end
+  object DstList: TListBox
+    Left = 192
+    Height = 185
+    Top = 32
+    Width = 144
+    Items.Strings = (
+      'Durchbiegung hd'
+      'Elastizität Punkt C'
+      'Mastfall F0C'
+      'Mastfall F0F'
+      'Vorstag-Spannung'
+      'Wanten-Spannung'
+    )
+    ItemHeight = 15
+    ItemIndex = 0
+    MultiSelect = True
+    TabOrder = 4
+  end
+end
