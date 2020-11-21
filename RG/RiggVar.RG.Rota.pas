@@ -3,7 +3,7 @@
 interface
 
 {$define UseImage}
-{$define UseViewport}
+{.$define UseViewport}
 
 {$define WantRotaForm1}
 {$define WantRotaForm2}
@@ -638,7 +638,7 @@ begin
       Main.CurrentRotaForm := 1;
       Main.StrokeRigg := RotaForm1;
 {$ifdef UseViewport}
-      //Viewport.Visible := False;
+      Viewport.Visible := False;
 {$endif}
       Image.Visible := True;
       RotaForm1.Swap;
@@ -656,7 +656,7 @@ begin
       Main.CurrentRotaForm := 2;
       Main.StrokeRigg := RotaForm2;
 {$ifdef UseViewport}
-      //Viewport.Visible := False;
+      Viewport.Visible := False;
 {$endif}
       Image.Visible := True;
       RotaForm2.Swap;

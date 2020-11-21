@@ -582,6 +582,7 @@ procedure TFormMain.FormResize(Sender: TObject);
 begin
   if (Main <> nil) and Main.IsUp then
   begin
+    MainVar.Scale := Screen.PixelsPerInch / 96;
     Inc(Main.ResizeCounter);
     Main.UpdateTouch;
   end;
@@ -656,14 +657,14 @@ begin
     TrimmText.Visible := True;
     ParamListbox.Visible := True;
     ReportListbox.Visible := True;
-
+{
     ReportListbox.Anchors := [];
     ReportListbox.Left := ParamListbox.Left;
     ReportListbox.Top := ParamListbox.Top + ParamListbox.Height + Margin;
     ReportListbox.Width := ParamListbox.Width;
     ReportListbox.Height := ClientHeight - ReportListbox.Top - Raster - Margin;
     ReportListbox.Anchors := [TAnchorKind.akLeft, TAnchorKind.akTop, TAnchorKind.akBottom];
-
+}
     HintContainer.Visible := True;
     HintContainer.Left := TrimmText.Left + TrimmText.Width + Margin;
 
@@ -1530,8 +1531,8 @@ begin
 
   ChartControl.Left := Round(ReportText.Left + 200 * FScale);
   ChartControl.Top := Round(ReportText.Top + 20 * FScale);
-  ChartControl.Width := Round(ChartImage.Width / FScale);
-  ChartControl.Height := Round(ChartImage.Height / FScale);
+  ChartControl.Width := Round(ChartImage.Width);
+  ChartControl.Height := Round(ChartImage.Height);
 end;
 
 procedure TFormMain.SetViewPoint(const Value: TViewPoint);
@@ -1891,13 +1892,15 @@ begin
   if not ComponentsCreated then
     Exit;
 
-  ControllerGraph.BackgroundColor := CssNavy; // ColorToBGRA(MainVar.ColorScheme.claBackground);
+  RotaForm.BackgroundColor := MainVar.ColorScheme.cssBackground;
+
+  ControllerGraph.BackgroundColor := MainVar.ColorScheme.cssBackground;
   UpdateControllerGraph;
 
-  SalingGraph.BackgroundColor := CssNavy; //ColorToBGRA(MainVar.ColorScheme.claBackground);
+  SalingGraph.BackgroundColor := MainVar.ColorScheme.cssBackground;
   UpdateSalingGraph;
 
-  RotaForm.DarkMode := SpeedColorScheme.IsDark;
+  RotaForm.DarkMode := MainVar.ColorScheme.IsDark;
 end;
 
 procedure TFormMain.SuperSimpleBtnClick(Sender: TObject);

@@ -25,29 +25,31 @@ type
     Height: single;
   end;
 
+  { like the Graph part in ChartGraph, with CharModel injected }
   TRggDiagram = class
   private
-    CM: TChartModel; // injected, not owned
-    FImage: TImage; // injected, not owned
+    CM: TChartModel; // injected via constructor, not owned
+    FImage: TImage; // injected via property, not owned
     FBitmap: TBGRABitmap; // owned, created in InitBitmap
-    procedure InitBitmap;
-    procedure SetImage(const Value: TImage);
-  private
+
     Box: TRggBox;
     Raster: Integer;
     Padding: Integer;
     FillColor: TBGRAPixel;
     StrokeColor: TBGRAPixel;
     StrokeThickness: single;
-  private
+
+    Width: Integer;
+    Height: Integer;
     FScale: single;
+
+    procedure InitBitmap;
+    procedure SetImage(const Value: TImage);
     procedure DrawToCanvas(g: TBGRABitmap);
     procedure DrawChart(g: TBGRABitmap);
     procedure DrawLabels(g: TBGRABitmap);
     procedure DrawLegend(g: TBGRABitmap);
   public
-    Width: Integer;
-    Height: Integer;
     constructor Create(Model: TChartModel);
     destructor Destroy; override;
     procedure Draw(Sender: TObject);
@@ -194,7 +196,7 @@ begin
 
   Radius := 3 * FScale;
 
-  for param := 0 to ParamCount-1 do
+  for param := 0 to CM.ParamCount - 1 do
   begin
     { Kurve }
     StrokeColor := CM.cf[param];

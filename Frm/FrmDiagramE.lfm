@@ -1,7 +1,7 @@
 object FormDiagramE: TFormDiagramE
-  Left = 1520
+  Left = 102
   Height = 240
-  Top = 119
+  Top = 260
   Width = 320
   Caption = 'FormDiagramE'
   OnCreate = FormCreate

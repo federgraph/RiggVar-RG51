@@ -257,7 +257,7 @@ begin
   if not Visible then
     Exit;
 
-  AToggle.Checked := ChartModel.AP;
+  AToggle.Checked := not ChartModel.AP;
   GToggle.Checked := ChartModel.ShowGroup;
 
   XBox.Items := ChartModel.XComboItems;

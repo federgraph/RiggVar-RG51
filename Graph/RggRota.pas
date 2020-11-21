@@ -464,8 +464,8 @@ end;
 
 procedure TRotaForm1.DoOnceOnShow;
 begin
-  FXPos := (Image.Width - Bitmap.Width);
-  FYPos := (Image.Height - Bitmap.Height);
+  FXPos := (Image.Width - Bitmap.Width) - 250;
+  FYPos := (Image.Height - Bitmap.Height) - 100;
 end;
 
 procedure TRotaForm1.DrawToImage(g: TBGRABitmap);

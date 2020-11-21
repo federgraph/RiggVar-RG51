@@ -23,6 +23,8 @@ interface
 {$endif}
 
 uses
+  BGRABitmap,
+  BGRABitmapTypes,
   RiggVar.FB.Color;
 
 type
@@ -32,14 +34,22 @@ type
 
     Scheme: Integer;
     SchemeDefault: Integer;
-    claBackground: TRggColor;
 
+    claBackground: TRggColor;
     claToolBtnFill: TRggColor;
     claTouchBtnFill: TRggColor;
     claCornerScrollbar: TRggColor;
     claCornerBtnText: TRggColor;
     claTouchbarText: TRggColor;
     claNull: TRggColor;
+
+    cssBackground: TBGRAPixel;
+    cssToolBtnFill: TBGRAPixel;
+    cssTouchBtnFill: TBGRAPixel;
+    cssCornerScrollbar: TBGRAPixel;
+    cssCornerBtnText: TBGRAPixel;
+    cssTouchbarText: TBGRAPixel;
+    cssNull: TBGRAPixel;
 
     IsDark: Boolean;
 
@@ -65,6 +75,11 @@ begin
   claTouchBtnFill := TRggColors.Gray;
   claCornerScrollbar := TRggColors.Gray;
   claCornerBtnText:= TRggColors.Blue;
+
+  cssToolBtnFill := CssGray;
+  cssTouchBtnFill := CssGray;
+  cssCornerScrollbar := CssGray;
+  cssCornerBtnText:= CssBlue;
 end;
 
 procedure TColorScheme.GrayText;
@@ -73,6 +88,11 @@ begin
   claTouchBtnFill := TRggColors.Gray;
   claCornerScrollbar := TRggColors.Gray;
   claCornerBtnText:= TRggColors.Blue;
+
+  cssToolBtnFill := CssGray;
+  cssTouchBtnFill := CssGray;
+  cssCornerScrollbar := CssGray;
+  cssCornerBtnText:= CssBlue;
 end;
 
 procedure TColorScheme.WhiteText;
@@ -81,6 +101,11 @@ begin
   claTouchBtnFill := TRggColors.White;
   claCornerScrollbar := TRggColors.Gray;
   claCornerBtnText:= TRggColors.White;
+
+  cssToolBtnFill := CssWhite;
+  cssTouchBtnFill := CssWhite;
+  cssCornerScrollbar := CssGray;
+  cssCornerBtnText:= CssWhite;
 end;
 
 constructor TColorScheme.Create(cs: Integer);
@@ -88,8 +113,13 @@ begin
   Dark := 5;
   Light := 2;
   WantBlackText := True;
+
   claTouchbarText := TRggColors.Black;
   claNull := TRggColors.Null;
+
+  cssTouchbarText := CssBlack;
+  cssNull := CssWhite;
+
   SchemeDefault := cs;
   Scheme := SchemeDefault;
   Init(Scheme);
@@ -99,6 +129,7 @@ procedure TColorScheme.Init(cs: Integer);
 begin
   Scheme := cs;
   IsDark := True;
+
   case cs of
     1:
     begin
@@ -162,13 +193,85 @@ begin
     end;
     7:
     begin
-      claBackground := TRggColors.Purple; //TRggColors.Null;
+      claBackground := TRggColors.Purple;
       claToolBtnFill := TRggColors.Gray;
       claTouchBtnFill := TRggColors.Gray;
       claCornerScrollbar := TRggColors.Lightgoldenrodyellow;
       claCornerBtnText:= TRggColors.Blue;
     end;
   end;
+
+  case cs of
+    1:
+    begin
+      if WantBlackText then
+      begin
+        cssBackground := CssSlateblue;
+        cssToolBtnFill := CssGray;
+        cssTouchBtnFill := CssGray;
+        cssCornerScrollbar := CssLightsalmon;
+        cssCornerBtnText:= CssBlue;
+      end
+      else
+      begin
+        cssBackground := CssLavender;
+        cssToolBtnFill := CssGray;
+        cssTouchBtnFill := CssGray;
+        cssCornerScrollbar := CssGray;
+        cssCornerBtnText:= CssBlue;
+      end;
+    end;
+    2:
+    begin
+      IsDark := False;
+      cssBackground.FromColor(TRggColors.ColorF9F9F9);
+      cssToolBtnFill := CssGray;
+      cssTouchBtnFill := CssGray;
+      cssCornerScrollbar := CssLavender;
+      cssCornerBtnText:= CssBlue;
+    end;
+    3:
+    begin
+      cssBackground := CssCornflowerblue;
+      cssToolBtnFill := CssWhite;
+      cssTouchBtnFill := CssWhite;
+      cssCornerScrollbar := CssWhite;
+      cssCornerBtnText:= CssBlack;
+    end;
+    4:
+    begin
+      cssBackground.FromColor(TRggColors.Color372E69);
+      cssToolBtnFill := CssWhite;
+      cssTouchBtnFill := CssWhite;
+      cssCornerScrollbar := CssAntiquewhite;
+      cssCornerBtnText:= CssBlue;
+    end;
+    5:
+    begin
+      cssBackground.FromColor(TRggColors.Color333333);
+      cssToolBtnFill := CssWhite;
+      cssTouchBtnFill := CssWhite;
+      cssCornerScrollbar.FromColor(TRggColors.WindowWhite);
+      cssCornerBtnText:= CssBlue;
+    end;
+    6:
+    begin
+      cssBackground := CssBlack;
+      cssToolBtnFill := CssWhite;
+      cssTouchBtnFill := CssWhite;
+      cssCornerScrollbar := CssLightgray;
+      cssCornerBtnText:= CssBlue;
+    end;
+    7:
+    begin
+      cssBackground := CssPurple;
+      cssToolBtnFill := CssGray;
+      cssTouchBtnFill := CssGray;
+      cssCornerScrollbar := CssLightgoldenrodyellow;
+      cssCornerBtnText:= CssBlue;
+    end;
+  end;
+
 end;
 
 end.

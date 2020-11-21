@@ -21,7 +21,6 @@ uses
 type
   TFormDiagramC = class(TForm)
     procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     UpdateBtn: TButton;
@@ -111,10 +110,6 @@ begin
 
   CreateComponents;
   Layout := 2;
-end;
-
-procedure TFormDiagramC.FormDestroy(Sender: TObject);
-begin
 end;
 
 procedure TFormDiagramC.FormShow(Sender: TObject);

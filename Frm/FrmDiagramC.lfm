@@ -1,11 +1,10 @@
 object FormDiagramC: TFormDiagramC
-  Left = 1520
+  Left = 171
   Height = 240
-  Top = 119
+  Top = 242
   Width = 320
   Caption = 'FormDiagramC'
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnShow = FormShow
   LCLVersion = '2.0.8.0'
 end

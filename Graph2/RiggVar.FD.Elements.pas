@@ -114,6 +114,8 @@ type
 
   TRggPoly = array of TRggPoint3D;
 
+  { TRggElement }
+
   TRggElement = class
   private
     FStrokeColor: TBGRAPixel;
@@ -129,8 +131,8 @@ type
     LineToPoint: TPointF;
     procedure TextOut(g: TBGRABitmap; s: string; c: TBGRAPixel);
     procedure TextOutLeading(g: TBGRABitmap; s: string; c: TBGRAPixel);
-    procedure LineTo(g: TBGRABitmap; x2, y2: single); overload;
-    procedure LineTo(g: TBGRABitmap; p: TPointF); overload;
+    procedure MoveTo(p: TPointF);
+    procedure LineTo(g: TBGRABitmap; p: TPointF);
     procedure PolyLine(g:TBGRABitmap; p: ArrayOfTPointF);
   public
     Caption: string;
@@ -636,12 +638,9 @@ begin
   TextOut(g, s, c);
 end;
 
-procedure TRggElement.LineTo(g: TBGRABitmap; x2, y2: single);
+procedure TRggElement.MoveTo(p: TPointF);
 begin
-  g.DrawLineAntialias(
-    LineToPoint.x, LineToPoint.y,
-    x2, y2, StrokeColor, StrokeThickness);
-  LineToPoint := PointF(x2, y2);
+  LineToPoint := p;
 end;
 
 procedure TRggElement.LineTo(g: TBGRABitmap; p: TPointF);
@@ -674,7 +673,7 @@ end;
 
 procedure TRggElement.Draw(g: TBGRABitmap);
 begin
-  TextOut(g, Caption, StrokeColor);
+  TextOut(g, Caption, Drawing.Colors.TextColor);
 end;
 
 { TRggCircle }
@@ -685,7 +684,7 @@ begin
   Matrix := Matrix3DIdentity;
   TypeName := 'Circle';
   StrokeThickness := 2;
-  Radius := 10;
+  FRadius := 10;
   Center.X := 100;
   Center.Y := 100;
   ShowCaption := DefaultShowCaption;
@@ -838,8 +837,8 @@ begin
   if not Visible then
     Exit;
 
-  LineToPoint := Point1.Center.P;
-  LineTo(g, Point2.Center.X, Point2.Center.Y);
+  MoveTo(Point1.Center.P);
+  LineTo(g, Point2.Center.P);
 
   if ShowCaption or GlobalShowCaption then
   begin
@@ -1307,7 +1306,7 @@ begin
     TempB.Offset(o);
     TempC.Offset(o);
     { g.DrawLine(TempB, TempC, 1.0); }
-    LineToPoint := TempB;
+    MoveTo(TempB);
     LineTo(g, TempC);
   end;
 
@@ -1329,7 +1328,7 @@ begin
     TempE.Offset(o);
     TempF.Offset(o);
     { g.DrawLine(TempE, TempF, Opacity); }
-    LineToPoint := TempE;
+    MoveTo(TempE);
     LineTo(g, TempF);
   end;
 end;
@@ -1950,10 +1949,10 @@ end;
 
 procedure TSchnittKKCircle.Draw(g: TBGRABitmap);
 begin
-  LineToPoint := MP1.Center.P;
+  MoveTo(MP1.Center.P);
   LineTo(g, Center.P);
 
-  LineToPoint := MP2.Center.P;
+  MoveTo(MP2.Center.P);
   LineTo(g, Center.P);
 
   inherited;
@@ -2011,24 +2010,22 @@ begin
   EndPoint.Y := StartPoint.Y;
   EndPoint.X := StartPoint.X + FOriginalValue;
 
-  StrokeColor := CssYellow;
   StrokeThickness := 5;
-  LineToPoint := StartPoint;
+  StrokeColor := CssYellow;
+  MoveTo(StartPoint);
   LineTo(g, EndPoint);
 
   EndPoint.X := StartPoint.X + FValue;
-
-  StrokeColor := CssNavy;
   StrokeThickness := 1;
-  LineToPoint := StartPoint;
+  StrokeColor := CssNavy;
+  MoveTo(StartPoint);
   LineTo(g, EndPoint);
 
   if ShowCaption or GlobalShowCaption then
   begin
-    StrokeColor := CssBlack;
     TextCenter := StartPoint;
     TextCenter.Offset(20, -15);
-    TextOutLeading(g, Text, CssBlack);
+    TextOutLeading(g, Text, StrokeColor);
   end;
 end;
 
@@ -2148,9 +2145,8 @@ begin
 
   if ShowCaption or GlobalShowCaption then
   begin
-    StrokeColor := CssBlack;
     TextCenter := Center.P;
-    TextOut(g, Caption, CssBlack);
+    TextOut(g, Caption, Drawing.Colors.TextColor);
   end;
 end;
 
@@ -2264,7 +2260,7 @@ end;
 procedure TRggColorScheme.GoDark;
 begin
   TextColor := CssWhite;
-  BackgroundColor := TRggColors.Color333333;
+  BackgroundColor.FromColor(TRggColors.Color333333);
   LabelColor := CssAntiquewhite;
 end;
 

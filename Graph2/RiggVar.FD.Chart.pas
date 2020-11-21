@@ -114,7 +114,6 @@ begin
     tempY := Box.Height - Box.Height * (Poly[0] - Ymin) / (Ymax - Ymin);
     P.X := Box.X;
     P.Y := Box.Y + Round(Limit(tempY));
-    { g.MoveTo(P.X, P.Y); }
     LineToPoint := P;
     for i := 1 to LNr do
     begin
@@ -122,7 +121,6 @@ begin
       tempY := Box.Height - Box.Height * (Poly[i] - Ymin) / (Ymax - Ymin);
       P.X := Box.X + Round(Limit(tempX));
       P.Y := Box.Y + Round(Limit(tempY));
-      { g.LineTo(P.X, P.Y); }
       LineTo(g, P);
     end;
   end;
@@ -140,7 +138,7 @@ begin
         P.Y - PointRadius,
         P.X + PointRadius,
         P.Y + PointRadius,
-        StrokeColor, 1.0, CssWhite);
+        CssWhite, 1.0, StrokeColor);
     end;
   end;
 
@@ -155,7 +153,7 @@ begin
       P.Y - PointRadius,
       P.X + PointRadius,
       P.Y + PointRadius,
-      StrokeColor, 1.0, CssWhite);
+      CssWhite, 1.0, StrokeColor);
   end;
 
 end;
