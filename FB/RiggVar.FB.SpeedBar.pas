@@ -14,7 +14,7 @@ uses
   RiggVar.FB.Color,
   RiggVar.FB.SpeedColor;
 
-{$define Vcl}
+{$define Vcl} // or LCL
 
 type
   TSpeedBtn = class(TSpeedButton)
@@ -97,7 +97,8 @@ begin
 //  InitSpeedButtons; // Main is still nil (by design)
   DarkMode := True;
   BigMode := True;
-  //ShowCaption := False; property not available in LCL
+//  ShowCaption := False; // property not available in LCL
+{ Need to set Caption to empty string after assigning name. }
 end;
 
 procedure TActionSpeedBar.InitLayoutProps;
