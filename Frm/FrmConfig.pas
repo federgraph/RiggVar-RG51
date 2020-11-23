@@ -28,7 +28,7 @@ uses
   Menus,
   RggStrings,
   RggScroll,
-  RggUnit4,
+  RggInter,
   RggTypes;
 
 type
@@ -158,7 +158,7 @@ type
     FiMastWante: Integer;
     FiMastTop: Integer;
     FiEI: Integer;
-    FEAarray: TRiggLvektor;
+    FEAarray: TRiggRods;
 
     FMastTypList: TStringList;
     FMastMassList: TStringList;
@@ -190,10 +190,10 @@ type
     FirstRowIndex: Integer;
     SecondRowIndex: Integer;
 
-    Rigg: TRigg;
+    Rigg: IRigg;
     IniFileName: string;
     FormShown: Boolean;
-    procedure Init(ARigg: TRigg);
+    procedure Init(ARigg: IRigg);
     procedure LoadFromIniFile;
     procedure WriteToIniFile;
   end;
@@ -218,6 +218,8 @@ begin
   Caption := 'Form Config';
 
   FScale := MainVar.Scale;
+
+  FGSB := TRggFA.Create;
 
   FMastTypList := TStringList.Create;
   FMastMassList := TStringList.Create;
@@ -251,6 +253,7 @@ begin
   FQuerschnittList.Free;
   FTrimmList.Free;
   FTempList.Free;
+  FGSB.Free;
 end;
 
 procedure TFormConfig.GetKeyList(Source, Dest: TStringList);
@@ -302,7 +305,7 @@ begin
   GridSelectCell(nil, FRumpfCell.X, FRumpfCell.Y, b);
 end;
 
-procedure TFormConfig.Init(ARigg: TRigg);
+procedure TFormConfig.Init(ARigg: IRigg);
 begin
   Rigg := ARigg;
   IniFileName := ChangeFileExt(ParamStr(0), '.ini');
@@ -319,13 +322,13 @@ procedure TFormConfig.FillRiggLists;
 var
   fs: string;
 begin
-  FGSB := Rigg.GSB;
+  FGSB.Assign(Rigg.RggFA);
   FEAarray := Rigg.EA; { EA in KN }
   FiEI := Rigg.MastEI;
   FiMastSaling := Round(Rigg.MastUnten);
   FiMastWante := FiMastSaling + Round(Rigg.MastOben);
-  FiMastTop := Round(Rigg.MastLaenge);
-  FiP := Rigg.rP;
+  FiMastTop := Round(Rigg.MastLength);
+  FiP := Rigg.RiggPoints;
 
   FMastMassList.Clear;
   FElementList.Clear;
@@ -686,11 +689,11 @@ end;
 
 procedure TFormConfig.OKBtnClick(Sender: TObject);
 begin
-  Rigg.rP := FiP; { Rumpfkoordinaten }
+  Rigg.RiggPoints := FiP; { Rumpfkoordinaten }
   Rigg.MastUnten := FiMastSaling;
   Rigg.MastOben := FiMastWante - FiMastSaling;
-  Rigg.MastLaenge := FiMastTop;
-  Rigg.GSB := FGSB; { neue Grenzen und Istwerte }
+  Rigg.MastLength := FiMastTop;
+  Rigg.RggFA.Assign(FGSB); { neue Grenzen und Istwerte }
   Rigg.EA := FEAarray;
   Rigg.MastEI := FiEI;
 end;
@@ -1223,7 +1226,6 @@ begin
   MinEdit.MaxLength := 4;
   PosEdit.MaxLength := 4;
   MaxEdit.MaxLength := 4;
-
   MastMassEdit.MaxLength := 4;
 
   IniMemo.ScrollBars := ssVertical;
