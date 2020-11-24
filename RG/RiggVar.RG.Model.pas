@@ -135,7 +135,7 @@ type
     F1, F2, FA, FB, FC: single; { in N }
     EI: single; { in Nmm^2 }
 
-    { gammaE bedeutet gammaEntlastet und wird in RggUnit3 verwendet, hier nicht }
+    { gammaE bedeutet gammaEntlastet }
     Beta, Gamma, gammaE, delta1, delta2, alpha1, alpha2: single; { in rad }
     eps1, eps2, epsA, epsB: single; { in rad }
 
@@ -202,7 +202,6 @@ type
     function GetEA: TRiggRods;
     procedure SetEA(const Value: TRiggRods);
 
-    procedure UpdateRigg;
     function GetRiggStatusText: string;
 
     function GetKorrigiert: Boolean;
@@ -269,7 +268,6 @@ type
     function GetTempValue(Idx: Integer): single;
 
     procedure ResetStatus;
-    procedure UpdateGetriebe;
     procedure UpdateGetriebeFS;
     procedure UpdateGetriebeDS;
     procedure UpdateGetriebeOSS;
@@ -343,6 +341,8 @@ type
     procedure Reset;
     procedure UpdateGSB;
     procedure UpdateGlieder;
+    procedure UpdateGetriebe;
+    procedure UpdateRigg;
 
     procedure Assign(Source: TRigg);
 
@@ -446,16 +446,25 @@ uses
 
 constructor TRigg.Create;
 begin
-  { --- TRiggFS ---}
-  FOnRegelGrafik := nil;
   GetDefaultChartData;
 
   SplitF := TSplitF.Create;
   TetraF := TTetraF.Create;
   Fachwerk := TFachwerk.Create;
 
+  FSalingTyp := stFest;
+  FControllerTyp := ctDruck;
+  FCalcTyp := ctBiegeKnicken;
+  FManipulatorMode := False;
+  FKorrigiert := True;
   FProbe := True;
   FHullIsFlexible := True;
+
+  FLineCountM := 100;
+  EI := 14.7E9; { Nmm^2 }
+  FExcenter := 20.0; { in mm }
+  FKnicklaenge := 4600.0; { in mm }
+  FKorrekturFaktor := 0.8; { dimensionlos }
 
   rEA.D0C := EAgross;
   rEA.C0D0 := EARumpf;
@@ -478,45 +487,27 @@ begin
   rEA.D0E := EAgross;
   rEA.E0E := EAgross;
 
-  { -- TMast -- }
-  FKorrigiert := True;
-  FCalcTyp := ctBiegeKnicken;
-  FControllerTyp := ctDruck;
-  FLineCountM := 100;
-  EI := 14.7E9; { Nmm^2 }
-  FExcenter := 20.0; { in mm }
-  FKnicklaenge := 4600.0; { in mm }
-  FKorrekturFaktor := 0.8; { dimensionlos }
-  { Achtung: inherited Create ruft virtuelle Funktionen auf, deshalb muß
-    z.Bsp. EI vorher initialisiert werden, sonst Division durch Null. }
-
-
   GSB := TRggFA.Create;
   WantLogoData := false;
   LogList := TStringList.Create;
   SKK := TSchnittKK.Create;
   TrimmTab := TTrimmTab.Create;
-  FSalingTyp := stFest;
-  FManipulatorMode := false;
+
   GetBuiltinData;
   IntGliederToReal;
   Reset;
-
-  { -- TGetriebeFS -- }
   BerechneWinkel;
 end;
 
 destructor TRigg.Destroy;
 begin
-  { --- TRiggFS --- }
   SplitF.Free;
   TetraF.Free;
   Fachwerk.Free;
-
-  LogList.Free;
   SKK.Free;
   TrimmTab.Free;
   GSB.Free;
+  LogList.Free;
   inherited Destroy;
 end;
 
