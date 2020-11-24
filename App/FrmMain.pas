@@ -323,7 +323,7 @@ begin
   Raster := Round(MainVar.Raster * FScale);
   MainVar.Scale := FScale;
   MainVar.ScaledRaster := Raster;
-  TKR := Round(TransKreisRadius * FScale);
+  TKR := Round(TKR * FScale);
 
   SpeedPanelHeight := Raster - Round(FScale * Margin);
   ListboxWidth := Round(230 * FScale);
@@ -582,7 +582,9 @@ procedure TFormMain.FormResize(Sender: TObject);
 begin
   if (Main <> nil) and Main.IsUp then
   begin
+{$ifdef MSWindows}
     MainVar.Scale := Screen.PixelsPerInch / 96;
+{$endif}
     Inc(Main.ResizeCounter);
     Main.UpdateTouch;
   end;
@@ -1181,7 +1183,7 @@ begin
     Exit;
 
   MM.Parent := Self;
-  MM.Font.Name := 'Courier New';
+  MM.Font.Name := 'Consolas';
   MM.Font.Size := 11;
   MM.Font.Color := TRggColors.Teal;
   MM.ScrollBars := ssBoth;
@@ -1629,6 +1631,7 @@ begin
   begin
     Main.UpdateTrimmText(TL);
     TrimmText.Text := TL.Text;
+    UpdateFederText;
   end;
   UpdateReport;
 end;
