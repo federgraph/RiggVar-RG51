@@ -542,8 +542,8 @@ end;
 procedure TFormMain.FormMouseWheel(Sender: TObject; Shift: TShiftState;
   WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
 begin
-    Main.DoMouseWheel(Shift, WheelDelta);
-    Handled := True;
+  Main.DoMouseWheel(Shift, WheelDelta);
+  Handled := True;
 end;
 
 procedure TFormMain.TimerTimer(Sender: TObject);
@@ -807,7 +807,7 @@ begin
 
     faToggleHelp:
     begin
-      ShowingHelp := True;
+      ShowingHelp := not ShowingHelp;
       UpdateReport;
     end;
 
@@ -1183,7 +1183,7 @@ begin
     Exit;
 
   MM.Parent := Self;
-  MM.Font.Name := 'Consolas';
+  MM.Font.Name := 'Courier';
   MM.Font.Size := 11;
   MM.Font.Color := TRggColors.Teal;
   MM.ScrollBars := ssBoth;

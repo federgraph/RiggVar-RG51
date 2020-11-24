@@ -559,15 +559,17 @@ begin
   TextDetail.Top := 64;
   TextDetail.Caption := 'Action Details';
 
-  SortBtn.Left := 784;
+  SortBtn.Left := 720;
   SortBtn.Top := 24;
   SortBtn.Caption := 'Sort Groups';
   SortBtn.OnClick := SortBtnClick;
+  SortBtn.AutoSize := True;
 
   HideBtn.Left := 872;
   HideBtn.Top := 24;
   HideBtn.Caption := 'Hide Groups';
   HideBtn.OnClick := HideBtnClick;
+  HideBtn.AutoSize := True;
 
   CaseBtn.Left := 128;
   CaseBtn.Top := 88;
