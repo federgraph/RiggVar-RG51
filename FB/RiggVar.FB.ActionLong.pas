@@ -265,7 +265,7 @@ begin
     faMemoryRecallBtn: result := 'Memory Recall Btn';
 
     faKorrigiertItem: result := 'Korrigiert Item';
-    faSofortBtn: result := 'Sofort Berechnen';
+    faSofortBtn: result := 'Sofort Berechnen Btn';
     faGrauBtn: result := 'Grau Btn';
     faBlauBtn: result := 'Blau Btn';
     faMultiBtn: result := 'Multi Btn';
