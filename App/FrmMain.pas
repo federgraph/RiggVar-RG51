@@ -79,6 +79,7 @@ type
     procedure InitDebugInfo;
     procedure InitZOrderInfo;
     procedure ShowHelpText(fa: Integer);
+    function GetCanShowMemo: Boolean;
   protected
     HelpTopic: Integer;
     ShowingHelp: Boolean;
@@ -206,6 +207,7 @@ type
     procedure SetViewPoint(const Value: TViewPoint);
     property ViewPoint: TViewPoint read FViewPoint write SetViewPoint;
     property IsUp: Boolean read GetIsUp write SetIsUp;
+    property CanShowMemo: Boolean read GetCanShowMemo;
   public
     Image: TImage;
     ImagePositionX: Integer;
@@ -614,6 +616,7 @@ end;
 
 procedure TFormMain.PlaceImage(PosLeft, PosTop: Integer);
 begin
+  Image.Anchors := [];
   Image.Left := PosLeft;
   Image.Top := PosTop;
   Image.Width := ClientWidth - Image.Left - Raster - Margin;
@@ -622,6 +625,7 @@ begin
      Image.Width := Round(RotaForm.RotaForm1.BitmapWidth * FScale);
   if Image.Height > RotaForm.RotaForm1.BitmapHeight * FScale then
      Image.Height := Round(RotaForm.RotaForm1.BitmapHeight * FScale);
+  Image.Anchors := [TAnchorKind.akLeft, TAnchorKind.akTop, TAnchorKind.akRight, TAnchorKind.akBottom];
 end;
 
 procedure TFormMain.CheckSpaceForMemo;
@@ -635,12 +639,15 @@ begin
 
   UpdateParent;
 
-  if (ClientWidth < 900 * FScale) or (ClientHeight < 700 * FScale) then
+  if not CanShowMemo then
   begin
     if RotaForm.LegendItemChecked then
     begin
       RotaForm.LegendBtnClick(nil);
     end;
+
+    SpeedPanel.Visible := False;
+
     TrimmText.Visible := False;
     ParamListbox.Visible := False;
     if ReportListbox <> nil then
@@ -663,6 +670,9 @@ begin
   end
   else
   begin
+    SpeedPanel.Visible := True;
+    SpeedPanel.Width := ClientWidth - 3 * Raster - Margin;
+
     TrimmText.Visible := True;
     ParamListbox.Visible := True;
     ReportListbox.Visible := True;
@@ -814,6 +824,7 @@ end;
 procedure TFormMain.HandleAction(fa: Integer);
 begin
   case fa of
+    faToggleAllText: ToggleAllText;
     faToggleSpeedPanel: ToggleSpeedPanel;
 
     faToggleHelp:
@@ -1237,6 +1248,8 @@ begin
 
   TrimmText := TMemo.Create(Self);
   SetupMemo(TrimmText);
+  TrimmText.ReadOnly := True;
+  TrimmText.TabStop := False;
 
   Image := TImage.Create(Self);
   Image.Name := 'Image';
@@ -1304,7 +1317,9 @@ begin
     SpeedPanel := SpeedPanel01;
     end;
 
+  SpeedPanel.Width := ClientWidth - 3 * Raster - Margin;
   SpeedPanel.Visible := True;
+  SpeedPanel.UpdateLayout;;
   SpeedPanel.UpdateSpeedButtonEnabled;
   SpeedPanel.UpdateSpeedButtonDown;
   SpeedPanel.DarkMode := MainVar.ColorScheme.IsDark;
@@ -1380,9 +1395,11 @@ begin
   Image.Top := 2 * Raster + Margin;
   Image.Width := ClientWidth - Image.Left - Raster - Margin;
   Image.Height := ClientHeight - Image.Top - Raster - Margin;
-  Image.Anchors := [];
+  Image.Anchors := Image.Anchors + [TAnchorKind.akRight, TAnchorKind.akBottom];
   ImagePositionX := Image.Left;
   ImagePositionY := Image.Top;
+
+  SpeedPanel.Width := ClientWidth - 3 * Raster - Margin;
 end;
 
 procedure TFormMain.LineColorBtnClick(Sender: TObject);
@@ -2093,21 +2110,23 @@ procedure TFormMain.ToggleAllText;
 var
   b: Boolean;
 begin
+  if not Main.FederText.Visible then
+    Exit;
+
+  if Main.FederText = Main.FederText2 then
+    Exit;
+
+  if not CanShowMemo then
+    Exit;
+
   b := not ParamListbox.Visible;
 
   SpeedPanel.Visible := b;
+  FocusContainer.Visible := b;
+  TrimmText.Visible := b;
   ParamListbox.Visible := b;
   ReportListbox.Visible := b;
-  TrimmText.Visible := b;
-
-  if not b then
-  begin
-    ReportText.Visible := False;
-  end
-  else
-  begin
-    ReportText.Visible := True;
-  end;
+  ReportText.Visible := b;
 end;
 
 procedure TFormMain.ToggleSpeedPanelFontSize;
@@ -2163,6 +2182,20 @@ begin
   //  KreisForm := TKreisForm.Create(Application);
   //end;
   //KreisForm.Show;
+end;
+
+function TFormMain.GetCanShowMemo: Boolean;
+begin
+  result := True;
+
+  if (ClientWidth < 900 * FScale) then
+    result := False;
+
+  if (ClientHeight < 700 * FScale) then
+    result := False;
+
+  if Main.IsPhone then
+    result := False;
 end;
 
 end.
