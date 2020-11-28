@@ -36,7 +36,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="120">
+    <Units Count="122">
       <Unit0>
         <Filename Value="rg51.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -541,6 +541,14 @@
         <Filename Value="RG\RiggVar.RG.Model.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit119>
+      <Unit120>
+        <Filename Value="Model\RiggVar.FederModel.ActionList.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit120>
+      <Unit121>
+        <Filename Value="Model\RiggVar.FederModel.Menu.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit121>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
