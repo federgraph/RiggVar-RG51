@@ -6,13 +6,16 @@
     <General>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="rg51"/>
+      <Title Value="RG51"/>
       <Scaled Value="True"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <XPManifest>
         <DpiAware Value="True"/>
+        <TextName Value="Federgraph.RiggVar.RG51"/>
+        <TextDesc Value="FPC / Lazarus version of Trimm 420 "/>
       </XPManifest>
+      <Icon Value="0"/>
     </General>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
@@ -36,7 +39,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="122">
+    <Units Count="129">
       <Unit0>
         <Filename Value="rg51.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -549,6 +552,34 @@
         <Filename Value="Model\RiggVar.FederModel.Menu.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit121>
+      <Unit122>
+        <Filename Value="Model\RiggVar.FederModel.ActionMapPhone.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit122>
+      <Unit123>
+        <Filename Value="Model\RiggVar.FederModel.ActionMapTablet.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit123>
+      <Unit124>
+        <Filename Value="Model\RiggVar.FederModel.Binding.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit124>
+      <Unit125>
+        <Filename Value="Model\RiggVar.FederModel.Keyboard01.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit125>
+      <Unit126>
+        <Filename Value="Model\RiggVar.FederModel.Touch.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit126>
+      <Unit127>
+        <Filename Value="Model\RiggVar.FederModel.TouchBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit127>
+      <Unit128>
+        <Filename Value="Model\RiggVar.FederModel.TouchPhone.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit128>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

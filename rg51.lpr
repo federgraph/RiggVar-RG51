@@ -18,6 +18,7 @@ uses
 
 begin
   RequireDerivedFormResource:=True;
+  Application.Title:='RG51';
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TFormMain, FormMain);
