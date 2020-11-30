@@ -276,7 +276,7 @@ type
     procedure CycleColorSchemeM;
     procedure CycleColorSchemeP;
     procedure ToggleDarkMode;
-    procedure ToggleSpeedPanelFontSize;
+    procedure ToggleButtonSize;
 
     procedure InitTouch;
     procedure UpdateTouch;
@@ -1746,9 +1746,9 @@ begin
   end;
 end;
 
-procedure TRggMain.ToggleSpeedPanelFontSize;
+procedure TRggMain.ToggleButtonSize;
 begin
-  FormMain.ToggleSpeedPanelFontSize;
+  FormMain.ToggleButtonSize;
 end;
 
 procedure TRggMain.ToggleDarkMode;
@@ -2432,7 +2432,7 @@ begin
     faCycleColorSchemeM: CycleColorSchemeM;
     faCycleColorSchemeP: CycleColorSchemeP;
 
-    faToggleFontColor: ToggleDarkMode;
+    faToggleDarkMode: ToggleDarkMode;
 
     else
     begin
@@ -2545,7 +2545,7 @@ begin
     faToggleDiffText: result := F.ShowDiffText;
     faToggleTrimmText: result := F.ShowTrimmText;
 
-    faToggleFontColor: result := MainVar.ColorScheme.IsDark;
+    faToggleDarkMode: result := MainVar.ColorScheme.IsDark;
 
     else
       result := F.GetChecked(fa);

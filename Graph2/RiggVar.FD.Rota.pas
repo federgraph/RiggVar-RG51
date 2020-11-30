@@ -543,7 +543,7 @@ begin
   g.FontHeight:= 24;
   g.FontName := 'Consolas';
 
-    RD.Draw(g);
+  RD.Draw(g);
 
   Image.Canvas.Clear;
   Bitmap.Draw(Image.Canvas, TH.Offset.X, TH.Offset.Y, True);

@@ -14,6 +14,7 @@ uses
   Types,
   ExtCtrls,
   RggTypes,
+  RggInter,
   RggChartModel;
 
 type
@@ -47,7 +48,7 @@ type
   public
     Width: Integer;
     Height: Integer;
-    constructor Create;
+    constructor Create(ARigg: IRigg);
     destructor Destroy; override;
     procedure Draw; override;
     property Image: TImage read FImage write SetImage;
@@ -60,7 +61,7 @@ uses
 
 { TChartGraph }
 
-constructor TChartGraph.Create;
+constructor TChartGraph.Create(ARigg: IRigg);
 begin
   inherited;
 

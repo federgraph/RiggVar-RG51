@@ -114,7 +114,7 @@ begin
   CreateComponents;
   Layout := 2;
 
-  ChartModel := TRggChartModel01.Create;
+  ChartModel := TRggChartModel01.Create(Main.Rigg);
   ChartModel.Rigg := Main.Rigg;
 
   ChartGraph := TRggDiagram.Create(ChartModel);

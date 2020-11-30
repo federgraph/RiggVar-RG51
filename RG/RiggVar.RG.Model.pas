@@ -41,7 +41,7 @@ uses
   RggInter;
 
 type
-  TRigg = class(TInterfacedObject, IRigg)
+  TRigg2 = class(TInterfacedObject, IRigg)
   private
     FSalingTyp: TSalingTyp;
     FControllerTyp: TControllerTyp;
@@ -267,12 +267,10 @@ type
     function GetTempValue(Idx: Integer): single;
 
     procedure ResetStatus;
-    procedure UpdateGetriebeFS;
     procedure UpdateGetriebeDS;
     procedure UpdateGetriebeOSS;
     procedure UpdateGetriebeOSB;
     procedure Rest;
-    procedure BerechneWinkel;
     procedure BerechneM;
     function GetKoppelKurve: TKoordLine;
     function GetMastKurve: TMastKurve;
@@ -345,7 +343,10 @@ type
     procedure UpdateGetriebe;
     procedure UpdateRigg;
 
-    procedure Assign(Source: TRigg);
+    procedure UpdateGetriebeFS;
+    procedure BerechneWinkel;
+
+    procedure Assign(Source: TRigg2);
 
     procedure LoadFromIniFile(ini: TIniFile);
     procedure WriteToIniFile(ini: TIniFile);
@@ -445,7 +446,7 @@ implementation
 uses
   RiggVar.App.Main;
 
-constructor TRigg.Create;
+constructor TRigg2.Create;
 begin
   GetDefaultChartData;
 
@@ -500,7 +501,7 @@ begin
   BerechneWinkel;
 end;
 
-destructor TRigg.Destroy;
+destructor TRigg2.Destroy;
 begin
   SplitF.Free;
   TetraF.Free;
@@ -512,7 +513,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TRigg.SetSalingTyp(const Value: TSalingTyp);
+procedure TRigg2.SetSalingTyp(const Value: TSalingTyp);
 begin
   if Value <> FSalingTyp then
   begin
@@ -521,7 +522,7 @@ begin
   end;
 end;
 
-procedure TRigg.SetMastUnten(const Value: single);
+procedure TRigg2.SetMastUnten(const Value: single);
 begin
   if Value <> FrMastUnten then
   begin
@@ -529,12 +530,12 @@ begin
   end;
 end;
 
-procedure TRigg.SetProofRequired(const Value: Boolean);
+procedure TRigg2.SetProofRequired(const Value: Boolean);
 begin
   FProbe := Value;
 end;
 
-procedure TRigg.SetMastOben(const Value: single);
+procedure TRigg2.SetMastOben(const Value: single);
 begin
   if Value <> FrMastOben then
   begin
@@ -542,17 +543,17 @@ begin
   end;
 end;
 
-procedure TRigg.SetManipulatorMode(const Value: Boolean);
+procedure TRigg2.SetManipulatorMode(const Value: Boolean);
 begin
   FManipulatorMode := Value;
 end;
 
-procedure TRigg.SetMastfallVorlauf(const Value: single);
+procedure TRigg2.SetMastfallVorlauf(const Value: single);
 begin
   FrMastfallVorlauf := Value;
 end;
 
-procedure TRigg.SetMastLength(const Value: single);
+procedure TRigg2.SetMastLength(const Value: single);
 begin
   if Value <> FrMastLength then
   begin
@@ -561,12 +562,12 @@ begin
   end;
 end;
 
-function TRigg.GetGetriebeOK: Boolean;
+function TRigg2.GetGetriebeOK: Boolean;
 begin
   result := FGetriebeOK;
 end;
 
-function TRigg.GetGlieder: TTrimmControls;
+function TRigg2.GetGlieder: TTrimmControls;
 begin
   RealGliederToInt;
   result.Controller := Round(FrController);
@@ -580,7 +581,7 @@ begin
   result.WPowerOS := Round(FWPowerOS);
 end;
 
-procedure TRigg.SetGlieder(const Values: TTrimmControls);
+procedure TRigg2.SetGlieder(const Values: TTrimmControls);
 begin
   FrController := Values.Controller;
   FWinkelDegrees := Values.Winkel;
@@ -594,7 +595,7 @@ begin
   IntGliederToReal;
 end;
 
-function TRigg.GetRealGlied(Index: TsbName): single;
+function TRigg2.GetRealGlied(Index: TsbName): single;
 begin
   result := 0;
   case Index of
@@ -611,12 +612,12 @@ begin
   end;
 end;
 
-function TRigg.GetRggFA: TRggFA;
+function TRigg2.GetRggFA: TRggFA;
 begin
   result := GSB;
 end;
 
-procedure TRigg.SetRealGlied(Index: TsbName; const Value: single);
+procedure TRigg2.SetRealGlied(Index: TsbName; const Value: single);
 begin
   case Index of
     fpController: FrController := Value;
@@ -636,12 +637,12 @@ begin
   end;
 end;
 
-procedure TRigg.SetRiggPoints(const Value: TRiggPoints);
+procedure TRigg2.SetRiggPoints(const Value: TRiggPoints);
 begin
   rP := Value;
 end;
 
-function TRigg.GetSalingDaten: TSalingDaten;
+function TRigg2.GetSalingDaten: TSalingDaten;
 var
   SD: TSalingDaten;
   ooTempA, ooTempB, ooTempC: TPoint3D;
@@ -688,26 +689,26 @@ begin
   result := SD;
 end;
 
-function TRigg.GetSalingTyp: TSalingTyp;
+function TRigg2.GetSalingTyp: TSalingTyp;
 begin
   result := FSalingTyp;
 end;
 
-procedure TRigg.IntGliederToReal;
+procedure TRigg2.IntGliederToReal;
 begin
   { Integer Glieder have been eliminated. }
   FrWinkel := DegToRad(FWinkelDegrees);
   FrMastEnde := FrMastLength - FrMastOben - FrMastUnten;
 end;
 
-procedure TRigg.RealGliederToInt;
+procedure TRigg2.RealGliederToInt;
 begin
   { Integer Glieder have been eliminated. }
   FWinkelDegrees := RadToDeg(FrWinkel);
   FrMastLength := FrMastUnten + FrMastOben + FrMastEnde;
 end;
 
-procedure TRigg.UpdateGSB;
+procedure TRigg2.UpdateGSB;
 begin
   RealGliederToInt;
   GSB.Controller.Ist := FrController;
@@ -722,7 +723,7 @@ begin
   GSB.WPowerOS.Ist := FWPowerOS;
 end;
 
-procedure TRigg.UpdateGlieder;
+procedure TRigg2.UpdateGlieder;
 begin
   FrController := GSB.Controller.Ist;
   FWinkelDegrees := GSB.Winkel.Ist;
@@ -736,13 +737,13 @@ begin
   IntGliederToReal;
 end;
 
-procedure TRigg.Wanten2dTo3d;
+procedure TRigg2.Wanten2dTo3d;
 begin
   FrWunten3D := sqrt(sqr(FrWunten2D) + sqr((FrPuettingA - FrSalingA) / 2));
   FrWoben3D := sqrt(sqr(FrWoben2D) + sqr(FrSalingA / 2));
 end;
 
-procedure TRigg.Wanten3dTo2d;
+procedure TRigg2.Wanten3dTo2d;
 var
   u, v: single;
 begin
@@ -755,7 +756,7 @@ begin
   end;
 end;
 
-function TRigg.GetGetriebeStatusText: string;
+function TRigg2.GetGetriebeStatusText: string;
 var
   s: string;
 begin
@@ -774,7 +775,7 @@ begin
   result := s;
 end;
 
-procedure TRigg.GetBuiltinData;
+procedure TRigg2.GetBuiltinData;
 begin
   if WantLogoData then
     GetLogoData
@@ -782,7 +783,7 @@ begin
     GetDefaultData;
 end;
 
-procedure TRigg.GetDefaultData;
+procedure TRigg2.GetDefaultData;
 { Initialisierung aller Integerwerte und der TrimmTabelle;
   nachfolgend muß IntGliederToReal und Reset aufgerufen werden,
   um die Gleitkommawerte zu initialiseieren. }
@@ -873,7 +874,7 @@ begin
   TrimmTab.TrimmTabDaten := DefaultTrimmTabDaten;
 end;
 
-procedure TRigg.GetLogoData;
+procedure TRigg2.GetLogoData;
 { Initialisierung aller Integerwerte und der TrimmTabelle;
   nachfolgend muß IntGliederToReal und Reset aufgerufen werden,
   um die Gleitkommawerte zu initialiseieren. }
@@ -974,27 +975,27 @@ begin
   TrimmTab.TrimmTabDaten := DefaultTrimmTabDaten;
 end;
 
-function TRigg.GetManipulatorMode: Boolean;
+function TRigg2.GetManipulatorMode: Boolean;
 begin
   result := FManipulatorMode;
 end;
 
-function TRigg.GetMastfallVorlauf: single;
+function TRigg2.GetMastfallVorlauf: single;
 begin
   result := FrMastfallVorlauf;
 end;
 
-function TRigg.GetMastOben: single;
+function TRigg2.GetMastOben: single;
 begin
   result := FrMastOben;
 end;
 
-function TRigg.GetMastOK: Boolean;
+function TRigg2.GetMastOK: Boolean;
 begin
   result := FMastOK;
 end;
 
-procedure TRigg.Reset;
+procedure TRigg2.Reset;
 begin
   { Rumpfkoordinaten }
   rP.P0 := rP.A0;
@@ -1007,7 +1008,7 @@ begin
   FrAlpha := SKK.AngleZXM(rP.P0, rP.D0);
 end;
 
-procedure TRigg.WriteToIniFile(ini: TIniFile);
+procedure TRigg2.WriteToIniFile(ini: TIniFile);
 var
   i: Integer;
   s, s1, s2: string;
@@ -1115,7 +1116,7 @@ begin
 
 end;
 
-procedure TRigg.LoadFromIniFile(ini: TIniFile);
+procedure TRigg2.LoadFromIniFile(ini: TIniFile);
 var
   i: Integer;
   s, s1, s2: string;
@@ -1222,14 +1223,14 @@ begin
 
 end;
 
-procedure TRigg.ResetStatus;
+procedure TRigg2.ResetStatus;
 begin
   FGetriebeOK := True;
   Exclude(FGetriebeStatus, gsWanteZukurz);
   Exclude(FGetriebeStatus, gsWanteZulang);
 end;
 
-procedure TRigg.ResetExitCounters;
+procedure TRigg2.ResetExitCounters;
 begin
   ExitCounter1 := 0;
   ExitCounter2 := 0;
@@ -1240,7 +1241,7 @@ begin
   ExitCounter7 := 0;
 end;
 
-procedure TRigg.UpdateGetriebe;
+procedure TRigg2.UpdateGetriebe;
 begin
   Inc(UpdateGetriebeCounter);
   LogList.Clear;
@@ -1261,7 +1262,7 @@ begin
   end;
 end;
 
-procedure TRigg.UpdateGetriebeFS;
+procedure TRigg2.UpdateGetriebeFS;
 { FrWinkel gegeben, FrVorstag ergibt sich }
 var
   svar: Boolean;
@@ -1303,7 +1304,7 @@ begin
   Rest;
 end;
 
-procedure TRigg.Rest;
+procedure TRigg2.Rest;
 begin
   { Berechnung Punkt ooE }
   rP.E.X := rP.E0.X - FrController;
@@ -1315,7 +1316,7 @@ begin
   BerechneM;
 end;
 
-procedure TRigg.BerechneF;
+procedure TRigg2.BerechneF;
 begin
 {$ifdef TGetriebeOnly}
   { Berechnung Punkt F - Masttop }
@@ -1331,7 +1332,7 @@ begin
   rP.F := SKK.AnglePointXZ(rP.C, FrMastEnde, FrEpsilon);
 end;
 
-procedure TRigg.BerechneM;
+procedure TRigg2.BerechneM;
 var
   ooTemp: TPoint3D;
   a, t: single;
@@ -1343,7 +1344,7 @@ begin
   rp.M := ooTemp;
 end;
 
-procedure TRigg.BerechneWinkel;
+procedure TRigg2.BerechneWinkel;
 { FrVorstag gegeben, FrWinkel gesucht }
 var
   Counter: Integer;
@@ -1459,7 +1460,7 @@ begin
   Rest; { think: refactored away with 'extract method refactoring' }
 end;
 
-function TRigg.GetKoppelKurve: TKoordLine;
+function TRigg2.GetKoppelKurve: TKoordLine;
 { Koppelkurve Viergelenk P0, P, D, D0 }
 { Wanten2d neu bereitgestellt,
   sonst interne Felder nicht verändert! }
@@ -1511,7 +1512,7 @@ begin
   rP := oooTemp; { aktuelle Koordinaten wiederherstellen }
 end;
 
-procedure TRigg.MakeSalingHBiggerFS(SalingHplus: single);
+procedure TRigg2.MakeSalingHBiggerFS(SalingHplus: single);
 { FrSalingH größer machen, FrWoben2d, Neigung und Biegung beibehalten;
   FrWunten2d neu berechnen }
 begin
@@ -1533,7 +1534,7 @@ begin
   Wanten2dTo3d;
 end;
 
-procedure TRigg.UpdateGetriebeDS;
+procedure TRigg2.UpdateGetriebeDS;
 { gegeben: Woben3d, Wunten3d, Mastunten, Mastoben, SalingL,
   Vorstag, Rumpfkoordinaten. }
 { gesucht: Riggkoordinaten ooA, ooB, ooC, ooD, ooP, ooF }
@@ -1662,7 +1663,7 @@ begin
   Rest;
 end;
 
-procedure TRigg.MakeSalingLBiggerDS(SalingLplus: single);
+procedure TRigg2.MakeSalingLBiggerDS(SalingLplus: single);
 var
   TempA, TempC, TempD, temp: TPoint3D;
   Basis, Skalar, WStrich, W1Strich, Saling1L: single;
@@ -1718,7 +1719,7 @@ begin
   FrController := FiControllerAnschlag;
 end;
 
-procedure TRigg.UpdateGetriebeOSS;
+procedure TRigg2.UpdateGetriebeOSS;
 { FrVorstag und FrWoben2d gegeben }
 var
   temp: TPoint3D;
@@ -1757,7 +1758,7 @@ begin
   Rest;
 end;
 
-procedure TRigg.UpdateGetriebeOSB;
+procedure TRigg2.UpdateGetriebeOSB;
 { FrVorstag und FrWoben3d und FrWunten3d gegeben }
 var
   TempW, Skalar, TempWunten2d, TempWoben2d: single;
@@ -1814,7 +1815,7 @@ begin
   Rest;
 end;
 
-procedure TRigg.GetWantenspannung;
+procedure TRigg2.GetWantenspannung;
 var
   VorstagNull: single;
 begin
@@ -1827,13 +1828,13 @@ begin
   Wantenspannung := SpannungW;
 end;
 
-function TRigg.WantenKraftvonVorstag(WegSoll: single): single;
+function TRigg2.WantenKraftvonVorstag(WegSoll: single): single;
 { liefert Wantenspannung 3D in Abhängigkeit von der Auslenkung des Vorstags }
 begin
   result := TrimmTab.EvalX(WegSoll);
 end;
 
-function TRigg.GetVorstagNull: single;
+function TRigg2.GetVorstagNull: single;
 var
   Temp, TempP, TempD, TempC: TPoint3D;
   s: string;
@@ -1967,7 +1968,7 @@ begin
   end;
 end;
 
-procedure TRigg.NeigeF(Mastfall: single);
+procedure TRigg2.NeigeF(Mastfall: single);
 var
   D0: TPoint3D;
 
@@ -2047,7 +2048,7 @@ begin
   BerechneM;
 end;
 
-procedure TRigg.BiegeUndNeigeF1(Mastfall, Biegung: single);
+procedure TRigg2.BiegeUndNeigeF1(Mastfall, Biegung: single);
 var
   k1, k2, k3, k4, k5, k6, k7: single;
   tempAlpha, tempBeta, tempGamma: single;
@@ -2096,7 +2097,7 @@ begin
   BerechneM;
 end;
 
-procedure TRigg.BiegeUndNeigeFS(TrimmSoll: TTrimm; var SalingHStart: single);
+procedure TRigg2.BiegeUndNeigeFS(TrimmSoll: TTrimm; var SalingHStart: single);
 { var Parameter SalingHStart wird vom Regler benötigt }
 var
   ooTemp: TPoint3D;
@@ -2114,7 +2115,7 @@ begin
   MakeSalingHBiggerFS(SalingHStart);
 end;
 
-procedure TRigg.BiegeUndNeigeDS(TrimmSoll: TTrimm; var SalingLStart: single);
+procedure TRigg2.BiegeUndNeigeDS(TrimmSoll: TTrimm; var SalingLStart: single);
 { var Parameter SalingLStart wird vom Regler benötigt }
 var
   ooTemp: TPoint3D;
@@ -2132,7 +2133,7 @@ begin
   MakeSalingLBiggerDS(SalingLStart);
 end;
 
-procedure TRigg.BiegeUndNeigeC(MastfallC, Biegung: single);
+procedure TRigg2.BiegeUndNeigeC(MastfallC, Biegung: single);
 var
   k1, k2: single;
   tempAlpha: single;
@@ -2170,7 +2171,7 @@ begin
   end;
 end;
 
-function TRigg.GetCounterValue(Idx: Integer): Integer;
+function TRigg2.GetCounterValue(Idx: Integer): Integer;
 begin
   result := 0;
   case Idx of
@@ -2185,7 +2186,7 @@ begin
   end;
 end;
 
-function TRigg.GetTempValue(Idx: Integer): single;
+function TRigg2.GetTempValue(Idx: Integer): single;
 begin
   result := 0;
   case Idx of
@@ -2196,46 +2197,46 @@ begin
   end;
 end;
 
-function TRigg.GetTrimmTabDaten: TTrimmTabDaten;
+function TRigg2.GetTrimmTabDaten: TTrimmTabDaten;
 begin
   result := TrimmTab.TrimmTabDaten;
 end;
 
-function TRigg.GetTrimmTabelle: TTrimmTab;
+function TRigg2.GetTrimmTabelle: TTrimmTab;
 begin
   result := TrimmTab;
 end;
 
 { TMast }
 
-procedure TRigg.SetCalcTyp(const Value: TCalcTyp);
+procedure TRigg2.SetCalcTyp(const Value: TCalcTyp);
 begin
   FCalcTyp := Value;
 end;
 
-procedure TRigg.SetControllerTyp(const Value: TControllerTyp);
+procedure TRigg2.SetControllerTyp(const Value: TControllerTyp);
 begin
   FControllerTyp := Value;
 end;
 
-procedure TRigg.SetEI(const Value: Integer);
+procedure TRigg2.SetEI(const Value: Integer);
 begin
   { EI Werte intern in Nmm^2, extern in Nm^2 }
   EI := Value * 1E6;
 end;
 
-procedure TRigg.SetKorrigiert(const Value: Boolean);
+procedure TRigg2.SetKorrigiert(const Value: Boolean);
 begin
   FKorrigiert := Value;
 end;
 
-function TRigg.GetEI: Integer;
+function TRigg2.GetEI: Integer;
 begin
   { EI Werte intern in Nmm^2, extern in Nm^2 }
   result := Round(EI / 1E6);
 end;
 
-procedure TRigg.Clear;
+procedure TRigg2.Clear;
 var
   i: Integer;
 begin
@@ -2248,7 +2249,7 @@ begin
     LineData[i] := 0;
 end;
 
-procedure TRigg.ResetMastStatus;
+procedure TRigg2.ResetMastStatus;
 begin
   FMastOK := True;
   Exclude(FMastStatus, msBiegungNegativ);
@@ -2257,7 +2258,7 @@ begin
   Exclude(FMastStatus, msControllerKraftzuGross);
 end;
 
-function TRigg.GetMastStatusText: string;
+function TRigg2.GetMastStatusText: string;
 var
   s: string;
 begin
@@ -2278,12 +2279,12 @@ begin
   result := s;
 end;
 
-function TRigg.GetMastUnten: single;
+function TRigg2.GetMastUnten: single;
 begin
   result := FrMastUnten;
 end;
 
-procedure TRigg.GetEpsilon;
+procedure TRigg2.GetEpsilon;
 var
   i: Integer;
   DeltaL: single;
@@ -2321,7 +2322,7 @@ begin
   eps2 := arctan2((LineData[i] - LineData[i - 1]), DeltaL);
 end;
 
-procedure TRigg.CalcW1W2;
+procedure TRigg2.CalcW1W2;
 var
   alpha11, alpha22, alpha12, alpha21: single; { in mm/N }
   a01, a02: single; { in mm/N }
@@ -2365,7 +2366,7 @@ begin
   ControllerFree := False;
 end;
 
-procedure TRigg.CalcW1;
+procedure TRigg2.CalcW1;
 var
   alpha11: single;
   a01: single;
@@ -2397,7 +2398,7 @@ begin
   ControllerFree := False;
 end;
 
-procedure TRigg.CalcW2;
+procedure TRigg2.CalcW2;
 var
   alpha22: single;
   a02: single;
@@ -2450,7 +2451,7 @@ begin
   ControllerFree := True;
 end;
 
-procedure TRigg.CalcWante;
+procedure TRigg2.CalcWante;
 var
   FU1, FU2, FBekannt: single;
   l2, h, alpha: single;
@@ -2493,7 +2494,7 @@ begin
   end;
 end;
 
-procedure TRigg.GetSalingWeg;
+procedure TRigg2.GetSalingWeg;
 { aus CalcW1 abgeleitet. Ermittelt die Durchbiegung hd, wenn he vorgegeben ist
   und die Salingkraft F2 Null ist. }
 var
@@ -2506,17 +2507,17 @@ begin
   FSalingWeg := a01 * tempF1; { in mm }
 end;
 
-function TRigg.GetCalcTyp: TCalcTyp;
+function TRigg2.GetCalcTyp: TCalcTyp;
 begin
   result := FCalcTyp;
 end;
 
-function TRigg.GetControllerTyp: TControllerTyp;
+function TRigg2.GetControllerTyp: TControllerTyp;
 begin
   result := FControllerTyp;
 end;
 
-procedure TRigg.GetControllerWeg;
+procedure TRigg2.GetControllerWeg;
 { aus CalcW2 abgeleitet. Ermittelt die Durchbiegung he, wenn hd vorgegeben ist
   und die Controllerkraft F1 Null ist. }
 var
@@ -2529,7 +2530,7 @@ begin
   FControllerWeg := a02 * tempF2; { in mm }
 end;
 
-procedure TRigg.GetSalingWegKnick;
+procedure TRigg2.GetSalingWegKnick;
 var
   Zaehler: Integer;
   WegDiff, WegIst, WegSoll: single; { in mm } { steht für FControllerWeg }
@@ -2563,17 +2564,17 @@ begin
   FSalingWegKnick := Temp;
 end;
 
-function TRigg.GetStabKraefte: TRiggRods;
+function TRigg2.GetStabKraefte: TRiggRods;
 begin
   result := rF;
 end;
 
-function TRigg.GetStabKraft(Value: TRiggRod): single;
+function TRigg2.GetStabKraft(Value: TRiggRod): single;
 begin
   result := rF.Rod[Value];
 end;
 
-procedure TRigg.CalcWKnick;
+procedure TRigg2.CalcWKnick;
 var
   Kurve: TKurvenTyp;
   WSoll: single; { in mm }
@@ -2681,7 +2682,7 @@ begin
   end;
 end;
 
-function TRigg.FvonW(WSoll: single; Kurve: TKurvenTyp; Korrigiert: Boolean): single;
+function TRigg2.FvonW(WSoll: single; Kurve: TKurvenTyp; Korrigiert: Boolean): single;
 { WSoll in mm, result in N }
 var
   Zaehler: Integer;
@@ -2715,7 +2716,7 @@ begin
   result := FTemp;
 end;
 
-function TRigg.WvonF(f: single; Kurve: TKurvenTyp; Korrigiert: Boolean): single;
+function TRigg2.WvonF(f: single; Kurve: TKurvenTyp; Korrigiert: Boolean): single;
 { F in N, result in mm }
 var
   k: single;
@@ -2734,7 +2735,7 @@ begin
     result := result + FKoppelFaktor * f * FSalingAlpha;
 end;
 
-function TRigg.GetKoppelFaktor: single;
+function TRigg2.GetKoppelFaktor: single;
 var
   FU1, FU2, FB: single;
 begin
@@ -2763,12 +2764,12 @@ begin
   end;
 end;
 
-function TRigg.GetKorrigiert: Boolean;
+function TRigg2.GetKorrigiert: Boolean;
 begin
   result := FKorrigiert;
 end;
 
-procedure TRigg.SolveKG21(KM, KU1, KU2, KB: TPoint3D; var FU1, FU2, FB: single);
+procedure TRigg2.SolveKG21(KM, KU1, KU2, KB: TPoint3D; var FU1, FU2, FB: single);
 var
   DX1, DY1, W1: single;
   DX2, DY2, W2: single;
@@ -2833,7 +2834,7 @@ begin
   end;
 end;
 
-procedure TRigg.SchnittKraefte;
+procedure TRigg2.SchnittKraefte;
 begin
   FanIn;
 
@@ -2889,7 +2890,7 @@ begin
   FanOut;
 end;
 
-procedure TRigg.FanIn;
+procedure TRigg2.FanIn;
 var
   SPSaling, SPController: TPoint3D;
   k1, k2, EC: single;
@@ -2931,7 +2932,7 @@ begin
   Clear; { bei ctOhne wird hier die Mastlinie genullt }
 end;
 
-procedure TRigg.FanOut;
+procedure TRigg2.FanOut;
 begin
   { Winkel }
   case SalingTyp of
@@ -3032,7 +3033,7 @@ begin
   end;
 end;
 
-procedure TRigg.Abstaende;
+procedure TRigg2.Abstaende;
 begin
   { Abstände ermitteln }
   rL.V[0] := rP.D0.Distance(rP.C);
@@ -3057,7 +3058,7 @@ begin
   rL.V[19] := rP.E0.Distance(rP.E);
 end;
 
-procedure TRigg.KorrekturF(tempH, k1, k2: single; var k3, Beta, Gamma: single);
+procedure TRigg2.KorrekturF(tempH, k1, k2: single; var k3, Beta, Gamma: single);
 var
   k8, temp: single;
 begin
@@ -3077,12 +3078,12 @@ begin
   Beta := Beta + k8 * cos(Gamma - Beta) / k3 * 0.6; { 0.6 empirisch }
 end;
 
-function TRigg.GetMastLinie: TLineDataR100;
+function TRigg2.GetMastLinie: TLineDataR100;
 begin
   result := LineData;
 end;
 
-procedure TRigg.UpdateMastPositionE;
+procedure TRigg2.UpdateMastPositionE;
 var
   PositionEStrich: single;
 begin
@@ -3094,19 +3095,19 @@ begin
   FMastPositionE := PositionEStrich;
 end;
 
-function TRigg.GetMastPositionE: single;
+function TRigg2.GetMastPositionE: single;
 begin
   result := FMastPositionE;
 end;
 
-procedure TRigg.UpdateMastGraph(Model: TMastGraphModel);
+procedure TRigg2.UpdateMastGraph(Model: TMastGraphModel);
 begin
   Model.LineData := LineData;
   Model.FLineCountM := FLineCountM;
   Model.GetriebeOK := GetriebeOK;
 end;
 
-function TRigg.GetRiggStatusText: string;
+function TRigg2.GetRiggStatusText: string;
 var
   s: string;
 begin
@@ -3122,7 +3123,7 @@ begin
   Result := s;
 end;
 
-procedure TRigg.Entlasten;
+procedure TRigg2.Entlasten;
 var
   i: Integer;
 begin
@@ -3137,7 +3138,7 @@ begin
   end;
 end;
 
-function TRigg.GetEA: TRiggRods;
+function TRigg2.GetEA: TRiggRods;
 var
   i: Integer;
 begin
@@ -3146,12 +3147,12 @@ begin
     Result.V[i] := rEA.V[i] / 1000;
 end;
 
-function TRigg.GetRiggOK: Boolean;
+function TRigg2.GetRiggOK: Boolean;
 begin
   result := FRiggOK;
 end;
 
-procedure TRigg.SetEA(const Value: TRiggRods);
+procedure TRigg2.SetEA(const Value: TRiggRods);
 var
   i: Integer;
 begin
@@ -3167,7 +3168,7 @@ begin
   Fachwerk.vektorEA[9] := rEA.C0D0;
 end;
 
-procedure TRigg.UpdateRigg;
+procedure TRigg2.UpdateRigg;
 begin
   FRiggOK := True;
   Exclude(FRiggStatus, rsNichtEntspannbar);
@@ -3224,7 +3225,7 @@ begin
   FTrimm.FlexWert := Round(rP.C.Distance(rPe.C)); { in mm }
 end;
 
-procedure TRigg.Kraefte;
+procedure TRigg2.Kraefte;
 begin
   { Kräfte für Verwendung in Probe speichern: }
   KnotenLastD0.X := FD0x; { in N }
@@ -3276,7 +3277,7 @@ begin
   end;
 end;
 
-procedure TRigg.Split;
+procedure TRigg2.Split;
 var
   P0P, PC, PD, P0C0, P0D0: single;
   j: Integer;
@@ -3387,7 +3388,7 @@ begin
   end;
 end;
 
-procedure TRigg.Probe;
+procedure TRigg2.Probe;
 
   function Probe(o, a, b, c, d: TRiggPoint; al, bl, cl, dl: Integer): Boolean;
   begin
@@ -3520,7 +3521,7 @@ begin
   end;
 end;
 
-procedure TRigg.MakeRumpfKoord;
+procedure TRigg2.MakeRumpfKoord;
 var
   r1, r2: single;
 begin
@@ -3599,7 +3600,7 @@ begin
   end;
 end;
 
-procedure TRigg.MakeKoord;
+procedure TRigg2.MakeKoord;
 var
   Temp: TPoint3D;
   s: string;
@@ -3698,7 +3699,7 @@ begin
   end;
 end;
 
-procedure TRigg.MakeKoordDS;
+procedure TRigg2.MakeKoordDS;
 var
   s: string;
   Temp, TempA0, TempA, TempC, TempD: TPoint3D;
@@ -3808,7 +3809,7 @@ begin
   end;
 end;
 
-procedure TRigg.KraefteOS;
+procedure TRigg2.KraefteOS;
 var
   temp: single;
 begin
@@ -3863,7 +3864,7 @@ begin
   end;
 end;
 
-procedure TRigg.SplitOS;
+procedure TRigg2.SplitOS;
 var
   P0D0, P0C, P0C0: single;
 begin
@@ -3938,7 +3939,7 @@ begin
   end;
 end;
 
-procedure TRigg.MakeKoordOS;
+procedure TRigg2.MakeKoordOS;
 var
   Temp: TPoint3D;
   Skalar: single;
@@ -3998,7 +3999,7 @@ end;
 { Regeln funktioniert auch bei Durchbiegung Null, weil die
   Ermittlung der Höhe hd immer(!) eine kleine Auslenkung
   zurückliefert. }
-function TRigg.Regeln(TrimmSoll: TTrimm): Integer;
+function TRigg2.Regeln(TrimmSoll: TTrimm): Integer;
 
   procedure Berechnen(Antrieb: single);
   begin
@@ -4147,7 +4148,7 @@ begin
   FProbe := tempFProbe;
 end;
 
-procedure TRigg.GetDefaultChartData;
+procedure TRigg2.GetDefaultChartData;
 var
   i: Integer;
 begin
@@ -4161,7 +4162,7 @@ begin
 end;
 
 {$ifdef MSWindowsDelphi}
-procedure TRigg.WriteXml(ML: TStrings; AllTags: Boolean);
+procedure TRigg2.WriteXml(ML: TStrings; AllTags: Boolean);
 var
   Document: TRggDocument;
 begin
@@ -4176,12 +4177,12 @@ begin
   end;
 end;
 {$else}
-procedure TRigg.WriteXml(ML: TStrings; AllTags: Boolean);
+procedure TRigg2.WriteXml(ML: TStrings; AllTags: Boolean);
 begin
 end;
 {$endif}
 
-procedure TRigg.WriteToDocFile(FileName: string);
+procedure TRigg2.WriteToDocFile(FileName: string);
 var
   Document: TRggDocument;
   s: string;
@@ -4206,7 +4207,7 @@ begin
   end;
 end;
 
-procedure TRigg.LoadFromDocFile(FileName: string);
+procedure TRigg2.LoadFromDocFile(FileName: string);
 var
   Document: TRggDocument;
   s: string;
@@ -4229,15 +4230,15 @@ begin
   end;
 end;
 
-procedure TRigg.Assign(Source: TRigg);
+procedure TRigg2.Assign(Source: TRigg2);
 var
   Document: TRggDocument;
 begin
-  if Source is TRigg then
+  if Source is TRigg2 then
   begin
     Document := TRggDocument.Create;
     try
-      (Source as TRigg).GetDocument(Document);
+      (Source as TRigg2).GetDocument(Document);
       SetDocument(Document);
     finally
       Document.Free;
@@ -4247,7 +4248,7 @@ begin
 //  inherited Assign(Source);
 end;
 
-procedure TRigg.GetDocument(Doc: TRggDocument);
+procedure TRigg2.GetDocument(Doc: TRggDocument);
 begin
   UpdateGSB;
   { Rigg: Typ }
@@ -4271,37 +4272,37 @@ begin
   Doc.TrimmTabDaten := TrimmTab.TrimmTabDaten;
 end;
 
-function TRigg.GetDurchbiegungHD: single;
+function TRigg2.GetDurchbiegungHD: single;
 begin
   result := hd;
 end;
 
-function TRigg.GetDurchbiegungHE: single;
+function TRigg2.GetDurchbiegungHE: single;
 begin
   result := BiegungE;
 end;
 
-function TRigg.GetMastBeta: single;
+function TRigg2.GetMastBeta: single;
 begin
   result := Beta;
 end;
 
-function TRigg.GetMastLC: single;
+function TRigg2.GetMastLC: single;
 begin
   result := lc;
 end;
 
-function TRigg.GetMastLE: single;
+function TRigg2.GetMastLE: single;
 begin
   result := le;
 end;
 
-function TRigg.GetMastLength: single;
+function TRigg2.GetMastLength: single;
 begin
   result := FrMastLength;
 end;
 
-procedure TRigg.SetDocument(Doc: TRggDocument);
+procedure TRigg2.SetDocument(Doc: TRggDocument);
 var
   InputRec: TTrimmControls;
   tempManipulatorMode: Boolean;
@@ -4350,7 +4351,7 @@ begin
   UpdateGSB;
 end;
 
-procedure TRigg.SetDefaultDocument;
+procedure TRigg2.SetDefaultDocument;
 var
   Document: TRggDocument;
 begin
@@ -4363,7 +4364,7 @@ begin
   end;
 end;
 
-procedure TRigg.GetRealTrimmRecord(var RealTrimm: TRealTrimm);
+procedure TRigg2.GetRealTrimmRecord(var RealTrimm: TRealTrimm);
 { Die Funktion überprüft nicht, ob die Werte in Rigg aktualisiert sind.
   Einige Werte stehen schon nach Aufruf von UpdateGetriebe() zur Verfügung.
   Andere erst nach Aufruf von UpdateRigg(). }
@@ -4394,22 +4395,22 @@ begin
   end;
 end;
 
-function TRigg.GetRelaxedRiggLengths: TRiggRods;
+function TRigg2.GetRelaxedRiggLengths: TRiggRods;
 begin
   result := rLE;
 end;
 
-function TRigg.GetRelaxedRiggPoints: TRiggPoints;
+function TRigg2.GetRelaxedRiggPoints: TRiggPoints;
 begin
   result := rPE;
 end;
 
-function TRigg.GetRiggPoints: TRiggPoints;
+function TRigg2.GetRiggPoints: TRiggPoints;
 begin
   result := rP;
 end;
 
-function TRigg.GetRealTrimm(Index: TTrimmIndex): single;
+function TRigg2.GetRealTrimm(Index: TTrimmIndex): single;
 var
   temp: single;
 begin
@@ -4439,7 +4440,7 @@ begin
   result := temp;
 end;
 
-procedure TRigg.SaveToFederData(fd: TRggData);
+procedure TRigg2.SaveToFederData(fd: TRggData);
 begin
   fd.A0X := Round(rP.A0.X);
   fd.A0Y := -Round(rP.A0.Y);
@@ -4504,7 +4505,7 @@ begin
   fd.Bie := Round(RealTrimm[tiBiegungS]);
 end;
 
-procedure TRigg.LoadFromFederData(fd: TRggData);
+procedure TRigg2.LoadFromFederData(fd: TRggData);
 var
   InputRec: TTrimmControls;
   tempManipulatorMode: Boolean;
@@ -4612,7 +4613,7 @@ begin
   UpdateGSB;
 end;
 
-procedure TRigg.AusgabeText(ML: TStrings; WantAll: Boolean = True; WantForce: Boolean = False);
+procedure TRigg2.AusgabeText(ML: TStrings; WantAll: Boolean = True; WantForce: Boolean = False);
 var
   tempSalingDaten: TSalingDaten;
 begin
@@ -4699,7 +4700,7 @@ begin
 //  ML.EndUpdate;
 end;
 
-procedure TRigg.AusgabeKommentar(ML: TStrings);
+procedure TRigg2.AusgabeKommentar(ML: TStrings);
 var
   temp: single;
 begin
@@ -4724,7 +4725,7 @@ begin
 //  ML.EndUpdate;
 end;
 
-procedure TRigg.InitFactArray;
+procedure TRigg2.InitFactArray;
 var
   temp, tempH, tempA: single;
   i: TFederParam;
@@ -4824,7 +4825,7 @@ begin
   end;
 end;
 
-procedure TRigg.UpdateFactArray(CurrentParam: TFederParam);
+procedure TRigg2.UpdateFactArray(CurrentParam: TFederParam);
 var
   i: TFederParam;
   sb: TRggSB;
@@ -4869,7 +4870,7 @@ begin
   end;
 end;
 
-procedure TRigg.ChangeRigg(CurrentParam: TFederParam; Value: single);
+procedure TRigg2.ChangeRigg(CurrentParam: TFederParam; Value: single);
 var
   tempH, tempA, tempL, tempW: single;
 begin
@@ -4967,7 +4968,7 @@ begin
   end;
 end;
 
-function TRigg.GetPlotValue(CurrentParam: TFederParam; PlotID: Integer; x, y: single): single;
+function TRigg2.GetPlotValue(CurrentParam: TFederParam; PlotID: Integer; x, y: single): single;
 var
   tx, ty: single;
 begin
@@ -4992,32 +4993,32 @@ begin
   end;
 end;
 
-function TRigg.GetPoint3D(Value: TRiggPoint): TPoint3D;
+function TRigg2.GetPoint3D(Value: TRiggPoint): TPoint3D;
 begin
   result := rP.V[Value];
 end;
 
-function TRigg.GetRelaxedPoint3D(Value: TRiggPoint): TPoint3D;
+function TRigg2.GetRelaxedPoint3D(Value: TRiggPoint): TPoint3D;
 begin
   result := rPe.V[Value];
 end;
 
-function TRigg.GetProofRequired: Boolean;
+function TRigg2.GetProofRequired: Boolean;
 begin
   result := FProbe;
 end;
 
-function TRigg.GetRiggDistance(Value: TRiggRod): single;
+function TRigg2.GetRiggDistance(Value: TRiggRod): single;
 begin
   result := rL.Rod[Value];
 end;
 
-function TRigg.GetRiggLengths: TRiggRods;
+function TRigg2.GetRiggLengths: TRiggRods;
 begin
   result := rL;
 end;
 
-procedure TRigg.LoadTrimm(fd: TRggData);
+procedure TRigg2.LoadTrimm(fd: TRggData);
 var
   temp, tempH, tempA: single;
   i: TFederParam;
@@ -5112,7 +5113,7 @@ begin
   GSB.ResetVolatile;
 end;
 
-procedure TRigg.SaveTrimm(fd: TRggData);
+procedure TRigg2.SaveTrimm(fd: TRggData);
 begin
   SaveToFederData(fd);
 
@@ -5153,7 +5154,7 @@ begin
   fd.WOMax := Round(GSB.Woben.Max);
 end;
 
-procedure TRigg.SetMastLineData(const Value: TLineDataR100; L: single; Beta: single);
+procedure TRigg2.SetMastLineData(const Value: TLineDataR100; L: single; Beta: single);
 var
   temp1, temp2, temp3, temp4, tempL: single;
   j, k: Integer;
@@ -5172,13 +5173,13 @@ begin
   end;
 end;
 
-function TRigg.GetMastKurve: TMastKurve;
+function TRigg2.GetMastKurve: TMastKurve;
 begin
   SetMastLineData(MastLinie, MastLC, MastBeta);
   result := MastKurve;
 end;
 
-function TRigg.GetMastKurvePoint(const Index: Integer): TPoint3D;
+function TRigg2.GetMastKurvePoint(const Index: Integer): TPoint3D;
 begin
   if (Index >= 0) and (Index < Length(MastKurve)) then
     result := MastKurve[Index]
@@ -5188,7 +5189,7 @@ begin
   end;
 end;
 
-function TRigg.FindBogenIndexOf(P: TPoint3D): Integer;
+function TRigg2.FindBogenIndexOf(P: TPoint3D): Integer;
 var
   i, j: Integer;
   MinIndex: Integer;

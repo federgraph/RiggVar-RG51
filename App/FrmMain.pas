@@ -27,11 +27,11 @@ interface
 uses
   BGRABitmap,
   BGRABitmapTypes,
+  RiggVar.App.Model,
   RiggVar.FB.Color,
   RiggVar.FB.SpeedColor,
   RiggVar.FB.SpeedBar,
   RiggVar.RG.Def,
-  RiggVar.RG.Model,
   RiggVar.RG.Report,
   RiggVar.RG.Rota,
   RiggVar.FederModel.Menu,
@@ -67,7 +67,6 @@ type
     procedure GotoNormal;
     procedure GotoPortrait;
     procedure GotoSquare;
-  protected
     procedure InitScreenPos;
   private
     FScale: single;
@@ -155,7 +154,7 @@ type
     procedure InitSpeedButtons;
     procedure LayoutSpeedPanel(SP: TActionSpeedBar);
     procedure ToggleSpeedPanel;
-    procedure ToggleSpeedPanelFontSize;
+    procedure ToggleButtonSize;
     procedure SwapSpeedPanel(Value: Integer);
     procedure SwapRota(Value: Integer);
   public
@@ -841,6 +840,7 @@ begin
   case fa of
     faToggleAllText: ToggleAllText;
     faToggleSpeedPanel: ToggleSpeedPanel;
+    faToggleButtonSize: ToggleButtonSize;
 
     faToggleHelp:
     begin
@@ -1050,7 +1050,7 @@ begin
     's': fa := faShowSpecialKeyInfo;
     'S': fa := faMemeGotoSquare;
 
-    't': fa := faToggleFontColor;
+    't': fa := faToggleDarkMode;
     'T': fa := faToggleSpeedPanel;
 
     'u': fa := faToggleDataText;
@@ -1566,7 +1566,7 @@ begin
   ChartImage.Parent := ChartControl;
   ChartImage.Visible := False;
 
-  ChartGraph := TChartGraph.Create;
+  ChartGraph := TChartGraph.Create(Main.Rigg);
   ChartGraph.Image := ChartImage;
 
   UpdateChartGraph;
@@ -1771,6 +1771,7 @@ begin
     faToggleSandboxed: result := MainVar.IsSandboxed;
     faToggleAllProps: result := MainVar.AllProps;
     faToggleAllTags: result := MainVar.AllTags;
+    faToggleButtonSize: result := SpeedPanel.BigMode;
 
     faToggleHelp: result := ShowingHelp;
     faToggleReport: result := ReportText.Visible;
@@ -2113,7 +2114,7 @@ begin
     RotaForm.Draw;
 end;
 
-procedure TFormMain.ToggleSpeedPanelFontSize;
+procedure TFormMain.ToggleButtonSize;
 begin
   SpeedPanel.ToggleBigMode;
   LayoutComponents;

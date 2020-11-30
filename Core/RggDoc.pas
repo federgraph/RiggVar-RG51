@@ -117,7 +117,6 @@ type
 implementation
 
 uses
-  //RiggVar.RG.Def,
   RiggVar.FB.Classes;
 
 constructor TRggDocument.Create;

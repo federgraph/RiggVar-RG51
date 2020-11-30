@@ -381,7 +381,7 @@ end;
 
 procedure TActionSpeedBar.ToggleFontSizeBtnClick(Sender: TObject);
 begin
-  Main.ToggleSpeedPanelFontSize;
+  Main.ToggleButtonSize;
 end;
 
 end.
