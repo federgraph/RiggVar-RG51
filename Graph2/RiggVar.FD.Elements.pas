@@ -45,19 +45,6 @@ type
     procedure GoLight;
   end;
 
-  TRggDrawingBase = class
-  public
-    WantRotation: Boolean;
-    WheelFlag: Boolean;
-    InplaceFlag: Boolean;
-    ViewpointFlag: Boolean;
-    FixPoint3D: TPoint3D;
-    Colors: TRggColorScheme;
-    IsDark: Boolean;
-    procedure Reset; virtual; abstract;
-    procedure Transform(M: TMatrix3D); virtual; abstract;
-  end;
-
   TLineSegmentCompareCase = (
     ccNone,
     ccNil,
@@ -114,6 +101,22 @@ type
 
   TRggPoly = array of TRggPoint3D;
 
+  TRggDrawingBase = class
+  public
+    WantRotation: Boolean;
+    WheelFlag: Boolean;
+    InplaceFlag: Boolean;
+    ViewpointFlag: Boolean;
+    FixPoint3D: TPoint3D;
+    Colors: TRggColorScheme;
+    IsDark: Boolean;
+    FaxPoint3D: TRggPoint3D;
+    class var
+      WantOffset: Boolean;
+    procedure Reset; virtual; abstract;
+    procedure Transform(M: TMatrix3D); virtual; abstract;
+  end;
+
   { TRggElement }
 
   TRggElement = class
@@ -128,6 +131,9 @@ type
     TextAngle: single;
     TextRadius: single;
     WantTextRect: Boolean;
+    Temp1: TRggPoint3D;
+    Temp2: TRggPoint3D;
+    Temp3: TRggPoint3D;
     LineToPoint: TPointF;
     procedure TextOut(g: TBGRABitmap; s: string; c: TBGRAPixel);
     procedure TextOutLeading(g: TBGRABitmap; s: string; c: TBGRAPixel);
@@ -332,6 +338,7 @@ type
   private
     FCount: Integer;
   protected
+    TransformedPoly: ArrayOfTPointF;
     procedure DrawText(g: TBGRABitmap);
   public
     Poly: ArrayOfTPointF;
@@ -346,6 +353,7 @@ type
   private
     FCount: Integer;
   protected
+    TransformedPoly: ArrayOfTPointF;
     procedure DrawText(g: TBGRABitmap);
   public
     Poly: ArrayOfTPointF;
@@ -357,8 +365,6 @@ type
   TRggPolyLine3D = class(TRggPolyLine)
   private
     procedure UpdateCount;
-  protected
-    TransformedPoly: ArrayOfTPointF;
   public
     RggPoly: TRggPoly;
     WantRotation: Boolean;
@@ -701,15 +707,17 @@ begin
   if not Visible then
     Exit;
 
-  g.EllipseAntialias(Center.X, Center.Y,
+  Temp1 := Center + Drawing.FaxPoint3D;
+
+  g.EllipseAntialias(Temp1.X, Temp1.Y,
   Radius, Radius, StrokeColor, 1.0, Drawing.Colors.BackgroundColor);
 
-  g.EllipseAntialias(Center.X, Center.Y,
+  g.EllipseAntialias(Temp1.X, Temp1.Y,
   Radius, Radius, StrokeColor, StrokeThickness);
 
   if ShowCaption or GlobalShowCaption then
   begin
-    TextCenter := Center.P;
+    TextCenter := Temp1.P;
     TextOut(g, Caption, Drawing.Colors.TextColor);
   end;
 end;
@@ -837,12 +845,15 @@ begin
   if not Visible then
     Exit;
 
-  MoveTo(Point1.Center.P);
-  LineTo(g, Point2.Center.P);
+  Temp1 := Point1.Center + Drawing.FaxPoint3D;
+  Temp2 := Point2.Center + Drawing.FaxPoint3D;
+
+  MoveTo(Temp1.P);
+  LineTo(g, Temp2.P);
 
   if ShowCaption or GlobalShowCaption then
   begin
-    TextCenter := Point1.Center.P + (Point2.Center.P - Point1.Center.P) * 0.5;
+    TextCenter := Temp1.P + (Temp2.P - Temp1.P) * 0.5;
     TextOut(g, Caption, Drawing.Colors.TextColor);
   end;
 end;
@@ -1119,14 +1130,14 @@ end;
 
 procedure TRggTriangle.Draw(g: TBGRABitmap);
 begin
-  Poly[0].X := Point1.Center.X;
-  Poly[0].Y := Point1.Center.Y;
+  Poly[0].X := Point1.Center.X + Drawing.FaxPoint3D.X;
+  Poly[0].Y := Point1.Center.Y + Drawing.FaxPoint3D.Y;
 
-  Poly[1].X := Point2.Center.X;
-  Poly[1].Y := Point2.Center.Y;
+  Poly[1].X := Point2.Center.X + Drawing.FaxPoint3D.X;
+  Poly[1].Y := Point2.Center.Y + Drawing.FaxPoint3D.Y;
 
-  Poly[2].X := Point3.Center.X;
-  Poly[2].Y := Point3.Center.Y;
+  Poly[2].X := Point3.Center.X + Drawing.FaxPoint3D.X;
+  Poly[2].Y := Point3.Center.Y + Drawing.FaxPoint3D.Y;
 
   g.DrawPolygonAntialias(Poly, StrokeColor, StrokeThickness, StrokeColor);
 end;
@@ -1161,8 +1172,12 @@ var
   arcData: ArrayOfTPointF;
   sa, ea, ta: single;
 begin
-  Angle2 := Point2.Center.Angle(Point1.Center);
-  Angle3 := Point3.Center.Angle(Point1.Center);
+  Temp1 := Point1.Center + Drawing.FaxPoint3D;
+  Temp2 := Point2.Center + Drawing.FaxPoint3D;
+  Temp3 := Point3.Center + Drawing.FaxPoint3D;
+
+  Angle2 := Temp2.Angle(Temp1);
+  Angle3 := Temp3.Angle(Temp1);
 
   startAngle := Angle3;
   sweepAngle := Angle2 - Angle3;
@@ -1190,7 +1205,7 @@ begin
   s := Caption;
 
   arcData := g.ComputeArcRad(
-    Point1.Center.X, Point1.Center.Y,
+    Temp1.X, Temp1.Y,
     Radius, Radius,
     -sa, -ea);
 
@@ -1200,7 +1215,7 @@ begin
   begin
     TextAngle := startAngle + sweepAngle / 2;
     TextRadius := Radius * FTextRadiusFactor;
-    TextCenter := Point1.Center.P;
+    TextCenter := Temp1.P;
     TextOut(g, s, Drawing.Colors.TextColor);
   end;
 end;
@@ -1250,8 +1265,8 @@ end;
 procedure TRggLagerLine.Draw(g: TBGRABitmap);
 begin
   inherited;
-  DrawLager(g, Point1.Center.P, True);
-  DrawLager(g, Point2.Center.P, False);
+  DrawLager(g, (Drawing.FaxPoint3D + Point1.Center).P, True);
+  DrawLager(g, (Drawing.FaxPoint3D + Point2.Center).P, False);
 end;
 
 procedure TRggLagerLine.DrawLager(g: TBGRABitmap; P: TPointF; FestLager: Boolean);
@@ -1537,6 +1552,12 @@ end;
 
 { TRggPolyLine }
 
+constructor TRggPolyLine.Create(ACaption: string = '');
+begin
+  inherited;
+  TypeName := 'PolyLine';
+end;
+
 constructor TRggPolyLine.Create(ACaption: string; ACount: Integer);
 begin
   Create(ACaption);
@@ -1544,22 +1565,33 @@ begin
   begin
     FCount := ACount;
     SetLength(Poly, Count);
+    SetLength(TransformedPoly, Count);
   end;
 end;
 
-constructor TRggPolyLine.Create(ACaption: string = '');
-begin
-  inherited;
-  TypeName := 'PolyLine';
-end;
-
 procedure TRggPolyLine.Draw(g: TBGRABitmap);
+var
+  i: Integer;
 begin
+  Temp1 := Point1.Center + Drawing.FaxPoint3D;
+  Temp2 := Point2.Center + Drawing.FaxPoint3D;
+
   if not ShowPoly then
     inherited
   else
   begin
-    g.DrawPolyLineAntialias(Poly, StrokeColor, Strokethickness);
+    if Drawing.WantOffset then
+    begin
+      for i := 0 to Length(Poly) - 1 do
+      begin
+        TransformedPoly[i].X := Round(Poly[i].X + Drawing.FaxPoint3D.X);
+        TransformedPoly[i].Y := Round(Poly[i].Y + Drawing.FaxPoint3D.Y);
+      end;
+      g.DrawPolyLineAntialias(TransformedPoly, StrokeColor, Strokethickness);
+    end
+    else
+      g.DrawPolyLineAntialias(Poly, StrokeColor, Strokethickness);
+
     DrawText(g);
   end;
 end;
@@ -1568,7 +1600,7 @@ procedure TRggPolyLine.DrawText(g: TBGRABitmap);
 begin
   if ShowCaption or GlobalShowCaption then
   begin
-    TextCenter := Point1.Center.P + (Point2.Center.P - Point1.Center.P) * 0.5;
+    TextCenter := Temp1.P + (Temp2.P - Temp1.P) * 0.5;
     TextOut(g, Caption, Drawing.Colors.TextColor);
   end;
 end;
@@ -1612,8 +1644,8 @@ begin
   begin
     for i := 0 to Length(RggPoly) - 1 do
     begin
-      TransformedPoly[i].X := Round(RggPoly[i].X);
-      TransformedPoly[i].Y := Round(RggPoly[i].Y);
+      TransformedPoly[i].X := Round(RggPoly[i].X + Drawing.FaxPoint3D.X);
+      TransformedPoly[i].Y := Round(RggPoly[i].Y + Drawing.FaxPoint3D.Y);
     end;
     g.DrawPolyLineAntialias(TransformedPoly, StrokeColor, StrokeThickness);
     DrawText(g);
@@ -1949,11 +1981,15 @@ end;
 
 procedure TSchnittKKCircle.Draw(g: TBGRABitmap);
 begin
-  MoveTo(MP1.Center.P);
-  LineTo(g, Center.P);
+  Temp1 := MP1.Center + Drawing.FaxPoint3D;
+  Temp2 := MP2.Center + Drawing.FaxPoint3D;
+  Temp3 := Center + Drawing.FaxPoint3D;
 
-  MoveTo(MP2.Center.P);
-  LineTo(g, Center.P);
+  MoveTo(Temp1.P);
+  LineTo(g, Temp3.P);
+
+  MoveTo(Temp2.P);
+  LineTo(g, Temp3.P);
 
   inherited;
 end;
@@ -2074,8 +2110,11 @@ var
   p0, p1: TPoint3D;
   vx, vy: TPoint3D;
 begin
-  vp := Point1.Center.C;
-  vq := Point2.Center.C;
+  Temp1 := Point1.Center + Drawing.FaxPoint3D;
+  Temp2 := Point2.Center + Drawing.FaxPoint3D;
+
+  vp := Temp1.C;
+  vq := Temp2.C;
 
   v := vq - vp;
 
@@ -2140,12 +2179,13 @@ end;
 
 procedure TRggBigCircle.Draw(g: TBGRABitmap);
 begin
-  g.EllipseAntialias(Center.X, Center.Y,
-  Radius, Radius, StrokeColor, 1.0);
+  Temp1 := Center + Drawing.FaxPoint3D;
+
+  g.EllipseAntialias(Temp1.X, Temp1.Y, Radius, Radius, StrokeColor, 1.0);
 
   if ShowCaption or GlobalShowCaption then
   begin
-    TextCenter := Center.P;
+    TextCenter := Temp1.P;
     TextOut(g, Caption, Drawing.Colors.TextColor);
   end;
 end;
@@ -2174,7 +2214,10 @@ var
   arcData: ArrayOfTPointF;
   sa: single;
 begin
-  Arrow.C := Point2.Center.C - Point1.Center.C;
+  Temp1 := Point1.Center + Drawing.FaxPoint3D;
+  Temp2 := Point2.Center + Drawing.FaxPoint3D;
+
+  Arrow.C := Temp2.C - Temp1.C;
   Angle := -Arrow.Angle(RggPoint3DZero);
   RadiusF.X := Arrow.Length;
   RadiusF.Y := RadiusF.X;
@@ -2182,14 +2225,14 @@ begin
   sa := DegToRad(SweepAngle);
 
   arcData := g.ComputeArcRad(
-    Point1.Center.X, Point1.Center.Y,
+    Temp1.X, Temp1.Y,
     RadiusF.X, RadiusF.Y,
     Angle - sa, Angle + sa);
   g.DrawPolyLineAntialias(arcData, StrokeColor, StrokeThickness);
 
   if ShowCaption or GlobalShowCaption then
   begin
-    TextCenter := Point1.Center.P + (Point2.Center.P - Point1.Center.P) * 0.5;
+    TextCenter := Temp1.P + (Temp2.P - Temp1.P) * 0.5;
     TextOut(g, Caption, Drawing.Colors.TextColor);
   end;
 end;
@@ -2233,12 +2276,26 @@ begin
   begin
     FCount := ACount;
     SetLength(Poly, Count);
+    SetLength(TransformedPoly, Count);
   end;
 end;
 
 procedure TRggPolyCurve.Draw(g: TBGRABitmap);
+var
+  i: Integer;
 begin
-  PolyLine(g, Poly);
+  if Drawing.WantOffset then
+  begin
+    for i := 0 to Length(Poly) - 1 do
+    begin
+      TransformedPoly[i].X := Round(Poly[i].X + Drawing.FaxPoint3D.X);
+      TransformedPoly[i].Y := Round(Poly[i].Y + Drawing.FaxPoint3D.Y);
+    end;
+    PolyLine(g, TransformedPoly);
+  end
+  else
+    PolyLine(g, Poly);
+
   DrawText(g);
 end;
 
@@ -2283,8 +2340,9 @@ end;
 
 procedure TRggFixpointCircle.Draw(g: TBGRABitmap);
 begin
-  g.EllipseAntialias(Center.X, Center.Y, FRadius, FRadius, Drawing.Colors.BackgroundColor, 0.0);
-  g.EllipseAntialias(Center.X, Center.Y, FRadius, FRadius, CssPlum, StrokeThickness);
+  Temp1 := Center + Drawing.FaxPoint3D;
+  g.EllipseAntialias(Temp1.X, Temp1.Y, FRadius, FRadius, Drawing.Colors.BackgroundColor, 0.0);
+  g.EllipseAntialias(Temp1.X, Temp1.Y, FRadius, FRadius, CssPlum, StrokeThickness);
 end;
 
 end.

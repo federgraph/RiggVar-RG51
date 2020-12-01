@@ -215,6 +215,7 @@ begin
   SortedCircleList := TRggCircleList.Create;
   SortedLineList := TRggLineList.Create;
   ML := TStringList.Create;
+  WantOffset := True;
 end;
 
 procedure TRggDrawing.InitButtons(BG: TRggButtonGroup);
@@ -278,7 +279,7 @@ begin
     if Value then
     begin
       Colors.GoDark;
-      GoDark
+      GoDark;
     end
     else
     begin

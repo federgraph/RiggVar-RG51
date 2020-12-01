@@ -25,7 +25,7 @@ type
     DirY: TPoint3D;
     DirZ: TPoint3D;
 
-    Offset: TPoint;
+    Offset: TPoint3D;
     Rotation: TPoint3D;
     ZoomDelta: single;
 
@@ -205,7 +205,7 @@ begin
   TRggCircle.Matrix := Matrix3DIdentity;
   AccuMatrix := Matrix3DIdentity;
   Rotation := TPoint3D.Zero;
-  Offset := TPoint.Zero;
+  Offset := TPoint3D.Zero;
 end;
 
 procedure TTransformHelper.Reset;

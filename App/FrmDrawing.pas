@@ -1122,8 +1122,8 @@ begin
   if CurrentElement is TRggCircle then
   begin
     cr := CurrentElement as TRggCircle;
-    InplaceShape.Left := Image.Left + TH.Offset.X + Round(cr.Center.P.X) - InplaceShape.Width div 2;
-    InplaceShape.Top := Image.Top + TH.Offset.Y + Round(cr.Center.P.Y) - InplaceShape.Height div 2;
+    InplaceShape.Left := Image.Left + Round(TH.Offset.X + cr.Center.P.X) - InplaceShape.Width div 2;
+    InplaceShape.Top := Image.Top + Round(TH.Offset.Y + cr.Center.P.Y) - InplaceShape.Height div 2;
     InplaceShape.Visible := True;
 
 {$ifdef WantDynamicFixPoint}
@@ -1216,7 +1216,6 @@ begin
 
 {$ifdef VCL}
   { VCL-GDI and LCL-Normal }
-  SetViewportOrgEx(g.Handle, TH.Offset.X, TH.Offset.Y, nil);
   g.Brush.Color := CurrentDrawing.Colors.BackgroundColor;
   g.FillRect(Rect(0, 0, 800, 800));
   g.Brush.Color := clYellow;
@@ -1224,8 +1223,8 @@ begin
   g.Pen.Width := 1;
   g.Font.Size := 12;
   g.Font.Name := 'Consolas';
+  CurrentDrawing.FaxPoint3D.C := TH.Offset;
   CurrentDrawing.Draw(g);
-  SetViewPortOrgEx(g.Handle, 0, 0, nil);
   Image.Canvas.Draw(0, 0, Bitmap);
 {$endif}
 
@@ -1234,6 +1233,7 @@ begin
   g.FillRect(0, 0, Bitmap.Width, Bitmap.Height, CurrentDrawing.Colors.BackgroundColor, dmSet);
   g.FontName := 'Consolas';
   g.FontHeight := 12;
+  CurrentDrawing.FaxPoint3D.C := TH.Offset;
   CurrentDrawing.Draw(g);
   Bitmap.Draw(Image.Canvas, 0, 0, True);
   Image.Invalidate;

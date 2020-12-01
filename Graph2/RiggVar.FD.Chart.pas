@@ -99,6 +99,8 @@ var
   tempX: single;
   tempY: single;
 
+  ox, oy: single;
+
   function Limit(a: single): single;
   begin
     if a < -32000 then
@@ -109,18 +111,21 @@ var
   end;
 
 begin
+  ox := Box.X + Drawing.FaxPoint3D.X;
+  oy := Box.Y + Drawing.FaxPoint3D.Y;
+
   if WantCurve then
   begin
     tempY := Box.Height - Box.Height * (Poly[0] - Ymin) / (Ymax - Ymin);
-    P.X := Box.X;
-    P.Y := Box.Y + Round(Limit(tempY));
+    P.X := ox;
+    P.Y := oy + Round(Limit(tempY));
     LineToPoint := P;
     for i := 1 to LNr do
     begin
       tempX := Box.Width * i / LNr;
       tempY := Box.Height - Box.Height * (Poly[i] - Ymin) / (Ymax - Ymin);
-      P.X := Box.X + Round(Limit(tempX));
-      P.Y := Box.Y + Round(Limit(tempY));
+      P.X := ox + Round(Limit(tempX));
+      P.Y := oy + Round(Limit(tempY));
       LineTo(g, P);
     end;
   end;
@@ -131,8 +136,8 @@ begin
     begin
       tempX := Box.Width * i / LNr;
       tempY := Box.Height - Box.Height * (Poly[i] - Ymin) / (Ymax - Ymin);
-      P.X := Box.X + Round(Limit(tempX));
-      P.Y := Box.Y + Round(Limit(tempY));
+      P.X := ox + Round(Limit(tempX));
+      P.Y := oy + Round(Limit(tempY));
       g.RectangleAntialias(
         P.X - PointRadius,
         P.Y - PointRadius,
@@ -146,8 +151,8 @@ begin
   begin
     tempX := Box.Width * ((ChartPunktX) - Xmin) / (XMax - Xmin);
     tempY := Box.Height;
-    P.X := Box.X + Round(Limit(tempX));
-    P.Y := Box.Y + Round(Limit(tempY));
+    P.X := ox + Round(Limit(tempX));
+    P.Y := oy + Round(Limit(tempY));
     g.RectangleAntialias(
       P.X - PointRadius,
       P.Y - PointRadius,

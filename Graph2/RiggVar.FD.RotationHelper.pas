@@ -13,7 +13,7 @@ uses
 type
   TRotationHelper = class
   public
-    procedure SinCosSingle(const Theta: Single; out S, C: Single);
+    procedure SinCosSingle(const Theta: Single; out ASin, ACos: Single);
     function IsEssentiallyZero(const Value: Single): Boolean;
 
     function RotD(Value: TPoint3D): TPoint3D;
@@ -36,10 +36,10 @@ const
 
 { TRotationHelper }
 
-procedure TRotationHelper.SinCosSingle(const Theta: Single; out S, C: Single);
+procedure TRotationHelper.SinCosSingle(const Theta: Single; out ASin, ACos: Single);
 begin
-  S := sin(Theta);
-  C := cos(Theta);
+  ASin := sin(Theta);
+  ACos := cos(Theta);
 end;
 
 function TRotationHelper.IsEssentiallyZero(const Value: Single): Boolean;

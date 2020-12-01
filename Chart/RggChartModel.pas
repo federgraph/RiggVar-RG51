@@ -271,7 +271,6 @@ type
 implementation
 
 uses
-  RiggVar.App.Main,
   RiggVar.FB.Classes,
   RiggVar.RG.Def,
   RggScroll;
