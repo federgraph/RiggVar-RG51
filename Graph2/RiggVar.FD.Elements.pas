@@ -630,10 +630,10 @@ end;
 
 procedure TRggElement.TextOut(g: TBGRABitmap; s: string; c: TBGRAPixel);
 var
-  x, y: Integer;
+  x, y: single;
 begin
-  x := Round(TextCenter.X + TextRadius * cos(TextAngle));
-  y := Round(TextCenter.Y + TextRadius * sin(TextAngle));
+  x := TextCenter.X + TextRadius * cos(TextAngle);
+  y := TextCenter.Y + TextRadius * sin(TextAngle);
   g.FontName := 'Consolas';
   g.FontHeight := 16;
   g.TextOut(x, y, s, c);
@@ -1584,8 +1584,8 @@ begin
     begin
       for i := 0 to Length(Poly) - 1 do
       begin
-        TransformedPoly[i].X := Round(Poly[i].X + Drawing.FaxPoint3D.X);
-        TransformedPoly[i].Y := Round(Poly[i].Y + Drawing.FaxPoint3D.Y);
+        TransformedPoly[i].X := Poly[i].X + Drawing.FaxPoint3D.X;
+        TransformedPoly[i].Y := Poly[i].Y + Drawing.FaxPoint3D.Y;
       end;
       g.DrawPolyLineAntialias(TransformedPoly, StrokeColor, Strokethickness);
     end
@@ -1644,8 +1644,8 @@ begin
   begin
     for i := 0 to Length(RggPoly) - 1 do
     begin
-      TransformedPoly[i].X := Round(RggPoly[i].X + Drawing.FaxPoint3D.X);
-      TransformedPoly[i].Y := Round(RggPoly[i].Y + Drawing.FaxPoint3D.Y);
+      TransformedPoly[i].X := RggPoly[i].X + Drawing.FaxPoint3D.X;
+      TransformedPoly[i].Y := RggPoly[i].Y + Drawing.FaxPoint3D.Y;
     end;
     g.DrawPolyLineAntialias(TransformedPoly, StrokeColor, StrokeThickness);
     DrawText(g);
@@ -2127,12 +2127,12 @@ begin
   a := l / 3 / 8;
   b := 20.0;
 
-  Poly[0] := PointF(Round(vp.X), Round(vp.Y));
+  Poly[0] := PointF(vp.X, vp.Y);
 
   v := vn * 8 * a;
   p0.X := vp.X + v.X;
   p0.Y := vp.Y + v.Y;
-  Poly[1] := PointF(Round(p0.X), Round(p0.Y));
+  Poly[1] := PointF(p0.X, p0.Y);
 
   v := vn * a;
   w := wn *  b;
@@ -2143,13 +2143,13 @@ begin
       p1 := p0 + w
     else
       p1 := p0 - w;
-    Poly[i] := PointF(Round(p1.X), Round(p1.Y));
+    Poly[i] := PointF(p1.X, p1.Y);
   end;
 
   p0 := p0 + v;
-  Poly[FCount-2] := PointF(Round(p0.X), Round(p0.Y));
+  Poly[FCount-2] := PointF(p0.X, p0.Y);
 
-  Poly[FCount-1] := PointF(Round(vq.X), Round(vq.Y));
+  Poly[FCount-1] := PointF(vq.X, vq.Y);
 
   g.DrawPolyLineAntialias(Poly, StrokeColor, StrokeThickness);
 end;
@@ -2288,8 +2288,8 @@ begin
   begin
     for i := 0 to Length(Poly) - 1 do
     begin
-      TransformedPoly[i].X := Round(Poly[i].X + Drawing.FaxPoint3D.X);
-      TransformedPoly[i].Y := Round(Poly[i].Y + Drawing.FaxPoint3D.Y);
+      TransformedPoly[i].X := Poly[i].X + Drawing.FaxPoint3D.X;
+      TransformedPoly[i].Y := Poly[i].Y + Drawing.FaxPoint3D.Y;
     end;
     PolyLine(g, TransformedPoly);
   end
