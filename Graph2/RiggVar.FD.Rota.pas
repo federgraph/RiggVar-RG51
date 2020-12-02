@@ -242,6 +242,7 @@ begin
   case fa of
     faRggBogen: result := FBogen;
     faRggKoppel: result := FKoppel;
+    faToggleSortedRota: result := RD.WantSort;
     else
       result := False;
   end;
@@ -369,7 +370,9 @@ end;
 
 procedure TRotaForm2.ToggleRenderOption(const fa: Integer);
 begin
-
+  case fa of
+    faToggleSortedRota: RD.WantSort := not RD.WantSort;
+  end;
 end;
 
 procedure TRotaForm2.Zoom(delta: single);
@@ -513,7 +516,6 @@ begin
 
 {$ifdef FMX}
   ss := Image.Scene.GetSceneScale;
-  g.Offset := TH.Offset;
   if g.BeginScene then
   try
     g.SetMatrix(TMatrix.CreateScaling(ss, ss));
@@ -617,6 +619,9 @@ end;
 function TRotaForm2.GetChecked(fa: Integer): Boolean;
 begin
   result := False;
+  case fa of
+    faToggleSortedRota: result := RD.WantSort;
+  end;
 end;
 
 procedure TRotaForm2.SetChecked(fa: Integer; Value: Boolean);
@@ -660,6 +665,12 @@ begin
     faResetPosition: ;
     faResetRotation: ;
     faResetZoom: ;
+
+    faToggleSortedRota:
+    begin
+      RD.WantSort := not RD.WantSort;
+      Draw;
+    end;
   end;
 end;
 

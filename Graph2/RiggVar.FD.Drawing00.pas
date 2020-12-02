@@ -393,7 +393,7 @@ begin
   FixPoint := ooD;
 
   WantRotation := True;
-  WantSort := True;
+  WantSort := False;
 
   E0.Visible := False;
   E.Visible := False;

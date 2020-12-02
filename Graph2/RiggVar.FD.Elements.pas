@@ -131,10 +131,11 @@ type
     TextAngle: single;
     TextRadius: single;
     WantTextRect: Boolean;
+    LineToPoint: TPointF;
+    class var
     Temp1: TRggPoint3D;
     Temp2: TRggPoint3D;
     Temp3: TRggPoint3D;
-    LineToPoint: TPointF;
     procedure TextOut(g: TBGRABitmap; s: string; c: TBGRAPixel);
     procedure TextOutLeading(g: TBGRABitmap; s: string; c: TBGRAPixel);
     procedure MoveTo(p: TPointF);
@@ -2301,12 +2302,20 @@ end;
 
 procedure TRggPolyCurve.DrawText(g: TBGRABitmap);
 var
-  pf: TPointf;
+  pf: TPointF;
 begin
   if ShowCaption or GlobalShowCaption then
   begin
-    pf.x := Poly[0].x;
-    pf.y := Poly[0].y;
+    if Drawing.WantOffset then
+    begin
+      pf.X := TransformedPoly[0].X;
+      pf.Y := TransformedPoly[0].Y;
+    end
+    else
+    begin
+      pf.X := Poly[0].X;
+      pf.Y := Poly[0].Y;
+    end;
     TextCenter := pf;
     TextOut(g, Caption, Drawing.Colors.TextColor);
   end;

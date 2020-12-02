@@ -81,6 +81,7 @@ type
   TRggDrawing = class(TRggDrawingBase)
   private
     FName: string;
+    FWantSort: Boolean;
     ElementList: TRggElementList;
     function GetElement(Index: Integer): TRggElement;
     procedure SetName(const Value: string);
@@ -89,8 +90,8 @@ type
     function GetIsValid: Boolean;
     function GetDefaultElementIndex: Integer;
     procedure SetUseDarkColorScheme(const Value: Boolean);
+    procedure SetWantSort(const Value: Boolean);
   protected
-    WantSort: Boolean;
     CircleComparer: IComparer<TRggCircle>;
     LineComparer: IComparer<TRggLine>;
     SortedCircleList: TRggCircleList;
@@ -136,6 +137,7 @@ type
     property DefaultElementIndex: Integer read GetDefaultElementIndex;
     property MemoLines: TStrings read ML;
     property UseDarkColorScheme: Boolean read IsDark write SetUseDarkColorScheme;
+    property WantSort: Boolean read FWantSort write SetWantSort;
   end;
 
   TRggDrawingList = TList<TRggDrawing>;
@@ -183,8 +185,6 @@ begin
     cl.SpecialDraw := True;
     LineList.Add(cl);
   end;
-
-  WantSort := True;
 end;
 
 function TRggDrawing.Find(ACaption: string): TRggCircle;
@@ -216,6 +216,7 @@ begin
   SortedLineList := TRggLineList.Create;
   ML := TStringList.Create;
   WantOffset := True;
+  WantSort := False;
 end;
 
 procedure TRggDrawing.InitButtons(BG: TRggButtonGroup);
@@ -287,6 +288,11 @@ begin
       GoLight;
     end;
   end;
+end;
+
+procedure TRggDrawing.SetWantSort(const Value: Boolean);
+begin
+  FWantSort := Value;
 end;
 
 procedure TRggDrawing.SortedDraw(g: TBGRABitmap);

@@ -118,14 +118,14 @@ begin
   begin
     tempY := Box.Height - Box.Height * (Poly[0] - Ymin) / (Ymax - Ymin);
     P.X := ox;
-    P.Y := oy + Round(Limit(tempY));
+    P.Y := oy + Limit(tempY);
     LineToPoint := P;
     for i := 1 to LNr do
     begin
       tempX := Box.Width * i / LNr;
       tempY := Box.Height - Box.Height * (Poly[i] - Ymin) / (Ymax - Ymin);
-      P.X := ox + Round(Limit(tempX));
-      P.Y := oy + Round(Limit(tempY));
+      P.X := ox + Limit(tempX);
+      P.Y := oy + Limit(tempY);
       LineTo(g, P);
     end;
   end;
@@ -136,8 +136,8 @@ begin
     begin
       tempX := Box.Width * i / LNr;
       tempY := Box.Height - Box.Height * (Poly[i] - Ymin) / (Ymax - Ymin);
-      P.X := ox + Round(Limit(tempX));
-      P.Y := oy + Round(Limit(tempY));
+      P.X := ox + Limit(tempX);
+      P.Y := oy + Limit(tempY);
       g.RectangleAntialias(
         P.X - PointRadius,
         P.Y - PointRadius,

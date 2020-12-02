@@ -243,12 +243,12 @@ begin
 
   { Tait-Bryan angles Y1 Z2 X3 }
 
-  { first row}
+  { first row }
   result.m11 := c1 * c2; { first column }
   result.m12 := s1 * s3 - c1 * s2 * c3;
   result.m13 := c1 * s2 * s3 + s1 * c3;
 
-  { second row}
+  { second row }
   result.m21 := s2;
   result.m22 := c2 * c3;
   result.m23 := -c2 * s3;
@@ -274,19 +274,6 @@ begin
     DegToRad(Value.Y),
     DegToRad(Value.Z));
 end;
-
-//function TRotationHelper.CreateTaitBryanZ1X2Y3(const EA: TPoint3D): TMatrix3D;
-//begin
-//  { compare with https://en.wikipedia.org/wiki/Euler_angles }
-//  result := TMatrix3D.CreateRotationYawPitchRoll(-EA.X, EA.Y, EA.Z);
-//  result := result.Transpose;
-//end;
-
-//function TRotationHelper.CreateTaitBryanY1X2Z3(const EA: TPoint3D): TMatrix3D;
-//begin
-//  { compare with https://en.wikipedia.org/wiki/Euler_angles }
-//  result := TMatrix3D.CreateRotationHeadingPitchBank(EA.X, EA.Y, EA.Z);
-//end;
 
 function TRotationHelper.GetRotationInfoHPB(rm: TMatrix3D): TPoint3D;
 var

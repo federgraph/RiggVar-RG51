@@ -297,6 +297,8 @@ procedure TFormMain.FormCreate(Sender: TObject);
 begin
   FormatSettings.DecimalSeparator := '.';
 
+  MainVar.WantScaling := False;
+
   SpeedColorScheme := TSpeedColorScheme.Create;
   SpeedColorScheme.InitDark;
   TActionSpeedBar.SpeedColorScheme := SpeedColorScheme;
@@ -315,21 +317,16 @@ end;
 
 procedure TFormMain.FormCreate2(Sender: TObject);
 begin
-{$ifdef Debug}
-  //ReportMemoryLeaksOnShutdown := True;
-{$endif}
-
   FScale := 1.0;
-{$ifdef MSWindows}
-  FScale := Screen.PixelsPerInch / 96;
-{$endif}
+  if MainVar.WantScaling then
+    FScale := Screen.PixelsPerInch / 96;
 
   Application.OnException := ApplicationEventsException;
 
   FormMain := self;
   InitScreenPos;
 
-  Margin := Round(2 * FScale);
+  Margin := Round(5 * FScale);
   Raster := Round(MainVar.Raster * FScale);
   MainVar.Scale := FScale;
   MainVar.ScaledRaster := Raster;
@@ -604,7 +601,8 @@ procedure TFormMain.FormResize(Sender: TObject);
 begin
   if (Main <> nil) and Main.IsUp then
   begin
-//    MainVar.Scale := Screen.PixelsPerInch / 96;
+    if MainVar.WantScaling then
+      MainVar.Scale := Screen.PixelsPerInch / 96;
     Inc(Main.ResizeCounter);
     Main.UpdateTouch;
     UpdateFederText;
@@ -903,6 +901,7 @@ begin
       RotaForm.UseDisplayListBtnClick(nil);
     end;
 
+    faToggleSortedRota: RotaForm.HandleAction(fa);
     faToggleShowLegend: RotaForm.LegendBtnClick(nil);
     faToggleUseQuickSort: RotaForm.UseQuickSortBtnClick(nil);
     faToggleSalingGraph: SalingImageBtnClick(nil);
@@ -1784,6 +1783,7 @@ begin
 
     faToggleUseDisplayList: result := RotaForm.UseDisplayList;
     faToggleUseQuickSort: result := RotaForm.UseQuickSort;
+    faToggleSortedRota:result := RotaForm.GetChecked(fa);
 
     faRggBogen: result := Main.Bogen;
     faRggKoppel: result := Main.Koppel;
