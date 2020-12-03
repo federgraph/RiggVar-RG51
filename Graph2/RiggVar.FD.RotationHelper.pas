@@ -13,7 +13,6 @@ uses
 type
   TRotationHelper = class
   public
-    procedure SinCosSingle(const Theta: Single; out ASin, ACos: Single);
     function IsEssentiallyZero(const Value: Single): Boolean;
 
     function RotD(Value: TPoint3D): TPoint3D;
@@ -25,7 +24,6 @@ type
     function EulerAnglesFromQuaternion(q: TQuaternion3D): TPoint3D;
     function EulerAnglesToQuaternion(yaw, pitch, roll: single): TQuaternion3D;
 
-    function GetRotationInfo(rm: TMatrix3D): TPoint3D;
     function GetRotationInfoHPB(rm: TMatrix3D): TPoint3D;
   end;
 
@@ -36,64 +34,25 @@ const
 
 { TRotationHelper }
 
-procedure TRotationHelper.SinCosSingle(const Theta: Single; out ASin, ACos: Single);
-begin
-  ASin := sin(Theta);
-  ACos := cos(Theta);
-end;
-
 function TRotationHelper.IsEssentiallyZero(const Value: Single): Boolean;
 begin
   Result := ((Value < Epsilon2) and (Value > -Epsilon2));
 end;
 
-function TRotationHelper.GetRotationInfo(rm: TMatrix3D): TPoint3D;
-var
-  psi, the, phi: single;
-//an3, an2, an1: single;
-
-//  ct: single;
+function TRotationHelper.RotD(Value: TPoint3D): TPoint3D;
 begin
-  { this is Tait-Bryan angles Z1 Y2 X3 - second row from bottom in wkipedia article }
+  result := Point3D(
+    RadToDeg(Value.X),
+    RadToDeg(Value.Y),
+    RadToDeg(Value.Z));
+end;
 
-{
-  m11 := c1 c2
-  m12 := c1 s2 s3 - c3 s1
-  m13 := c1 c2 s2
-
-  m21 := c2 s1
-  m22 := c1 c3    + s1 s 2 s3
-  m23 := c3 s1 s2 - c1 s3
-
-  m31 := -s2
-  m32 := c2 s3
-  m33 := c2 c3
-}
-
-  the := -ArcSin(rm.m31);
-  if IsEssentiallyZero(the) then
-  begin
-    phi := 0;
-    if IsEssentiallyZero(rm.m31 + 1) then
-    begin
-      the := pi/2;
-      psi := { phi + } arctan2(rm.m12, rm.m13);
-    end
-    else
-    begin
-      the := -pi/2;
-      psi := { -phi + } arctan2(-rm.m12, -rm.m13);
-    end;
-  end
-  else
-  begin
-    psi := arctan2(rm.m32, rm.m33); // c2 s3 / c2 c3 = s3 / c3 = tan(psi)
-    phi := arctan2(rm.m21, rm.m11); // c2 s1 / c1 c2 = s1 / c1 = tan(phi)
-  end;
-
-  result.X := psi;
-  result.Y := the;
-  result.Z := phi;
+function TRotationHelper.RotR(Value: TPoint3D): TPoint3D;
+begin
+  result := Point3D(
+    DegToRad(Value.X),
+    DegToRad(Value.Y),
+    DegToRad(Value.Z));
 end;
 
 function TRotationHelper.EulerAnglesFromQuaternion(q: TQuaternion3D): TPoint3D;
@@ -257,22 +216,6 @@ begin
   result.m31 := -s1 * c2;
   result.m32 := s1 * s2 * c3 + c1 * s3;
   result.m33 := -s1 * s2 * s3 + c1 * c3;
-end;
-
-function TRotationHelper.RotD(Value: TPoint3D): TPoint3D;
-begin
-  result := Point3D(
-    RadToDeg(Value.X),
-    RadToDeg(Value.Y),
-    RadToDeg(Value.Z));
-end;
-
-function TRotationHelper.RotR(Value: TPoint3D): TPoint3D;
-begin
-  result := Point3D(
-    DegToRad(Value.X),
-    DegToRad(Value.Y),
-    DegToRad(Value.Z));
 end;
 
 function TRotationHelper.GetRotationInfoHPB(rm: TMatrix3D): TPoint3D;

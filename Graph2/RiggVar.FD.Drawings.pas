@@ -89,7 +89,6 @@ type
     procedure UnsortedDraw(g: TBGRABitmap);
     function GetIsValid: Boolean;
     function GetDefaultElementIndex: Integer;
-    procedure SetUseDarkColorScheme(const Value: Boolean);
     procedure SetWantSort(const Value: Boolean);
   protected
     CircleComparer: IComparer<TRggCircle>;
@@ -123,8 +122,6 @@ type
     procedure SaveAll;
     procedure Compute; virtual;
     procedure InitButtons(BG: TRggButtonGroup); virtual;
-    procedure GoDark; virtual;
-    procedure GoLight; virtual;
 
     procedure Draw(g: TBGRABitmap);
     procedure GetInfo(ML: TStrings);
@@ -136,7 +133,6 @@ type
     property IsValid: Boolean read GetIsValid;
     property DefaultElementIndex: Integer read GetDefaultElementIndex;
     property MemoLines: TStrings read ML;
-    property UseDarkColorScheme: Boolean read IsDark write SetUseDarkColorScheme;
     property WantSort: Boolean read FWantSort write SetWantSort;
   end;
 
@@ -272,24 +268,6 @@ begin
   TRggButtonGroup.UpdateDrawing;
 end;
 
-procedure TRggDrawing.SetUseDarkColorScheme(const Value: Boolean);
-begin
-  if IsDark <> Value then
-  begin
-    IsDark := Value;
-    if Value then
-    begin
-      Colors.GoDark;
-      GoDark;
-    end
-    else
-    begin
-      Colors.GoLight;
-      GoLight;
-    end;
-  end;
-end;
-
 procedure TRggDrawing.SetWantSort(const Value: Boolean);
 begin
   FWantSort := Value;
@@ -362,16 +340,6 @@ begin
       break;
     end;
   end;
-end;
-
-procedure TRggDrawing.GoDark;
-begin
-  IsDark := True;
-end;
-
-procedure TRggDrawing.GoLight;
-begin
-  IsDark := False;
 end;
 
 procedure TRggDrawing.GetInfo(ML: TStrings);
@@ -467,7 +435,7 @@ var
 begin
   DrawingList.Add(Value);
 
-  Value.UseDarkColorScheme := UseDarkColorScheme;
+  Value.IsDark := UseDarkColorScheme;
 
   for e in Value.ElementList do
   begin

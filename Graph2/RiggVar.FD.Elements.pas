@@ -102,6 +102,9 @@ type
   TRggPoly = array of TRggPoint3D;
 
   TRggDrawingBase = class
+  private
+    FIsDark: Boolean;
+    procedure SetIsDark(const Value: Boolean);
   public
     WantRotation: Boolean;
     WheelFlag: Boolean;
@@ -109,15 +112,15 @@ type
     ViewpointFlag: Boolean;
     FixPoint3D: TPoint3D;
     Colors: TRggColorScheme;
-    IsDark: Boolean;
     FaxPoint3D: TRggPoint3D;
     class var
       WantOffset: Boolean;
     procedure Reset; virtual; abstract;
     procedure Transform(M: TMatrix3D); virtual; abstract;
+    procedure GoDark; virtual;
+    procedure GoLight; virtual;
+    property IsDark: Boolean read FIsDark write SetIsDark;
   end;
-
-  { TRggElement }
 
   TRggElement = class
   private
@@ -2352,6 +2355,36 @@ begin
   Temp1 := Center + Drawing.FaxPoint3D;
   g.EllipseAntialias(Temp1.X, Temp1.Y, FRadius, FRadius, Drawing.Colors.BackgroundColor, 0.0);
   g.EllipseAntialias(Temp1.X, Temp1.Y, FRadius, FRadius, CssPlum, StrokeThickness);
+end;
+
+{ TRggDrawingBase }
+
+procedure TRggDrawingBase.GoDark;
+begin
+
+end;
+
+procedure TRggDrawingBase.GoLight;
+begin
+
+end;
+
+procedure TRggDrawingBase.SetIsDark(const Value: Boolean);
+begin
+  if FIsDark <> Value then
+  begin
+    FIsDark := Value;
+    if Value then
+    begin
+      Colors.GoDark;
+      GoDark;
+    end
+    else
+    begin
+      Colors.GoLight;
+      GoLight;
+    end;
+  end;
 end;
 
 end.

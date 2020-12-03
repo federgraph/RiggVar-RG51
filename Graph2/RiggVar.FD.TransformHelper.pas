@@ -44,7 +44,6 @@ type
 
     procedure BuildMatrix(mr: TMatrix3D);
     procedure BuildMatrixM;
-    procedure BuildMatrixQ;
     procedure ResetTransform;
     procedure InitTransform(mr: TMatrix3D);
     procedure UpdateTransform;
@@ -118,10 +117,6 @@ begin
   begin
     ra := RotationHelper.EulerAnglesFromMatrix(AccuMatrix);
 
-    { Variante 1 }
-//    mr := RotationHelper.EulerAnglesToMatrix(ra.X, ra.Y, ra.Z);
-
-    { Variante 2 }
     mx := TMatrix3D.CreateRotationX(ra.X);
     my := TMatrix3D.CreateRotationY(ra.Y);
     mz := TMatrix3D.CreateRotationZ(ra.Z);
@@ -161,7 +156,6 @@ end;
 
 function TTransformHelper.BuildMatrixI: TMatrix3D;
 var
-//  mx, my, mz: TMatrix3D;
   mr: TMatrix3D;
   ra: TPoint3D;
 begin
@@ -169,14 +163,7 @@ begin
   begin
     ra := RotationHelper.EulerAnglesFromMatrix(AccuMatrix);
     mr := RotationHelper.EulerAnglesToMatrix(ra.X, ra.Y, ra.Z);
-
-//    mx := TMatrix3D.CreateRotationX(ra.X);
-//    my := TMatrix3D.CreateRotationY(ra.Y);
-//    mz := TMatrix3D.CreateRotationZ(ra.Z);
-//    mr := mx * my * mz;
-
     mr := mr.Transpose;
-
     BuildMatrix(mr);
     result := NewMatrix;
     NewMatrix := Matrix3DIdentity;
@@ -236,22 +223,6 @@ begin
   mr := mx * my * mz;
 
   BuildMatrix(mr);
-end;
-
-procedure TTransformHelper.BuildMatrixQ;
-var
-  Q: TQuaternion3D;
-begin
-  Q := Quaternion3DIdentity;
-
-  if Rotation.X <> 0 then
-    Q := Q * TQuaternion3D.Create(DirX, Rotation.X);
-  if Rotation.Y <> 0 then
-    Q := Q * TQuaternion3D.Create(DirY, Rotation.Y);
-  if Rotation.Z <> 0 then
-    Q := Q * TQuaternion3D.Create(DirZ, Rotation.Z);
-
-  BuildMatrix(Q);
 end;
 
 procedure TTransformHelper.BuildMatrix(mr: TMatrix3D);

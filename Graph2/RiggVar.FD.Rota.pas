@@ -108,6 +108,8 @@ type
     RD: TRggDrawingD00;
     CurrentElement: TRggElement;
 
+//    NullPunktOffset: TPointF;
+
     procedure ClearImage;
     procedure DrawToCanvas(g: TBGRABitmap);
     procedure DoDrawToCanvas(Sender: TObject);
@@ -225,7 +227,6 @@ begin
   end;
   TH.Offset.X := 0;
   TH.Offset.Y := 0;
-  DoOnUpdateStrokeRigg;
 end;
 
 procedure TRotaForm2.Swap;
@@ -285,7 +286,7 @@ end;
 procedure TRotaForm2.SetDarkMode(const Value: Boolean);
 begin
   FDarkMode := Value;
-  RD.UseDarkColorScheme := Value;
+  RD.IsDark := Value;
   RD.Colors.BackgroundColor := FBackgroundColor;
   Draw;
 end;
@@ -399,6 +400,7 @@ end;
 
 constructor TRotaForm2.Create;
 begin
+  UseRotaCenterFullScreen := False;
   UseMastKurve := True;
 
   if UseRotaCenterFullScreen then
@@ -414,7 +416,7 @@ begin
 
   RD := TRggDrawingD00.Create;
   DL := TRggDrawings.Create;
-  DL.UseDarkColorScheme := False;
+  DL.UseDarkColorScheme := True;
   DL.Add(RD);
 
   TH := TTransformHelper.Create;
@@ -515,6 +517,9 @@ begin
   Inc(DrawCounter);
 
 {$ifdef FMX}
+
+  g.Offset := PointF(NullpunktOffset.X, NullpunktOffset.Y);
+
   ss := Image.Scene.GetSceneScale;
   if g.BeginScene then
   try
@@ -525,6 +530,7 @@ begin
     g.Stroke.Thickness := 1.0;
     g.Font.Size := 16;
     g.Font.Family := 'Consolas';
+    RD.FaxPoint3D.C := TH.Offset;
     RD.Draw(g);
   finally
     g.EndScene;
@@ -606,8 +612,8 @@ begin
 
   TH.ResetTransform;
 
-  RD.OffsetX := 0;
-  RD.OffsetY := 0;
+  RD.OffsetX := BitmapWidth / 2;
+  RD.OffsetY := BitmapHeight / 2;
   RD.InitialZoom := RD.InitialZoomDefault * aRelativeZoom;
 
   RD.ViewpointFlag := True;
