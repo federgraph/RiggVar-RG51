@@ -93,7 +93,7 @@ type
   public
     procedure ShowTrimm;
     procedure ShowTrimmData;
-  public
+  private
     FWantButtonReport: Boolean;
     procedure UpdateReport;
     property WantButtonReport: Boolean read FWantButtonReport;
@@ -187,8 +187,8 @@ type
     procedure SuperMultiBtnClick(Sender: TObject);
     procedure SuperDisplayBtnClick(Sender: TObject);
     procedure SuperQuickBtnClick(Sender: TObject);
-  public
 {$ifdef WantMenu}
+  public
     MainMenu: TMainMenu;
     FederMenu: TFederMenu;
     procedure PopulateMenu;
@@ -446,7 +446,6 @@ begin
   begin
     Main.ActionHandler.Execute(fa);
   end;
-//  ShowTrimm;
 end;
 
 procedure TFormMain.UpdateOnParamValueChanged;
@@ -1565,7 +1564,7 @@ begin
   ChartImage.Parent := ChartControl;
   ChartImage.Visible := False;
 
-  ChartGraph := TChartGraph.Create(Main.Rigg);
+  ChartGraph := TChartGraph.Create(Rigg);
   ChartGraph.Image := ChartImage;
 
   UpdateChartGraph;
@@ -1935,6 +1934,9 @@ begin
     FormDiagramC.Free;
     FormDiagramC := nil;
   end;
+
+  { Forms owned by Application not freed here. }
+  { FormSplash is disposing of itself. }
 end;
 
 procedure TFormMain.InitSpeedButtons;
