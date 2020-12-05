@@ -114,7 +114,6 @@ type
 implementation
 
 uses
-  FrmMain,
   RiggVar.App.Main;
 
 { TRotaFormContainer }
@@ -642,8 +641,7 @@ begin
 {$endif}
       Image.Visible := True;
       RotaForm1.Swap;
-      Main.FederText1.Parent := FormMain;
-      Main.FederText2.Parent := FormMain;
+      Main.FederTextUpdateParent;
       Main.UpdateStrokeRigg;
       RotaForm1.FixPoint := Main.FixPoint;
     end;
@@ -660,8 +658,7 @@ begin
 {$endif}
       Image.Visible := True;
       RotaForm2.Swap;
-      Main.FederText1.Parent := FormMain;
-      Main.FederText2.Parent := FormMain;
+      Main.FederTextUpdateParent;
       Main.UpdateStrokeRigg;
       RotaForm2.FixPoint := Main.FixPoint;
     end;
@@ -677,8 +674,7 @@ begin
 {$ifdef UseImage}
       Image.Visible := False;
 {$endif}
-      Main.FederText1.Parent := Viewport;
-      Main.FederText2.Parent := Viewport;
+      Main.FederTextUpdateParent;
       Main.UpdateStrokeRigg;
       RotaForm3.FixPoint := Main.FixPoint;
       Viewport.SetFocus;
