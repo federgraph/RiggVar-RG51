@@ -407,7 +407,7 @@ begin
   Main.FixPoint := ooD0;
   Main.HullVisible := False;
   Main.OnUpdateChart := DoOnUpdateChart;
-  Main.FederText.CheckState;
+  Main.FederTextCheckState;
 
 {$ifdef WantMenu}
   PopulateMenu;
@@ -751,7 +751,7 @@ begin
       SalingImage.Visible := False;
   end;
 
-  Main.FederText.CheckState;
+  Main.FederTextCheckState;
 end;
 
 procedure TFormMain.Reset;
@@ -1634,7 +1634,7 @@ begin
     Main.Param := Main.Text2Param(ParamListbox.Items[ParamListbox.ItemIndex]);
   ShowTrimm;
   UpdateControllerGraph;
-  Main.FederText.CheckState;
+  Main.FederTextCheckState;
 end;
 
 procedure TFormMain.InitParamListbox;
@@ -1706,7 +1706,7 @@ procedure TFormMain.SofortBtnClick(Sender: TObject);
 begin
   Main.SofortBerechnen := not Main.SofortBerechnen;
   if Sender <> nil then
-    Main.FederText.CheckState;
+    Main.FederTextCheckState;
   UpdateReport;
 end;
 
@@ -1742,21 +1742,21 @@ procedure TFormMain.BogenBtnClick(Sender: TObject);
 begin
   Main.Bogen := not Main.Bogen;
   if Sender <> nil then
-    Main.FederText.CheckState;
+    Main.FederTextCheckState;
 end;
 
 procedure TFormMain.KoppelBtnClick(Sender: TObject);
 begin
   Main.Koppel := not Main.Koppel;
   if Sender <> nil then
-    Main.FederText.CheckState;
+    Main.FederTextCheckState;
 end;
 
 procedure TFormMain.HullBtnClick(Sender: TObject);
 begin
   Main.HullVisible := not Main.HullVisible;
   if Sender <> nil then
-    Main.FederText.CheckState;
+    Main.FederTextCheckState;
 end;
 
 function TFormMain.GetChecked(fa: Integer): Boolean;
