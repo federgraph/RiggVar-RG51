@@ -94,6 +94,7 @@ type
     xmax: single;
     ymax: single;
 
+    ImageMidPoint: TPointF;
     FXpos: single;
     FYpos: single;
     FIncrementW: single;
@@ -473,8 +474,10 @@ begin
   Painted := False;
 
   { Verschiebung erfolgt mit FXPos und FYPos }
-  NullpunktOffset.X := FBitmapWidth / 2 + FXpos;
-  NullpunktOffset.Y := FBitmapHeight / 2 + FYpos;
+//  NullpunktOffset.X := FBitmapWidth / 2 + FXpos;
+//  NullpunktOffset.Y := FBitmapHeight / 2 + FYpos;
+  NullpunktOffset.X := Round(ImageMidPoint.X + FXpos);
+  NullpunktOffset.Y := Round(ImageMidPoint.Y + FYpos);
   Transformer.Offset := PointF(NullpunktOffset.X, NullpunktOffset.Y);
 
   g.LineCap := TPenEndCap.pecRound;
@@ -598,8 +601,8 @@ procedure TRotaForm1.UpdateMinMax;
 begin
   if KeepInsideItemChecked then
   begin
-    xmin := -FBitmapWidth / 2;
-    ymin := -FBitmapHeight / 2;
+    xmin := -Image.Width / 2;
+    ymin := -Image.Height / 2;
     xmax := Abs(xmin);
     ymax := Abs(ymin);
     if xmax > xmin + Image.Width then
@@ -1110,10 +1113,10 @@ end;
 
 procedure TRotaForm1.InitPosition(w, h, x, y: single);
 begin
-  FBitmapWidth := Round(w);
-  FBitmapHeight := Round(h);
-  FXPos := Round(x);
-  FYPos := Round(y);
+  ImageMidPoint.X := w / 2;
+  ImageMidPoint.Y := h / 2;
+  FXPos := 0;
+  FYPos := 0;
 end;
 
 procedure TRotaForm1.Swap;

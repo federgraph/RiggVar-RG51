@@ -274,9 +274,9 @@ type
     procedure HandleAction(fa: Integer);
     function GetChecked(fa: TFederAction): Boolean;
     procedure FederTextCheckState;
+    procedure FederTextRepaint;
     procedure FederTextUpdateParent;
     procedure FederTextUpdateCaption;
-    procedure FederTextRepaint;
     procedure CollectShortcuts(fa: Integer; ML: TStrings);
 
     procedure InitText;
@@ -1692,7 +1692,7 @@ end;
 procedure TRggMain.InitRaster;
 begin
   MainVar.ClientWidth := FormMain.ClientWidth;
-  MainVar.ClientHeight := FormMain.ClientHeight;
+  MainVar.ClientHeight := FormMain.ClientHeight - MainVar.StatusBarHeight;
 end;
 
 procedure TRggMain.InitText;
@@ -1714,8 +1714,16 @@ procedure TRggMain.InitTouch;
 begin
   InitRaster;
 {$ifdef WantFederText}
-  FederText2.Visible := IsPhone;
-  FederText1.Visible := not FederText2.Visible;
+  if MainVar.WantFederText then
+  begin
+    FederText2.Visible := IsPhone;
+    FederText1.Visible := not FederText2.Visible;
+  end
+  else
+  begin
+    FederText1.Visible := False;
+    FederText2.Visible := False;
+  end;
 {$endif}
 end;
 
@@ -1750,9 +1758,13 @@ begin
     faTouchTablet: result := False;
     else
     begin
-      MinCount := Min(FormMain.ClientHeight, FormMain.ClientWidth) div MainVar.Raster;
-      MaxCount := Max(FormMain.ClientHeight, FormMain.ClientWidth) div MainVar.Raster;
-      result  := (MinCount < 8) or (MaxCount < 12);
+      result := False;
+      if MainVar.Raster > 1 then
+      begin
+        MinCount := Min(FormMain.ClientHeight, FormMain.ClientWidth) div MainVar.Raster;
+        MaxCount := Max(FormMain.ClientHeight, FormMain.ClientWidth) div MainVar.Raster;
+        result  := (MinCount < 8) or (MaxCount < 12);
+      end;
     end;
   end;
 end;
@@ -2618,8 +2630,11 @@ end;
 procedure TRggMain.FederTextUpdateParent;
 begin
 {$ifdef WantFederText}
-  FederText1.Parent := FormMain;
-  FederText2.Parent := FormMain;
+  if FederText.Parent = nil then
+  begin
+    FederText1.Parent := FormMain;
+    FederText2.Parent := FormMain;
+  end;
 {$endif}
 end;
 
