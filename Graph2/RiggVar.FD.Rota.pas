@@ -69,6 +69,9 @@ type
 
     UseMastKurve: Boolean;
 
+    FBitmapWidth: Integer;
+    FBitmapHeight: Integer;
+
     procedure UpdateRiggKoords;
     procedure UpdateKoppelKurve;
     procedure UpdateMastKurve;
@@ -121,8 +124,6 @@ type
     procedure ImageMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure ImageMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
   public
-    BitmapWidth: Integer;
-    BitmapHeight: Integer;
     Bitmap: TBGRABitmap;
     Image: TImage;
     IsUp: Boolean;
@@ -202,8 +203,8 @@ var
   b: TBitmap;
 begin
   Bitmap := TBGRABitmap.Create(
-    Round(BitmapWidth),
-    Round(BitmapHeight), CssWhite);
+    Round(FBitmapWidth),
+    Round(FBitmapHeight), CssWhite);
 
   b := TBitmap.Create;
   b.Width := Bitmap.Width;
@@ -397,13 +398,14 @@ begin
 
   if UseRotaCenterFullScreen then
   begin
-    BitmapWidth := 1600;
-    BitmapHeight := 1200;
+    FBitmapWidth := 1600;
+    FBitmapHeight := 1200;
   end
   else
   begin
-    BitmapWidth := 1024;
-    BitmapHeight := 768;
+    { should be the same value as in RotaForm1 }
+    FBitmapWidth := 1024;
+    FBitmapHeight := 768;
   end;
 
   RD := TRggDrawingD00.Create;
