@@ -182,6 +182,7 @@ type
     FWantLineColors: Boolean;
     FDarkMode: Boolean;
     FUseQuickSort: Boolean;
+    procedure InitBitmapSize;
     procedure InitGraph;
     procedure InitRaumGraph;
     procedure InitHullGraph;
@@ -253,9 +254,6 @@ type
     property WantLineColors: Boolean read FWantLineColors write SetWantLineColors;
     property DarkMode: Boolean read FDarkMode write SetDarkMode;
     property UseQuickSort: Boolean read FUseQuickSort write SetUseQuickSort;
-
-    property BitmapWidth: Integer read FBitmapWidth;
-    property BitmapHeight: Integer read FBitmapHeight;
   end;
 
 implementation
@@ -274,9 +272,9 @@ constructor TRotaForm1.Create;
 begin
   FScale := MainVar.Scale;
   KeepInsideItemChecked := True;
+  FBogen := True;
   FBitmapWidth := Round(1024 * FScale);
   FBitmapHeight := Round(768 * FScale);
-  FBogen := True;
 
   { do almost nothing here,
     - Image reference needs to be injected first,
@@ -302,15 +300,31 @@ begin
   FDrawAlways := True;
   AlwaysShowAngle := False;
 
+  { determine size for internal Bitmap }
+  if Image.Picture.Graphic <> nil then
+  begin
+    FBitmapWidth := Image.Picture.Graphic.Width;
+    FBitmapHeight := Image.Picture.Graphic.Height;
+  end
+  else
+  begin
+    InitBitmapSize;
+  end;
+
+  { create internal Bitmap }
   Bitmap := TBGRABitmap.Create(
     Round(FBitmapWidth),
     Round(FBitmapHeight), CssWhite);
 
-  b := TBitmap.Create;
-  b.Width := Bitmap.Width;
-  b.Height := Bitmap.Height;
-  Image.Picture.Graphic := b;
-  b.Free;
+  { injected Image may be shared with other RotaForm instances }
+  if Image.Picture.Graphic = nil then
+  begin
+    b := TBitmap.Create;
+    b.Width := Bitmap.Width;
+    b.Height := Bitmap.Height;
+    Image.Picture.Graphic := b;
+    b.Free;
+  end;
 
   FZoomBase := 0.05;
   FViewPoint := vp3D;
@@ -1197,6 +1211,11 @@ procedure TRotaForm1.SetUseQuickSort(const Value: Boolean);
 begin
   FUseQuickSort := Value;
   RaumGraph.DL.UseQuickSort := True;
+end;
+
+procedure TRotaForm1.InitBitmapSize;
+begin
+  // see default value set in constructor 
 end;
 
 end.

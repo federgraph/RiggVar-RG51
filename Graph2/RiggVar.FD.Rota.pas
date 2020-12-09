@@ -202,15 +202,25 @@ procedure TRotaForm2.Init;
 var
   b: TBitmap;
 begin
+  if Image.Picture.Graphic <> nil then
+  begin
+    FBitmapWidth := Image.Picture.Graphic.Width;
+    FBitmapHeight := Image.Picture.Graphic.Height;
+  end;
+
   Bitmap := TBGRABitmap.Create(
     Round(FBitmapWidth),
     Round(FBitmapHeight), CssWhite);
 
-  b := TBitmap.Create;
-  b.Width := Bitmap.Width;
-  b.Height := Bitmap.Height;
-  Image.Picture.Graphic := b;
-  b.Free;
+  { injected Image may be shared with other RotaForm instances }
+  if Image.Picture.Graphic = nil then
+  begin
+    b := TBitmap.Create;
+    b.Width := Bitmap.Width;
+    b.Height := Bitmap.Height;
+    Image.Picture.Graphic := b;
+    b.Free;
+  end;
 
 end;
 
@@ -403,7 +413,6 @@ begin
   end
   else
   begin
-    { should be the same value as in RotaForm1 }
     FBitmapWidth := 1024;
     FBitmapHeight := 768;
   end;
