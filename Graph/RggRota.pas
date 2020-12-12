@@ -581,7 +581,7 @@ begin
   if UseDisplayList then
   begin
     UpdateDisplayListForBoth(False);
-    TDisplayItem.NullpunktOffset := NullpunktOffset;;
+    TDisplayItem.NullpunktOffset := NullpunktOffset;
     RaumGraph.DL.WantLegend := LegendItemChecked; // not RumpfItemChecked;
     RaumGraph.DL.Draw(g);
   end

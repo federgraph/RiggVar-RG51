@@ -298,6 +298,7 @@ begin
   fag.Add(faToggleButtonSize);
   fag.Add(faToggleDarkMode);
   fag.Add(faToggleSortedRota);
+  fag.Add(faToggleAllText);
   AddGroup('Option', fag);
 end;
 
