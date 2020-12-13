@@ -2,6 +2,8 @@
 
 interface
 
+{$define WantDisplayList}
+
 uses
   BGRABitmap,
   BGRABitmapTypes,
@@ -10,9 +12,11 @@ uses
   Graphics,
   RiggVar.FD.Point,
   RggTypes,
+{$ifdef WantDisplayList}
   RggDisplayTypes,
   RggDisplay,
   RggDisplayOrder,
+{$endif}
   RggZug,
   RggBootGraph;
 
@@ -45,9 +49,10 @@ type
     procedure UpdateZugProps;
     procedure Update2;
   public
+{$ifdef WantDisplayList}
     DF: TRggFrame;
     DL: TRggDisplayList;
-
+{$endif}
     WantFixPunkt: Boolean;
     WantRumpf: Boolean;
     WantSaling: Boolean;
@@ -67,7 +72,9 @@ type
     destructor Destroy; override;
 
     procedure Update; override;
+{$ifdef WantDisplayList}
     procedure UpdateDisplayList;
+{$endif}
     procedure DrawToCanvas(g: TBGRABitmap); override;
 
     procedure SetChecked(fa: Integer; Value: Boolean);
@@ -104,9 +111,11 @@ begin
   Zug3D.Data := RaumGraphData;
   Zug3D.Props := RaumGraphProps;
 
+{$ifdef WantDisplayList}
   DF := TRggFrame.Create;
   DL := TRggDisplayList.Create;
   DL.DF := DF;
+{$endif}
 
   AchseN.X := 0;
   AchseN.Y := 0;
@@ -132,8 +141,10 @@ end;
 destructor TRaumGraph.Destroy;
 begin
   Zug3D.Free;
+{$ifdef WantDisplayList}
   DL.Free;
   DF.Free;
+{$endif}
   inherited;
 end;
 
@@ -169,7 +180,9 @@ begin
   EllipseCenter.x := RPT.V[FixPoint].X;
   EllipseCenter.y := -RPT.V[FixPoint].Z;
 
+{$ifdef WantDisplayList}
   DF.Koordinaten := RPT;
+{$endif}
 
   AchseNT := Transformer.TransformPoint(AchseN);
   AchseXT := Transformer.TransformPoint(AchseX);
@@ -320,6 +333,7 @@ begin
   cr.OffsetY := Round(Transformer.Offset.Y);
 end;
 
+{$ifdef WantDisplayList}
 procedure TRaumGraph.UpdateDisplayList;
 var
   DI: TDisplayItem;
@@ -462,6 +476,7 @@ begin
   DF.WantAchsen := WantAchsen;
   DF.Sort;
 end;
+{$endif}
 
 function TRaumGraph.GetChecked(fa: Integer): Boolean;
 begin
@@ -474,6 +489,12 @@ begin
     faToggleSegmentW: result := WantWante;
     faToggleSegmentC: result := WantController;
     faToggleSegmentA: result := WantAchsen;
+
+    faWantRenderE: result := WantRenderE;
+    faWantRenderF: result := WantRenderF;
+    faWantRenderH: result := WantRenderH;
+    faWantRenderP: result := WantRenderP;
+    faWantRenderS: result := WantRenderS;
 
     faRggBogen: result := Bogen;
     faRggKoppel: result := Koppel;
@@ -493,6 +514,12 @@ begin
     faToggleSegmentW: WantWante := Value;
     faToggleSegmentC: WantController := Value;
     faToggleSegmentA: WantAchsen := Value;
+
+    faWantRenderE:WantRenderE := Value;
+    faWantRenderF: WantRenderF := Value;
+    faWantRenderH: WantRenderH := Value;
+    faWantRenderP: WantRenderP := Value;
+    faWantRenderS: WantRenderS := Value;
   end;
 end;
 

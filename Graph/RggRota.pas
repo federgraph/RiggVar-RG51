@@ -22,6 +22,8 @@ interface
 {$mode delphi}
 {$endif}
 
+{$define WantHull}
+
 uses
   Graphics,
   BGRABitmap,
@@ -38,7 +40,9 @@ uses
   RggMatrix,
   RggRaumGraph,
   RggGraph,
+{$ifdef WantHull}
   RggHull,
+{$endif}
   RggPolarKar,
   RggTransformer;
 
@@ -201,7 +205,9 @@ type
     IsUp: Boolean;
     Image: TImage; // injected
 
+{$ifdef WantHull}
     HullGraph: THullGraph;
+{$endif}
     RaumGraph: TRaumGraph;
     UseDisplayList: Boolean;
     BackgroundColor: TColor;
@@ -287,7 +293,9 @@ begin
   Image := nil;
   Bitmap.Free;
   RaumGraph.Free;
+{$ifdef WantHull}
   HullGraph.Free;
+{$endif}
   Rotator.Free;
   Transformer.Free;
   inherited;
@@ -366,8 +374,10 @@ end;
 
 procedure TRotaForm1.InitHullGraph;
 begin
+{$ifdef WantHull}
   HullGraph := THullGraph.Create;
   HullGraph.Transformer := Transformer;
+{$endif}
 end;
 
 procedure TRotaForm1.UpdateGraphFromTestData;
@@ -580,7 +590,6 @@ begin
 
   if UseDisplayList then
   begin
-    UpdateDisplayListForBoth(False);
     TDisplayItem.NullpunktOffset := NullpunktOffset;
     RaumGraph.DL.WantLegend := LegendItemChecked; // not RumpfItemChecked;
     RaumGraph.DL.Draw(g);
@@ -755,7 +764,9 @@ begin
   RaumGraph.FixPoint := FixPoint; // --> Transformer.FixPoint
 
   RaumGraph.Update;
+{$ifdef WantHull}
   HullGraph.Update;
+{$endif}
 
   { Neuzeichnen }
   EraseBK := True;
@@ -886,6 +897,8 @@ procedure TRotaForm1.Draw;
 begin
   if IsUp then
   begin
+    if UseDisplayList then
+      UpdateDisplayListForBoth(True);
     DrawToImage(Bitmap);
     if Assigned(OnAfterDraw) then
       OnAfterDraw(Self);
@@ -1051,12 +1064,14 @@ begin
   RaumGraph.Update;
   RaumGraph.UpdateDisplayList;
 
+{$ifdef WantHull}
   if RumpfItemChecked then
   begin
     HullGraph.Coloriert := True;
     HullGraph.Update;
     HullGraph.AddToDisplayList(RaumGraph.DL);
   end;
+{$endif}
 
   if Assigned(OnBeforeDraw) then
     OnBeforeDraw(Self);
@@ -1064,6 +1079,7 @@ end;
 
 procedure TRotaForm1.DrawHullNormal(g: TBGRABitmap);
 begin
+{$ifdef WantHull}
   if RumpfItemChecked
     and not UseDisplayList
     and (not MouseDown or (MouseDown and FDrawAlways)) then
@@ -1072,6 +1088,7 @@ begin
     HullGraph.Update;
     HullGraph.DrawToCanvas(g);
   end;
+{$endif}
 end;
 
 function TRotaForm1.SingleDraw: Boolean;
@@ -1176,7 +1193,9 @@ begin
   FIncrementW := Round(RotaData.IncrementW);
 
   RaumGraph.Update;
+{$ifdef WantHull}
   HullGraph.Update;
+{$endif}
   EraseBK := True;
   Draw;
 end;
