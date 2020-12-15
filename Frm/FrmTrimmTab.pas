@@ -19,7 +19,7 @@ uses
   ComCtrls,
   Buttons,
   Menus,
-  RggInter,
+  RiggVar.App.Model,
   RggTypes,
   RggTrimmTab,
   RggTrimmTabGraph;

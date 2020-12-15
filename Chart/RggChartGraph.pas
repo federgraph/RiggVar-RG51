@@ -14,7 +14,7 @@ uses
   Types,
   ExtCtrls,
   RggTypes,
-  RggInter,
+  RiggVar.App.Model,
   RggChartModel;
 
 type

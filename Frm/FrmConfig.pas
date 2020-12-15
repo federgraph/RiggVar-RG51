@@ -28,7 +28,7 @@ uses
   Menus,
   RggStrings,
   RggScroll,
-  RggInter,
+  RiggVar.App.Model,
   RggTypes;
 
 type

@@ -398,6 +398,8 @@ begin
   FormDestroy2(Sender);
 
   SpeedColorScheme.Free;
+
+  TModelFactory.ReleaseIfAppropriate(Rigg);
 end;
 
 procedure TFormMain.FormCreate2(Sender: TObject);
@@ -443,7 +445,7 @@ begin
   MainVar.StatusBarHeight := StatusBar.Height;
 {$endif}
 
-  Rigg := TRigg.Create;
+  Rigg := TModelFactory.NewRigg;
   Rigg.TrimmTabelle.FScale := FScale;
   Rigg.ControllerTyp := ctOhne;
 

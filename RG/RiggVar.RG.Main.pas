@@ -37,9 +37,9 @@ uses
   RggStrings,
   RggScroll,
   RggTypes,
-  RggInter,
   RggCalc,
   RggDoc,
+  RiggVar.App.Model,
   RiggVar.FB.Action,
   RiggVar.FB.ActionConst,
   RiggVar.FB.ActionGroups,
@@ -184,8 +184,6 @@ type
     Trimm7: TRggData; // 420
     Trimm8: TRggData; // Logo
 
-    BackgroundLock: Boolean;
-
     FixPunkt: TPoint3D;
 
     MinValCaption: string;
@@ -217,6 +215,7 @@ type
     ActionGroupList: TActionGroupList;
     ActionTest: TActionTest;
     FederBinding: TFederBinding;
+    BackgroundLock: Boolean;
 
     CurrentRotaForm: Integer;
 

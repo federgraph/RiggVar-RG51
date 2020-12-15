@@ -11,7 +11,7 @@ uses
   BGRABitmapTypes,
   RiggVar.FB.ActionConst,
   RggStrings,
-  RggInter,
+  RiggVar.App.Model,
   RggTypes,
   RggDoc,
   RggSaling3Eck,

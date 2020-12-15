@@ -10,7 +10,7 @@ uses
   Math,
   Forms,
   UITypes,
-  RggInter,
+  RiggVar.App.Model,
   RggStrings,
   RggChartModel,
   RggScroll,
