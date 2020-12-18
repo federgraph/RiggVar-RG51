@@ -1,4 +1,4 @@
-﻿unit RggRota;
+﻿unit RiggVar.Graph1.Rota;
 
 (*
 -
@@ -36,19 +36,14 @@ uses
   Controls, // for TMouseButton
   RiggVar.FD.Point,
   RiggVar.RG.Graph,
-  RggTypes,
-  RggMatrix,
-  RggRaumGraph,
-  RggGraph,
+  RiggVar.RG.Types,
+  RiggVar.Graph1.Rigg,
 {$ifdef WantHull}
-  RggHull,
+  RiggVar.Graph1.Hull,
 {$endif}
-  RggPolarKar,
-  RggTransformer;
+  RiggVar.Graph1.Transform;
 
 type
-  { TRotaForm1 }
-
   TRotaForm1 = class(TInterfacedObject, IStrokeRigg)
   private
     RPN: TRiggPoints;
@@ -268,9 +263,7 @@ uses
   RiggVar.App.Main,
   RiggVar.FB.ActionConst,
   RiggVar.RG.Def,
-  RggDisplay,
-  RggZug3D,
-  RggTestData;
+  RiggVar.Graph1.DisplayList;
 
 { TRotaForm1 }
 

@@ -1,4 +1,4 @@
-﻿unit RggChartModel01;
+﻿unit RiggVar.Chart.Model01;
 
 interface
 
@@ -11,10 +11,10 @@ uses
   Forms,
   UITypes,
   RiggVar.App.Model,
-  RggStrings,
-  RggChartModel,
-  RggScroll,
-  RggTypes;
+  RiggVar.App.Strings,
+  RiggVar.Chart.Model,
+  RiggVar.RG.Scroll,
+  RiggVar.RG.Types;
 
 type
   TRggChartModel01 = class(TChartModel)
@@ -142,7 +142,7 @@ var
   f: TRggSB;
 begin
   s := PComboSelectedText;
-  if s = NoParamString then
+  if s = RggStrings.NoParamString then
   begin
     PMinEditText := IntToStr(0);
     PMaxEditText := IntToStr(0);

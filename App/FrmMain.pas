@@ -43,9 +43,9 @@ uses
   RiggVar.RG.Report,
   RiggVar.RG.Rota,
   RiggVar.FederModel.Menu,
-  RggCtrls,
-  RggChartGraph,
-  RggTypes,
+  RiggVar.DT.Ctrls,
+  RiggVar.Chart.Graph,
+  RiggVar.RG.Types,
   SysUtils,
   Classes,
   Controls,
@@ -748,8 +748,6 @@ begin
     CheckSpaceForMemo;
     CheckSpaceForImages;
     CheckSpaceForImage;
-
-    Main.Draw;
 
     ShowTrimm;
     UpdateSpeedPanelWidth;

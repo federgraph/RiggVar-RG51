@@ -1,4 +1,4 @@
-﻿unit RggProfile;
+﻿unit RiggVar.DT.Profile;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   BGRABitmap,
   BGRABitmapTypes,
   BGRACanvas2D,
-  RggTypes;
+  RiggVar.RG.Types;
 
 type
   TLage = (Hoch, Quer);

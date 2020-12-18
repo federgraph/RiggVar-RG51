@@ -20,9 +20,9 @@ uses
   Buttons,
   Menus,
   RiggVar.App.Model,
-  RggTypes,
-  RggTrimmTab,
-  RggTrimmTabGraph;
+  RiggVar.RG.Types,
+  RiggVar.RG.TrimmTab,
+  RiggVar.DT.TrimmTabGraph;
 
 type
 

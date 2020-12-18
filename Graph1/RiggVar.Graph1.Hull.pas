@@ -1,4 +1,4 @@
-﻿unit RggHull;
+﻿unit RiggVar.Graph1.Hull;
 
 interface
 
@@ -14,16 +14,21 @@ uses
   BGRABitmap,
   BGRABitmapTypes,
   RiggVar.FD.Point,
-  RggTypes,
-  RggMatrix,
-  RggDisplay,
-  RggDisplayTypes,
-  RggGraph;
+  RiggVar.RG.Types,
+  RiggVar.Graph1.Rigg,
+  RiggVar.Graph1.DisplayList,
+  RiggVar.Graph1.DisplayTypes;
 
 type
-  TConColors = array [0 .. 15] of TBGRAPixel;
-
   THullGraph0 = class(TRggGraph)
+  private const
+    maxvert = 400;
+    maxcon = 1000;
+  private type
+    TConColors = array [0 .. 15] of TBGRAPixel;
+    TVertArrayF = array [0 .. maxvert] of single;
+    TVertArrayI = array [0 .. maxvert] of Integer;
+    TConArray = array [0 .. maxcon] of Integer;
   private
     procedure MessageBeep(Value: Integer);
     procedure Transform;

@@ -10,7 +10,7 @@ uses
   Forms, FrmMain, FrmAction, FrmMemo, RiggVar.App.Model, RiggVar.RG.Speed01,
   RiggVar.RG.Speed02, RiggVar.RG.Rota, FrmAuswahl, FrmConfig, FrmTrimmTab,
   RiggVar.FB.ActionMap, RiggVar.FB.SpeedBar, RiggVar.FB.SpeedColor,
-  RiggVar.FB.TextBase, RggTestData, RggChartModel, RggChartGraph,
+  RiggVar.FB.TextBase, RiggVar.Chart.Model, RiggVar.Chart.Graph,
   RiggVar.FederModel.ActionList, RiggVar.FederModel.Menu
   { you can add units after this };
 

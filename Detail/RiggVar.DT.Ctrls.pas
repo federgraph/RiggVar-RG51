@@ -1,4 +1,4 @@
-﻿unit RggCtrls;
+﻿unit RiggVar.DT.Ctrls;
 
 interface
 
@@ -15,8 +15,8 @@ uses
   Classes,
   Types,
   ExtCtrls,
-  RggTypes,
-  RggProfile;
+  RiggVar.RG.Types,
+  RiggVar.DT.Profile;
 
 type
   TFigure = (

@@ -9,8 +9,8 @@ interface
 uses
   SysUtils,
   Classes,
-  RggTypes,
-  RggSchnittKK,
+  RiggVar.RG.Types,
+  RiggVar.RG.Calc,
   BGRABitmapTypes,
   RiggVar.FD.Point,
   RiggVar.FD.Chart,

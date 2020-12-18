@@ -23,7 +23,7 @@
 interface
 
 uses
-  RggTypes,
+  RiggVar.RG.Types,
   BGRABitmap,
   BGRABitmapTypes,
   RiggVar.FD.Point,

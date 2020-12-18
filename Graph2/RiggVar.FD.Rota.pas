@@ -35,7 +35,7 @@ uses
   Types,
   Math,
   RiggVar.RG.Graph,
-  RggTypes,
+  RiggVar.RG.Types,
   RiggVar.FB.ActionConst,
   RiggVar.FD.Drawing00,
   RiggVar.FD.Drawings,

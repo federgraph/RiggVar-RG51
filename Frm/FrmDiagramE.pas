@@ -16,8 +16,8 @@ uses
   ComCtrls,
   ExtCtrls,
   LCLType,
-  RggChartModel01,
-  RggDiagram;
+  RiggVar.Chart.Model01,
+  RiggVar.Chart.Diagram;
 
 type
   TFormDiagramE = class(TForm)

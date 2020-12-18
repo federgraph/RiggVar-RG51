@@ -31,7 +31,7 @@ uses
   Generics.Defaults,
   Graphics,
   Buttons,
-  RggSchnittKK,
+  RiggVar.RG.Calc,
   RiggVar.FD.Point,
   RiggVar.FD.TransformHelper,
   RiggVar.FD.Elements,

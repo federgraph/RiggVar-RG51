@@ -25,6 +25,7 @@ interface
 uses
   BGRABitmap,
   BGRABitmapTypes,
+  RiggVar.RG.Types,
   RiggVar.FD.Point,
   RiggVar.FD.Elements,
   RiggVar.FD.Drawings;
@@ -44,10 +45,6 @@ type
   end;
 
 implementation
-
-uses
-  RggTypes,
-  RggTestData;
 
 { TRggDrawingD05 }
 

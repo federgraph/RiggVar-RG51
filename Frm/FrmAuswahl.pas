@@ -18,7 +18,7 @@ uses
   Controls,
   Buttons,
   StdCtrls,
-  RggTypes;
+  RiggVar.RG.Types;
 
 type
   TYAuswahlDlg = class(TForm)

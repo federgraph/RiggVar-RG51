@@ -38,7 +38,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="130">
+    <Units Count="120">
       <Unit0>
         <Filename Value="rg51.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -51,538 +51,498 @@
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
-        <Filename Value="Core\RggCalc.pas"/>
+        <Filename Value="RG\RiggVar.RG.Calc.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="Core\RggDoc.pas"/>
+        <Filename Value="RG\RiggVar.RG.Doc.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="Core\RggFachwerk.pas"/>
+        <Filename Value="RG\RiggVar.RG.Fachwerk.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="Core\RggReport.pas"/>
+        <Filename Value="RG\RiggVar.RG.Scroll.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit5>
       <Unit6>
-        <Filename Value="Core\RggSaling3Eck.pas"/>
+        <Filename Value="RG\RiggVar.RG.TrimmTab.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
       <Unit7>
-        <Filename Value="Core\RggSchnittGG.pas"/>
+        <Filename Value="RG\RiggVar.RG.Types.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
-        <Filename Value="Core\RggSchnittKK.pas"/>
+        <Filename Value="RG\RiggVar.RG.Data.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
       <Unit9>
-        <Filename Value="Core\RggScroll.pas"/>
+        <Filename Value="RG\RiggVar.RG.Def.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
       <Unit10>
-        <Filename Value="Core\RggTrimmTab.pas"/>
+        <Filename Value="App\RiggVar.App.Main.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
       <Unit11>
-        <Filename Value="Core\RggTypes.pas"/>
+        <Filename Value="Util\RiggVar.Util.Logger.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit11>
       <Unit12>
-        <Filename Value="RG\RiggVar.RG.Data.pas"/>
+        <Filename Value="FB\RiggVar.FB.Action.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
       <Unit13>
-        <Filename Value="RG\RiggVar.RG.Def.pas"/>
+        <Filename Value="FB\RiggVar.FB.ActionConst.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit13>
       <Unit14>
-        <Filename Value="App\RiggVar.App.Main.pas"/>
+        <Filename Value="FB\RiggVar.FB.ActionLong.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit14>
       <Unit15>
-        <Filename Value="Util\RiggVar.Util.Logger.pas"/>
+        <Filename Value="FB\RiggVar.FB.ActionName.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit15>
       <Unit16>
-        <Filename Value="FB\RiggVar.FB.Action.pas"/>
+        <Filename Value="FB\RiggVar.FB.ActionShort.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit16>
       <Unit17>
-        <Filename Value="FB\RiggVar.FB.ActionConst.pas"/>
+        <Filename Value="FB\RiggVar.FB.Scheme.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit17>
       <Unit18>
-        <Filename Value="FB\RiggVar.FB.ActionLong.pas"/>
+        <Filename Value="FB\RiggVar.FB.Classes.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit18>
       <Unit19>
-        <Filename Value="FB\RiggVar.FB.ActionName.pas"/>
+        <Filename Value="RG\RiggVar.RG.Graph.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit19>
       <Unit20>
-        <Filename Value="FB\RiggVar.FB.ActionShort.pas"/>
+        <Filename Value="RG\RiggVar.RG.Track.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit20>
       <Unit21>
-        <Filename Value="FB\RiggVar.FB.Scheme.pas"/>
+        <Filename Value="RG\RiggVar.RG.Main.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit21>
       <Unit22>
-        <Filename Value="FB\RiggVar.FB.Classes.pas"/>
+        <Filename Value="Detail\RiggVar.DT.Ctrls.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit22>
       <Unit23>
-        <Filename Value="RG\RiggVar.RG.Graph.pas"/>
+        <Filename Value="Graph1\RiggVar.Graph1.DisplayList.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit23>
       <Unit24>
-        <Filename Value="RG\RiggVar.RG.Report.pas"/>
+        <Filename Value="Graph1\RiggVar.Graph1.DisplayOrder.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit24>
       <Unit25>
-        <Filename Value="RG\RiggVar.RG.Track.pas"/>
+        <Filename Value="Graph1\RiggVar.Graph1.DisplayTypes.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit25>
       <Unit26>
-        <Filename Value="RG\RiggVar.RG.Main.pas"/>
+        <Filename Value="Graph1\RiggVar.Graph1.Hull.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit26>
       <Unit27>
-        <Filename Value="Graph\RggBootGraph.pas"/>
+        <Filename Value="Detail\RiggVar.DT.Profile.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit27>
       <Unit28>
-        <Filename Value="Graph\RggCtrls.pas"/>
+        <Filename Value="Graph1\RiggVar.Graph1.Rigg.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit28>
       <Unit29>
-        <Filename Value="Graph\RggDisplay.pas"/>
+        <Filename Value="Graph1\RiggVar.Graph1.Rota.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit29>
       <Unit30>
-        <Filename Value="Graph\RggDisplayOrder.pas"/>
+        <Filename Value="Graph1\RiggVar.Graph1.Transform.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit30>
       <Unit31>
-        <Filename Value="Graph\RggDisplayTypes.pas"/>
+        <Filename Value="Model\RiggVar.FederModel.Action.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit31>
       <Unit32>
-        <Filename Value="Graph\RggGraph.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit32>
-      <Unit33>
-        <Filename Value="Graph\RggHull.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit33>
-      <Unit34>
-        <Filename Value="Graph\RggMatrix.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit34>
-      <Unit35>
-        <Filename Value="Graph\RggPolarKar.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit35>
-      <Unit36>
-        <Filename Value="Graph\RggProfile.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit36>
-      <Unit37>
-        <Filename Value="Graph\RggRaumGraph.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit37>
-      <Unit38>
-        <Filename Value="Graph\RggRota.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit38>
-      <Unit39>
-        <Filename Value="Graph\RggTransformer.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit39>
-      <Unit40>
-        <Filename Value="Graph\RggZug.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit40>
-      <Unit41>
-        <Filename Value="Graph\RggZug3D.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit41>
-      <Unit42>
-        <Filename Value="Model\RiggVar.FederModel.Action.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit42>
-      <Unit43>
         <Filename Value="App\FrmMemo.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
-      </Unit43>
-      <Unit44>
+      </Unit32>
+      <Unit33>
         <Filename Value="App\FrmAction.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormAction"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit44>
-      <Unit45>
+      </Unit33>
+      <Unit34>
         <Filename Value="RG\RiggVar.RG.Speed01.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit45>
-      <Unit46>
+      </Unit34>
+      <Unit35>
         <Filename Value="RG\RiggVar.RG.Speed02.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit46>
-      <Unit47>
+      </Unit35>
+      <Unit36>
         <Filename Value="FB\RiggVar.FB.ActionMap.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit47>
-      <Unit48>
+      </Unit36>
+      <Unit37>
         <Filename Value="FB\RiggVar.FB.SpeedColor.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit48>
-      <Unit49>
+      </Unit37>
+      <Unit38>
         <Filename Value="FB\RiggVar.FB.TextBase.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit49>
-      <Unit50>
+      </Unit38>
+      <Unit39>
         <Filename Value="FB\RiggVar.FB.SpeedBar.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit50>
-      <Unit51>
+      </Unit39>
+      <Unit40>
         <Filename Value="Frm\FrmAuswahl.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="YAuswahlDlg"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit51>
-      <Unit52>
+      </Unit40>
+      <Unit41>
         <Filename Value="Frm\FrmConfig.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormConfig"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit52>
-      <Unit53>
+      </Unit41>
+      <Unit42>
         <Filename Value="Frm\FrmTrimmTab.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormTrimmTab"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit53>
-      <Unit54>
+      </Unit42>
+      <Unit43>
         <Filename Value="FB\RiggVar.FB.ActionGroup.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit54>
-      <Unit55>
+      </Unit43>
+      <Unit44>
         <Filename Value="FB\RiggVar.FB.ActionGroups.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit55>
-      <Unit56>
+      </Unit44>
+      <Unit45>
         <Filename Value="FB\RiggVar.FB.ActionKeys.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit56>
-      <Unit57>
+      </Unit45>
+      <Unit46>
         <Filename Value="FB\RiggVar.FB.ActionTable.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit57>
-      <Unit58>
+      </Unit46>
+      <Unit47>
         <Filename Value="FB\RiggVar.FB.ActionTest.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit58>
-      <Unit59>
+      </Unit47>
+      <Unit48>
         <Filename Value="FB\RiggVar.FB.Color.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit59>
-      <Unit60>
+      </Unit48>
+      <Unit49>
         <Filename Value="Frm\FrmDiagramC.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
-      </Unit60>
-      <Unit61>
+      </Unit49>
+      <Unit50>
         <Filename Value="Frm\FrmDiagramE.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
-      </Unit61>
-      <Unit62>
+      </Unit50>
+      <Unit51>
         <Filename Value="Frm\FrmDiagramQ.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormDiagramQ"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+      </Unit51>
+      <Unit52>
+        <Filename Value="Detail\RiggVar.DT.TrimmTabGraph.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit52>
+      <Unit53>
+        <Filename Value="RG\RiggVar.RG.Speed03.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit53>
+      <Unit54>
+        <Filename Value="FD\RiggVar.FD.Drawing01.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit54>
+      <Unit55>
+        <Filename Value="FD\RiggVar.FD.Drawing02.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit55>
+      <Unit56>
+        <Filename Value="FD\RiggVar.FD.Drawing03.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit56>
+      <Unit57>
+        <Filename Value="FD\RiggVar.FD.Drawing04.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit57>
+      <Unit58>
+        <Filename Value="FD\RiggVar.FD.Drawing05.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit58>
+      <Unit59>
+        <Filename Value="FD\RiggVar.FD.Drawing06.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit59>
+      <Unit60>
+        <Filename Value="FD\RiggVar.FD.Drawing07.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit60>
+      <Unit61>
+        <Filename Value="FD\RiggVar.FD.Drawing08.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit61>
+      <Unit62>
+        <Filename Value="FD\RiggVar.FD.Drawing09.pas"/>
+        <IsPartOfProject Value="True"/>
       </Unit62>
       <Unit63>
-        <Filename Value="Graph\RggTrimmTabGraph.pas"/>
+        <Filename Value="FD\RiggVar.FD.Drawing10.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit63>
       <Unit64>
-        <Filename Value="RG\RiggVar.RG.Speed03.pas"/>
+        <Filename Value="FD\RiggVar.FD.Drawing11.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit64>
       <Unit65>
-        <Filename Value="FD\RiggVar.FD.Drawing01.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit65>
-      <Unit66>
-        <Filename Value="FD\RiggVar.FD.Drawing02.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit66>
-      <Unit67>
-        <Filename Value="FD\RiggVar.FD.Drawing03.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit67>
-      <Unit68>
-        <Filename Value="FD\RiggVar.FD.Drawing04.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit68>
-      <Unit69>
-        <Filename Value="FD\RiggVar.FD.Drawing05.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit69>
-      <Unit70>
-        <Filename Value="FD\RiggVar.FD.Drawing06.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit70>
-      <Unit71>
-        <Filename Value="FD\RiggVar.FD.Drawing07.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit71>
-      <Unit72>
-        <Filename Value="FD\RiggVar.FD.Drawing08.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit72>
-      <Unit73>
-        <Filename Value="FD\RiggVar.FD.Drawing09.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit73>
-      <Unit74>
-        <Filename Value="FD\RiggVar.FD.Drawing10.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit74>
-      <Unit75>
-        <Filename Value="FD\RiggVar.FD.Drawing11.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit75>
-      <Unit76>
         <Filename Value="App\FrmDrawing.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormDrawing"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+      </Unit65>
+      <Unit66>
+        <Filename Value="FZ\RiggVar.FZ.Z01_Viereck.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit66>
+      <Unit67>
+        <Filename Value="FZ\RiggVar.FZ.Z02_Logo.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit67>
+      <Unit68>
+        <Filename Value="FZ\RiggVar.FZ.Z03_Viergelenk.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit68>
+      <Unit69>
+        <Filename Value="FZ\RiggVar.FZ.Z04_Tetraeder.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit69>
+      <Unit70>
+        <Filename Value="FZ\RiggVar.FZ.Z06_Hoehe.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit70>
+      <Unit71>
+        <Filename Value="FZ\RiggVar.FZ.Z07_Triangle.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit71>
+      <Unit72>
+        <Filename Value="FZ\RiggVar.FZ.Z08_Arc.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit72>
+      <Unit73>
+        <Filename Value="FZ\RiggVar.FZ.Z09_Axis.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit73>
+      <Unit74>
+        <Filename Value="FZ\RiggVar.FZ.Z10_Lager.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit74>
+      <Unit75>
+        <Filename Value="FZ\RiggVar.FZ.Z11_Above.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit75>
+      <Unit76>
+        <Filename Value="FZ\RiggVar.FZ.Z12_Atan2.pas"/>
+        <IsPartOfProject Value="True"/>
       </Unit76>
       <Unit77>
-        <Filename Value="FZ\RiggVar.FZ.Z01_Viereck.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z13_SchnittKK.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit77>
       <Unit78>
-        <Filename Value="FZ\RiggVar.FZ.Z02_Logo.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z14_SplitF.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit78>
       <Unit79>
-        <Filename Value="FZ\RiggVar.FZ.Z03_Viergelenk.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z15_SchnittGG.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit79>
       <Unit80>
-        <Filename Value="FZ\RiggVar.FZ.Z04_Tetraeder.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z16_Shrink.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit80>
       <Unit81>
-        <Filename Value="FZ\RiggVar.FZ.Z06_Hoehe.pas"/>
+        <Filename Value="FD\RiggVar.FD.Drawing12.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit81>
       <Unit82>
-        <Filename Value="FZ\RiggVar.FZ.Z07_Triangle.pas"/>
+        <Filename Value="FD\RiggVar.FD.Registry.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit82>
       <Unit83>
-        <Filename Value="FZ\RiggVar.FZ.Z08_Arc.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z05_TestRigg.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit83>
       <Unit84>
-        <Filename Value="FZ\RiggVar.FZ.Z09_Axis.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Registry.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit84>
       <Unit85>
-        <Filename Value="FZ\RiggVar.FZ.Z10_Lager.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z17_Feder.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit85>
       <Unit86>
-        <Filename Value="FZ\RiggVar.FZ.Z11_Above.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z18_BerechneWinkel.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit86>
       <Unit87>
-        <Filename Value="FZ\RiggVar.FZ.Z12_Atan2.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z19_Chart.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit87>
       <Unit88>
-        <Filename Value="FZ\RiggVar.FZ.Z13_SchnittKK.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z20_Epsilon.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit88>
       <Unit89>
-        <Filename Value="FZ\RiggVar.FZ.Z14_SplitF.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z21_Rotations.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit89>
       <Unit90>
-        <Filename Value="FZ\RiggVar.FZ.Z15_SchnittGG.pas"/>
+        <Filename Value="FZ\RiggVar.FZ.Z22_BigArc.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit90>
       <Unit91>
-        <Filename Value="FZ\RiggVar.FZ.Z16_Shrink.pas"/>
+        <Filename Value="Chart\RiggVar.Chart.Model.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit91>
       <Unit92>
-        <Filename Value="FD\RiggVar.FD.Drawing12.pas"/>
+        <Filename Value="Chart\RiggVar.Chart.Graph.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit92>
       <Unit93>
-        <Filename Value="FD\RiggVar.FD.Registry.pas"/>
+        <Filename Value="Graph2\RiggVar.FD.Chart.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit93>
       <Unit94>
-        <Filename Value="FZ\RiggVar.FZ.Z05_TestRigg.pas"/>
+        <Filename Value="Graph2\RiggVar.FD.Drawings.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit94>
       <Unit95>
-        <Filename Value="FZ\RiggVar.FZ.Registry.pas"/>
+        <Filename Value="Graph2\RiggVar.FD.Elements.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit95>
       <Unit96>
-        <Filename Value="FZ\RiggVar.FZ.Z17_Feder.pas"/>
+        <Filename Value="Graph2\RiggVar.FD.Point.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit96>
       <Unit97>
-        <Filename Value="FZ\RiggVar.FZ.Z18_BerechneWinkel.pas"/>
+        <Filename Value="Graph2\RiggVar.FD.RotationHelper.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit97>
       <Unit98>
-        <Filename Value="FZ\RiggVar.FZ.Z19_Chart.pas"/>
+        <Filename Value="Graph2\RiggVar.FD.SchnittKK.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit98>
       <Unit99>
-        <Filename Value="FZ\RiggVar.FZ.Z20_Epsilon.pas"/>
+        <Filename Value="Graph2\RiggVar.FD.TransformHelper.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit99>
       <Unit100>
-        <Filename Value="FZ\RiggVar.FZ.Z21_Rotations.pas"/>
+        <Filename Value="Graph2\RiggVar.FD.Rota.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit100>
       <Unit101>
-        <Filename Value="FZ\RiggVar.FZ.Z22_BigArc.pas"/>
+        <Filename Value="Chart\RiggVar.Chart.Model01.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit101>
       <Unit102>
-        <Filename Value="Core\RggTestData.pas"/>
+        <Filename Value="Chart\RiggVar.Chart.Diagram.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit102>
       <Unit103>
-        <Filename Value="Chart\RggChartModel.pas"/>
+        <Filename Value="RG\RiggVar.RG.Rota.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit103>
       <Unit104>
-        <Filename Value="Chart\RggChartGraph.pas"/>
+        <Filename Value="Graph2\RiggVar.FD.Drawing00.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit104>
       <Unit105>
-        <Filename Value="Graph2\RiggVar.FD.Chart.pas"/>
+        <Filename Value="RG\RiggVar.RG.Speed04.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit105>
       <Unit106>
-        <Filename Value="Graph2\RiggVar.FD.Drawings.pas"/>
+        <Filename Value="RG\RiggVar.RG.Inter.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit106>
       <Unit107>
-        <Filename Value="Graph2\RiggVar.FD.Elements.pas"/>
+        <Filename Value="RG\RiggVar.RG.Model.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit107>
       <Unit108>
-        <Filename Value="Graph2\RiggVar.FD.Point.pas"/>
+        <Filename Value="Model\RiggVar.FederModel.ActionList.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit108>
       <Unit109>
-        <Filename Value="Graph2\RiggVar.FD.RotationHelper.pas"/>
+        <Filename Value="Model\RiggVar.FederModel.Menu.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit109>
       <Unit110>
-        <Filename Value="Graph2\RiggVar.FD.SchnittKK.pas"/>
+        <Filename Value="Model\RiggVar.FederModel.ActionMapPhone.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit110>
       <Unit111>
-        <Filename Value="Graph2\RiggVar.FD.TransformHelper.pas"/>
+        <Filename Value="Model\RiggVar.FederModel.ActionMapTablet.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit111>
       <Unit112>
-        <Filename Value="Graph2\RiggVar.FD.Rota.pas"/>
+        <Filename Value="Model\RiggVar.FederModel.Binding.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit112>
       <Unit113>
-        <Filename Value="Chart\RggChartModel01.pas"/>
+        <Filename Value="Model\RiggVar.FederModel.Keyboard01.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit113>
       <Unit114>
-        <Filename Value="Chart\RggDiagram.pas"/>
+        <Filename Value="Model\RiggVar.FederModel.Touch.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit114>
       <Unit115>
-        <Filename Value="RG\RiggVar.RG.Rota.pas"/>
+        <Filename Value="Model\RiggVar.FederModel.TouchBase.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit115>
       <Unit116>
-        <Filename Value="Graph2\RiggVar.FD.Drawing00.pas"/>
+        <Filename Value="Model\RiggVar.FederModel.TouchPhone.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit116>
       <Unit117>
-        <Filename Value="RG\RiggVar.RG.Speed04.pas"/>
+        <Filename Value="App\RiggVar.App.Model.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit117>
       <Unit118>
-        <Filename Value="Core\RggInter.pas"/>
+        <Filename Value="RG\RiggVar.RG.Strings.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit118>
       <Unit119>
-        <Filename Value="RG\RiggVar.RG.Model.pas"/>
+        <Filename Value="App\RiggVar.App.Strings.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit119>
-      <Unit120>
-        <Filename Value="Model\RiggVar.FederModel.ActionList.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit120>
-      <Unit121>
-        <Filename Value="Model\RiggVar.FederModel.Menu.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit121>
-      <Unit122>
-        <Filename Value="Model\RiggVar.FederModel.ActionMapPhone.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit122>
-      <Unit123>
-        <Filename Value="Model\RiggVar.FederModel.ActionMapTablet.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit123>
-      <Unit124>
-        <Filename Value="Model\RiggVar.FederModel.Binding.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit124>
-      <Unit125>
-        <Filename Value="Model\RiggVar.FederModel.Keyboard01.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit125>
-      <Unit126>
-        <Filename Value="Model\RiggVar.FederModel.Touch.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit126>
-      <Unit127>
-        <Filename Value="Model\RiggVar.FederModel.TouchBase.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit127>
-      <Unit128>
-        <Filename Value="Model\RiggVar.FederModel.TouchPhone.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit128>
-      <Unit129>
-        <Filename Value="App\RiggVar.App.Model.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit129>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -593,7 +553,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="App;Core;RG;Util;FB;Graph;Model;Frm;FD;FZ;Chart;Graph2"/>
+      <OtherUnitFiles Value="App;RG;Util;FB;Model;Frm;FD;FZ;Chart;Graph2;Detail;Graph1"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

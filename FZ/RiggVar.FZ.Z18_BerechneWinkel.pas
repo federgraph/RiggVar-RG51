@@ -27,6 +27,8 @@ uses
   Classes,
   Math,
   BGRABitmapTypes,
+  RiggVar.RG.Types,
+  RiggVar.RG.Calc,
   RiggVar.FD.Chart,
   RiggVar.FD.Point,
   RiggVar.FD.Elements,
@@ -162,10 +164,6 @@ type
   end;
 
 implementation
-
-uses
-  RggTypes,
-  RggSchnittKK;
 
 { TRggDrawingZ18 }
 

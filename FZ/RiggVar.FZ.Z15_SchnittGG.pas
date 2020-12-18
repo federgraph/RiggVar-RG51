@@ -3,8 +3,8 @@
 interface
 
 uses
-  RggCalc,
   BGRABitmapTypes,
+  RiggVar.RG.Calc,
   RiggVar.FD.Point,
   RiggVar.FD.Elements,
   RiggVar.FD.Drawings;
@@ -72,7 +72,7 @@ begin
   P4.Z := D.Center.Y;
 
   { SchnittGG is using XZ }
-  SchnittGG(P1, P2, P3, P4, SP);
+  TRggCalc.SchnittGG(P1, P2, P3, P4, SP);
 
   S.Center.X := SP.X;
   S.Center.Y := SP.Z;

@@ -13,9 +13,9 @@ uses
   Graphics,
   BGRABitmap,
   BGRABitmapTypes,
-  RggTypes,
+  RiggVar.RG.Types,
 {$ifdef WantRotaForm1}
-  RggRota,
+  RiggVar.Graph1.Rota,
 {$endif}
 {$ifdef WantRotaForm2}
   RiggVar.FD.Rota,

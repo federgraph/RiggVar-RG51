@@ -11,6 +11,7 @@ uses
   SysUtils,
   BGRABitmap,
   BGRABitmapTypes,
+  RiggVar.RG.Calc,
   RiggVar.FD.Elements,
   RiggVar.FD.Drawings;
 
@@ -37,9 +38,6 @@ type
   end;
 
 implementation
-
-uses
-  RggCalc;
 
 { TRggDrawingD06 }
 
@@ -75,7 +73,7 @@ begin
   lb := SeiteB.V2.Length;
   lc := SeiteC.V2.Length;
 
-  h := Hoehe(la, lb, lc, k);
+  h := TRggCalc.Hoehe(la, lb, lc, k);
   LineH.Caption := Format('%s = %.2f', ['h', h]);
 
   temp := C.Center.P + k * SeiteA.V2;
@@ -94,7 +92,7 @@ begin
   lb := SeiteB.V3.Length;
   lc := SeiteC.V3.Length;
 
-  h := Hoehe(la, lb, lc, k);
+  h := TRggCalc.Hoehe(la, lb, lc, k);
   LineH.Caption := Format('%s = %.2f', ['h', h]);
 
   D.Center.C := C.Center.C + k * SeiteA.V3;

@@ -962,7 +962,7 @@ var
 //  d: TDisplay;
   wa: TRect;
 begin
-  ss := 1.0; //ScaleFactor;  // Handle.Scale;
+  ss := 1.0; // ScaleFactor;  // Handle.Scale;
   w := Round(FMaxRight + Margin);
   h := Round(FMaxBottom + Margin);
 
