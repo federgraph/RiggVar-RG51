@@ -174,7 +174,6 @@ type
 
   public
     class constructor Create;
-    class function ColorFromRGB(R, G, B: Byte): TRggColor;
   end;
 
 implementation
@@ -343,20 +342,6 @@ implementation
     Whitesmoke := TColor($F5F5F5);
     Yellow := TColor($00FFFF);
     Yellowgreen := TColor($32CD9A);
-  end;
-
-  class function TRggColors.ColorFromRGB(R, G, B: Byte): TRggColor;
-  var
-    c: Cardinal;
-  begin
-    c := R;
-    c := c and (G shl 8);
-    c := c and (B shl 16);
-    result := TColor(c);
-
-//    TColorRec(result).R := R;
-//    TColorRec(result).G := G;
-//    TColorRec(result).B := B;
   end;
 
 end.
