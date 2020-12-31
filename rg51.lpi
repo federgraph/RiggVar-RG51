@@ -38,7 +38,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="120">
+    <Units Count="129">
       <Unit0>
         <Filename Value="rg51.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -543,6 +543,42 @@
         <Filename Value="App\RiggVar.App.Strings.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit119>
+      <Unit120>
+        <Filename Value="RG\RiggVar.RG.View.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit120>
+      <Unit121>
+        <Filename Value="FB\RiggVar.FB.ActionLongDE.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit121>
+      <Unit122>
+        <Filename Value="FB\RiggVar.FB.ActionLongEN.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit122>
+      <Unit123>
+        <Filename Value="FB\RiggVar.FB.ActionShortDE.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit123>
+      <Unit124>
+        <Filename Value="FB\RiggVar.FB.ActionShortEN.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit124>
+      <Unit125>
+        <Filename Value="RG\RiggVar.RG.LocalizedStrings.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit125>
+      <Unit126>
+        <Filename Value="RG\RiggVar.RG.LocalizedStrings00.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit126>
+      <Unit127>
+        <Filename Value="RG\RiggVar.RG.LocalizedStringsDE.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit127>
+      <Unit128>
+        <Filename Value="RG\RiggVar.RG.LocalizedStringsEN.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit128>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

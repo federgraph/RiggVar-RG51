@@ -23,6 +23,7 @@ interface
 {$endif}
 
 {$define WantHull}
+{$define WantDisplayList}
 
 uses
   Graphics,
@@ -716,9 +717,11 @@ end;
 
 procedure TRotaForm1.UseQuickSortBtnClick(Sender: TObject);
 begin
+{$ifdef WantDisplayList}
   RaumGraph.DL.UseQuickSort := not RaumGraph.DL.UseQuickSort;
   RaumGraph.Update;
   Draw;
+{$endif}
 end;
 
 procedure TRotaForm1.BogenBtnClick(Sender: TObject);
@@ -955,6 +958,7 @@ end;
 
 procedure TRotaForm1.SetMastLineData(const Value: TLineDataR100; L, Beta: single);
 begin
+  RaumGraph.Koordinaten := RPN;
   RaumGraph.SetMastLineData(Value, L, Beta);
 end;
 
@@ -1055,14 +1059,18 @@ begin
   end;
 
   RaumGraph.Update;
+{$ifdef WantDisplayList}
   RaumGraph.UpdateDisplayList;
+{$endif}
 
 {$ifdef WantHull}
   if RumpfItemChecked then
   begin
     HullGraph.WantLineColors := WantLineColors;
     HullGraph.Update;
+{$ifdef WantDisplayList}
     HullGraph.AddToDisplayList(RaumGraph.DL);
+{$endif}
   end;
 {$endif}
 
@@ -1216,13 +1224,17 @@ end;
 procedure TRotaForm1.SetWantLineColors(const Value: Boolean);
 begin
   FWantLineColors := Value;
+{$ifdef WantDisplayList}
   RaumGraph.DL.WantLineColors := Value;
+{$endif}
 end;
 
 procedure TRotaForm1.SetUseQuickSort(const Value: Boolean);
 begin
   FUseQuickSort := Value;
+{$ifdef WantDisplayList}
   RaumGraph.DL.UseQuickSort := True;
+{$endif}
 end;
 
 procedure TRotaForm1.InitBitmapSize;

@@ -7,11 +7,7 @@
 interface
 
 uses
-{$ifdef fpc}
   LCLType,
-{$else}
-  Winapi.Windows,
-{$endif}
   Classes,
   Graphics,
   Forms,
@@ -51,11 +47,7 @@ var
 
 implementation
 
-{$IFnDEF FPC}
-  {$R *.dfm}
-{$ELSE}
-  {$R *.lfm}
-{$ENDIF}
+{$R *.lfm}
 
 procedure TYAuswahlDlg.FormCreate(Sender: TObject);
 var

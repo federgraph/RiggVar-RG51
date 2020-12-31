@@ -29,20 +29,23 @@ interface
 {.$define UseLabelsForText}
 {.$define WantImageLeft}
 {$define WantHintContainer}
-{$define WantFocusContainer}
+{.$define WantFocusContainer}
 {.$define WantReportLabel}
 
 uses
   BGRABitmap,
   BGRABitmapTypes,
   RiggVar.App.Model,
+  RiggVar.App.Strings,
+  RiggVar.RG.View,
   RiggVar.FB.Color,
   RiggVar.FB.SpeedColor,
   RiggVar.FB.SpeedBar,
-  RiggVar.RG.Def,
   RiggVar.RG.Report,
   RiggVar.RG.Rota,
+{$ifdef WantMenu}
   RiggVar.FederModel.Menu,
+{$endif}
   RiggVar.DT.Ctrls,
   RiggVar.Chart.Graph,
   RiggVar.RG.Types,
@@ -60,7 +63,7 @@ uses
 {$define Vcl}
 
 type
-  TFormMain = class(TForm)
+  TFormMain = class(TForm, IFormMain)
     Timer: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -91,6 +94,9 @@ type
     procedure InitZOrderInfo;
     procedure ShowHelpText(fa: Integer);
     function GetCanShowMemo: Boolean;
+    procedure ToggleLanguage;
+    procedure UpdateParamListboxText;
+    procedure UpdateReportListboxText;
   protected
     HelpTopic: Integer;
     ShowingHelp: Boolean;
@@ -303,6 +309,13 @@ type
     FReportLabelCaption: string;
     procedure SetReportLabelCaption(const Value: string);
     property ReportLabelCaption: string read FReportLabelCaption write SetReportLabelCaption;
+  public
+    function GetClientHeight: Integer;
+    function GetClientWidth: Integer;
+    procedure SetClientHeight(const Value: Integer);
+    procedure SetClientWidth(const Value: Integer);
+    procedure RotaFormRotateZ(Delta: single);
+    procedure RotaFormZoom(Delta: single);
   end;
 
 var
@@ -348,6 +361,14 @@ end;
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
   FormatSettings.DecimalSeparator := '.';
+
+  MainVar.WantLocalizedText := True;
+  MainVar.WantGermanText := True;
+  MainVar.WantFederText := True;
+  MainVar.ClientWidth := Round(ClientWidth);
+  MainVar.ClientHeight := Round(ClientHeight);
+
+  FormMain := self;
 
 {$ifdef UseLabelsForText}
   UseLabelsForText := True;
@@ -449,9 +470,8 @@ begin
   Rigg.TrimmTabelle.FScale := FScale;
   Rigg.ControllerTyp := ctOhne;
 
-  Main := TMain.Create(Rigg);
+  Main := TMain.Create(Rigg, Self, Self);
   Main.Logger.Verbose := True;
-  Main.IsUp := True;
 
   CreateComponents;
 
@@ -510,6 +530,7 @@ begin
   InitControllerGraph;
   InitChartGraph;
 
+  Main.IsUp := True;
   Main.Draw;
   Main.MemoryBtnClick;
 
@@ -529,8 +550,6 @@ begin
 {$ifdef WantMenu}
   PopulateMenu;
 {$endif}
-
-//  Main.StrokeRigg.HullVisible := True;
 end;
 
 procedure TFormMain.FormDestroy2(Sender: TObject);
@@ -560,11 +579,11 @@ var
   fa: Integer;
 begin
   fa := GetActionFromKeyChar(Key);
-
   if fa <> faNoop then
   begin
     Main.ActionHandler.Execute(fa);
   end;
+  Key := #0;
 end;
 
 procedure TFormMain.UpdateOnParamValueChanged;
@@ -711,7 +730,9 @@ begin
   if not FormShown then
   begin
     FormShown := True;
+
     UpdateParent;
+    Main.CycleToolSet(0);
 
     { ClientHeight is now available }
 {$ifdef WantStatusBar}
@@ -942,6 +963,8 @@ end;
 procedure TFormMain.HandleAction(fa: Integer);
 begin
   case fa of
+    faToggleLanguage: ToggleLanguage;
+
     faToggleAllText: ToggleAllText;
     faToggleSpeedPanel: ToggleSpeedPanel;
     faToggleButtonSize: ToggleButtonSize;
@@ -2532,6 +2555,87 @@ begin
   else
     ReportText.Width := ReportMemoWidth;
   ReportText.Height := ClientHeight - ReportText.Top - Raster - MainVar.StatusBarHeight - Margin;
+end;
+
+procedure TFormMain.ToggleLanguage;
+begin
+  MainVar.WantGermanText := not MainVar.WantGermanText;
+  RggLocalizedStrings.UpdateText;
+{$ifdef WantMenu}
+  FederMenu.UpdateText(MainMenu);
+{$endif}
+  SpeedPanel.UpdateText;
+  Main.CycleToolSet(0);
+{$ifdef WantListboxes}
+  UpdateReportListboxText;
+  UpdateParamListboxText;
+{$endif}
+  Main.ParamCaption := Main.Param2Text(Main.Param);
+  ShowTrimm;
+
+  if (FormConfig <> nil) and not (FormConfig.Visible) then
+    FreeAndNil(FormConfig);
+end;
+
+{$ifdef WantListboxes}
+procedure TFormMain.UpdateParamListboxText;
+var
+  ii: Integer;
+begin
+  if ParamListbox <> nil then
+  begin
+    ii := ParamListbox.ItemIndex;
+    ParamListbox.OnSelectionChange := nil;
+    InitParamListbox;
+    ParamListbox.ItemIndex := ii;
+    ParamListbox.OnSelectionChange := ParamListboxChange;
+  end;
+end;
+
+procedure TFormMain.UpdateReportListboxText;
+var
+  ii: Integer;
+begin
+  if ReportListbox <> nil then
+  begin
+    ii := ReportListbox.ItemIndex;
+    ReportListbox.OnSelectionChange := nil;
+    ReportListbox.Clear;
+    ReportManager.InitLB(ReportListbox.Items);
+    ReportListbox.ItemIndex := ii;
+    ReportListbox.OnSelectionChange := ReportListboxChange;
+  end;
+end;
+{$endif}
+
+function TFormMain.GetClientHeight: Integer;
+begin
+  result := ClientHeight;
+end;
+
+function TFormMain.GetClientWidth: Integer;
+begin
+  result := ClientWidth;
+end;
+
+procedure TFormMain.SetClientHeight(const Value: Integer);
+begin
+  ClientHeight := Value;
+end;
+
+procedure TFormMain.SetClientWidth(const Value: Integer);
+begin
+  ClientWidth := Value;
+end;
+
+procedure TFormMain.RotaFormRotateZ(Delta: single);
+begin
+  RotaForm.RotateZ(Delta);
+end;
+
+procedure TFormMain.RotaFormZoom(Delta: single);
+begin
+  RotaForm.Zoom(Delta);
 end;
 
 end.
