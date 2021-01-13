@@ -38,7 +38,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="129">
+    <Units Count="133">
       <Unit0>
         <Filename Value="rg51.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -579,6 +579,22 @@
         <Filename Value="RG\RiggVar.RG.LocalizedStringsEN.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit128>
+      <Unit129>
+        <Filename Value="FB\RiggVar.FB.Equation.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit129>
+      <Unit130>
+        <Filename Value="FB\RiggVar.FB.Formula.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit130>
+      <Unit131>
+        <Filename Value="FZ\RiggVar.FZ.Z23_Federgraph.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit131>
+      <Unit132>
+        <Filename Value="Model\RiggVar.FederModel.Circle.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit132>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

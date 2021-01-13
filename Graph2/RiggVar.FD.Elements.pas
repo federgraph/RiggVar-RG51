@@ -363,6 +363,7 @@ type
     Poly: ArrayOfTPointF;
     constructor Create(ACaption: string; ACount: Integer); overload;
     procedure Draw(g: TBGRABitmap); override;
+    procedure AssignPoly(const APoly: array of TPointF);
     property Count: Integer read FCount;
   end;
 
@@ -2271,12 +2272,33 @@ end;
 
 { TRggPolyCurve }
 
+procedure TRggPolyCurve.AssignPoly(const APoly: array of TPointF);
+var
+  i: Integer;
+  l: Integer;
+begin
+  l := Length(APoly);
+  if l <> Count then
+  begin
+    FCount := l;
+    SetLength(Poly, l);
+    SetLength(TransformedPoly, l);
+  end;
+
+  { Poly := APoly; }
+  for i := 0 to l-1 do
+  begin
+    Poly[i].X := Round(APoly[i].X);
+    Poly[i].Y := Round(APoly[i].Y);
+   end;
+end;
+
 constructor TRggPolyCurve.Create(ACaption: string; ACount: Integer);
 begin
   inherited Create;
   TypeName := 'PolyCurve';
   Caption := ACaption;
-  if (ACount > 2) and (ACount < 202) then
+  if (ACount > 2) and (ACount < 361) then
   begin
     FCount := ACount;
     SetLength(Poly, Count);
