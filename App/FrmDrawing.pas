@@ -20,6 +20,8 @@
   {$mode delphi}
 {$endif}
 
+{$define WantMultipleLists}
+{$define WantDrawingList}
 {$define WantDynamicFixPoint}
 {$define WantMemoOutput}
 
@@ -59,7 +61,9 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: char);
   private
     Memo: TMemo;
+{$ifdef WantDrawingList}
     DrawingList: TListBox;
+{$endif}
     ElementList: TListBox;
     Image: TImage;
     InplaceShape: TShape;
@@ -72,9 +76,10 @@ type
     procedure InplaceShapeMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure InplaceShapeMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 
+{$ifdef WantDrawingList}
     procedure DrawingListClick(Sender: TObject);
     procedure DrawingListKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
-
+{$endif}
     procedure ElementListClick(Sender: TObject);
     procedure ElementListKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
 
@@ -98,7 +103,9 @@ type
     CurrentDrawing: TRggDrawing;
     CurrentElement: TRggElement;
     TempList: TStringList;
+{$ifdef WantMultipleLists}
     WantExampleDrawings: Boolean;
+{$endif}
     WantVerticalButtons: Boolean;
     WantThickLines: Boolean;
     procedure InitComponentSize;
@@ -214,9 +221,13 @@ begin
     if not (ML = Memo.Lines) then
       ML := Memo.Lines;
     LayoutComponents;
+{$ifdef WantDrawingList}
     DrawingList.ItemIndex := DL.DrawingList.Count-1;
     SelectDrawing(DrawingList.ItemIndex);
     DrawingList.SetFocus;
+{$else}
+    SelectDrawing(0);
+{$endif}
   end;
 end;
 
@@ -234,14 +245,18 @@ begin
 end;
 
 procedure TFormDrawing.InitDrawings;
+{$ifdef WantDrawingList}
 var
   i: Integer;
+{$endif}
 begin
   DL.InitItems(TempList);
+{$ifdef WantDrawingList}
   for i := 0 to TempList.Count-1 do
   begin
     DrawingList.Items.Add(TempList[i]);
   end;
+{$endif}
 end;
 
 procedure TFormDrawing.InitElements;
@@ -330,7 +345,7 @@ begin
   InitBitmapAndImage;
 
   GlobalShowCaptionBtn.AllowAllUp := True;
-  GlobalShowCaptionBtn.Down := GlobalShowCaption;
+  GlobalShowCaptionBtn.Down := TRggElement.GlobalShowCaption;
 
   InitComponentProps;
 end;
@@ -364,10 +379,12 @@ end;
 
 procedure TFormDrawing.CreateComponents;
 begin
+{$ifdef WantDrawingList}
   DrawingList := TListBox.Create(Self);
   DrawingList.Parent := Self;
   DrawingList.OnClick := DrawingListClick;
   DrawingList.OnKeyUp := DrawingListKeyUp;
+{$endif}
 
   ElementList := TListBox.Create(Self);
   ElementList.Parent := Self;
@@ -507,7 +524,9 @@ begin
     'C': SwapColorScheme;
     'G': GlobalShowCaptionBtnClick(nil);
     'R': DoReset;
+{$ifdef WantMultipleLists}
     'L': SwapDrawingLists;
+{$endif}
     'T': SwapLayout;
     'W': SwapThickLines;
 
@@ -596,7 +615,7 @@ end;
 
 procedure TFormDrawing.GlobalShowCaptionBtnClick(Sender: TObject);
 begin
-  GlobalShowCaption := not GlobalShowCaption;
+  TRggElement.GlobalShowCaption := not TRggElement.GlobalShowCaption;
   Draw;
 end;
 
@@ -777,8 +796,10 @@ begin
   ListboxWidth := 200;
   MemoWidth := 220;
 
+{$ifdef WantDrawingList}
   DrawingList.Width := ListboxWidth;
   DrawingList.Height := 300;
+{$endif}
 
   ElementList.Width := ListboxWidth;
   ElementList.Height := 100;
@@ -796,14 +817,15 @@ end;
 procedure TFormDrawing.InplaceShapeMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 var
   dx, dy, dt: Integer;
+ {$ifdef WantDynamicFixPoint}
   cr: TRggCircle;
+{$endif}
 begin
   if not InplaceMouseDown then
     Exit;
   if CurrentElement = nil then
     Exit;
   Assert(CurrentElement is TRggCircle);
-  cr := CurrentElement as TRggCircle;
 
   dx := X - InplaceMousePos.X;
   dy := Y - InplaceMousePos.Y;
@@ -820,6 +842,7 @@ begin
 
 {$ifdef WantDynamicFixPoint}
   { InplaceShape.Position is updated in DrawToCanvas }
+  cr := CurrentElement as TRggCircle;
 
   cr.Param1I(dx);
   cr.Param2I(dy);
@@ -894,14 +917,20 @@ begin
   StackH(BtnF);
 
   cr := CodeBtn;
+{$ifdef WantDrawingList}
   StackV(DrawingList);
   StackH(ElementList);
+{$else}
+  StackV(ElementList);
+{$endif}
   StackH(Image);
   StackH(Memo);
 
   AdjustWH;
 
+{$ifdef WantDrawingList}
   AnchorV(DrawingList);
+{$endif}
   AnchorV(ElementList);
   AnchorV(Image);
   AnchorHV(Memo);
@@ -942,14 +971,18 @@ begin
   StackV(BtnF);
 
   cr := CodeBtn;
+{$ifdef WantDrawingList}
   StackH(DrawingList);
+{$endif}
   StackH(ElementList);
   StackH(Memo);
   StackH(Image);
 
   AdjustWH;
 
+{$ifdef WantDrawingList}
   AnchorV(DrawingList);
+{$endif}
   AnchorV(ElementList);
   AnchorV(Memo);
   AnchorHV(Image);
@@ -1016,12 +1049,20 @@ begin
   InplaceShape.OnMouseUp := InplaceShapeMouseUp;
 end;
 
+{$ifdef WantDrawingList}
 procedure TFormDrawing.DrawingListClick(Sender: TObject);
 begin
   if DrawingList.ItemIndex = -1 then
     Exit;
   SelectDrawing(DrawingList.ItemIndex);
 end;
+
+procedure TFormDrawing.DrawingListKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_Space then
+    SelectDrawing(DrawingList.ItemIndex);
+end;
+{$endif}
 
 procedure TFormDrawing.SelectDrawing(ii: Integer);
 begin
@@ -1048,12 +1089,6 @@ begin
       ClearImage;
     end;
   end;
-end;
-
-procedure TFormDrawing.DrawingListKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  if Key = VK_Space then
-    SelectDrawing(DrawingList.ItemIndex);
 end;
 
 procedure TFormDrawing.ElementListClick(Sender: TObject);
@@ -1197,7 +1232,6 @@ begin
 
 {$ifdef FMX}
   ss := Image.Scene.GetSceneScale;
-  g.Offset := TH.Offset;
   if g.BeginScene then
   try
     g.SetMatrix(TMatrix.CreateScaling(ss, ss));
@@ -1207,6 +1241,7 @@ begin
     g.Stroke.Thickness := 1.0;
     g.Font.Size := 16;
     g.Font.Family := 'Consolas';
+    CurrentDrawing.FaxPoint3D.C := TH.Offset;
     CurrentDrawing.Draw(g);
   finally
     g.EndScene;
@@ -1259,7 +1294,9 @@ begin
   ML.Add(Format('Bitmap = (%d, %d)', [Image.Bitmap.Width, Image.Bitmap.Height]));
   ML.Add(Format('Image  = (%.1f, %.1f)', [Image.Width, Image.Height]));
   ML.Add(Format('Memo   = (%.1f, %.1f)', [Memo.Width, Memo.Height]));
+{$ifdef WantDrawingList}
   ML.Add(Format('DL     = (%.1f, %.1f)', [DrawingList.Width, DrawingList.Height]));
+{$endif}
   ML.Add(Format('Scale  = %.2f', [Handle.Scale]));
   ML.Add(Format('ImgSS  = %.2f', [Image.ScreenScale]));
   ML.Add(Format('R1     = (%.1f, %.1f)', [Image.R1.Width, Image.R1.Height]));
@@ -1309,18 +1346,23 @@ begin
   CurrentDrawing := nil;
   CurrentElement := nil;
 
+{$ifdef WantDrawingList}
   DrawingList.Items.Clear;
+{$endif}
   ElementList.Items.Clear;
 
   DL.Free;
   DL := TRggDrawings.Create;
 
+{$ifdef WantMultipleLists}
   WantExampleDrawings := not WantExampleDrawings;
   if WantExampleDrawings then
     TRggDrawingRegistry.InitFD(DL)
   else
     TRggDrawingRegistry.InitFZ(DL);
-
+{$else}
+  TRggDrawingRegistry.Init(DL);
+{$endif}
   InitDrawings;
   SelectDrawing(0);
 end;
@@ -1328,12 +1370,16 @@ end;
 procedure TFormDrawing.ResetLayout;
 begin
   AnchorReset(Image);
+{$ifdef WantDrawingList}
   AnchorReset(DrawingList);
+{$endif}
   AnchorReset(ElementList);
   AnchorReset(Memo);
 
+{$ifdef WantDrawingList}
   DrawingList.Width := ListboxWidth;
   DrawingList.Height := 200;
+{$endif}
 
   ElementList.Height := ListboxWidth;
   ElementList.Height := 200;

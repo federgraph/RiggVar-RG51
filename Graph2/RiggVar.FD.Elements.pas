@@ -64,19 +64,6 @@ type
     ccUnknown
   );
 
-  TDisplayItemType = (
-    diLine,
-    diPolyLine,
-    diEllipse
-  );
-
-  TBemerkungGG = (
-    g1Vertical,
-    g2Vertical,
-    ggParallel,
-    ggOK
-  );
-
   TRggPoint3D = record
     function Rotate(const AAngle: Single): TRggPoint3D;
     function Angle(const APoint: TRggPoint3D): single;
@@ -105,6 +92,8 @@ type
   private
     FIsDark: Boolean;
     procedure SetIsDark(const Value: Boolean);
+    function GetDefaultShowCaption: Boolean;
+    procedure SetDefaultShowCaption(const Value: Boolean);
   public
     WantRotation: Boolean;
     WheelFlag: Boolean;
@@ -120,6 +109,7 @@ type
     procedure GoDark; virtual;
     procedure GoLight; virtual;
     property IsDark: Boolean read FIsDark write SetIsDark;
+    property DefaultShowCaption: Boolean read GetDefaultShowCaption write SetDefaultShowCaption;
   end;
 
   TRggElement = class
@@ -152,6 +142,15 @@ type
     IsComputed: Boolean;
     Visible: Boolean;
     Drawing: TRggDrawingBase;
+
+    const
+      Eps = 0.0001;
+      DefaultTextAngle: single = 45 * PI / 180;
+      DefaultTextRadius: single = 30.0;
+
+    class var
+      GlobalShowCaption: Boolean;
+      DefaultShowCaption: Boolean;
 
     constructor Create;
 
@@ -489,19 +488,7 @@ type
     property L2: single read GetL2;
   end;
 
-var
-  GlobalShowCaption: Boolean = False;
-  DefaultShowCaption: Boolean = False;
-
-const
-  RggPoint3DZero: TRggPoint3D = (X: 0; Y: 0; Z: 0);
-
 implementation
-
-const
-  Eps = 0.0001;
-  DefaultTextAngle: single = 45 * PI / 180;
-  DefaultTextRadius: single = 30.0;
 
 { TRggPoint3D }
 
@@ -2223,7 +2210,7 @@ begin
   Temp2 := Point2.Center + Drawing.FaxPoint3D;
 
   Arrow.C := Temp2.C - Temp1.C;
-  Angle := -Arrow.Angle(RggPoint3DZero);
+  Angle := -Arrow.Angle(TRggPoint3D.Zero);
   RadiusF.X := Arrow.Length;
   RadiusF.Y := RadiusF.X;
 
@@ -2389,6 +2376,16 @@ end;
 procedure TRggDrawingBase.GoLight;
 begin
 
+end;
+
+function TRggDrawingBase.GetDefaultShowCaption: Boolean;
+begin
+  result := TRggElement.DefaultShowCaption;
+end;
+
+procedure TRggDrawingBase.SetDefaultShowCaption(const Value: Boolean);
+begin
+  TRggElement.DefaultShowCaption := Value;
 end;
 
 procedure TRggDrawingBase.SetIsDark(const Value: Boolean);

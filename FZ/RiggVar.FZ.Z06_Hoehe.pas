@@ -122,11 +122,11 @@ begin
   A.StrokeColor := CssRed;
 
   B := TRggCircle.Create('B');
-  B.StrokeColor := CssLime;
+  B.StrokeColor := CssAquamarine;
 
   C := TRggCircle.Create;
   C.Caption := 'C';
-  C.StrokeColor := CssAqua;
+  C.StrokeColor := CssDodgerblue;
 
   D := TRggCircle.Create('D');
   D.ShowCaption := False;
@@ -141,7 +141,7 @@ begin
 
   L := TRggLine.Create('a');
   L.ShowCaption := False;
-  L.StrokeColor := CssWhite;
+  L.StrokeColor := CssRed;
   L.StrokeThickness := 1;
   L.Point1 := C;
   L.Point2 := B;
@@ -149,7 +149,7 @@ begin
   SeiteA := L;
 
   L := TRggLine.Create('b');
-  L.StrokeColor := CssLime;
+  L.StrokeColor := CssAquamarine;
   L.StrokeThickness := 4;
   L.Point1 := C;
   L.Point2 := A;
@@ -157,7 +157,7 @@ begin
   SeiteB := L;
 
   L := TRggLine.Create('c');
-  L.StrokeColor := CssAqua;
+  L.StrokeColor := CssDodgerblue;
   L.StrokeThickness := 4;
   L.Point1 := B;
   L.Point2 := A;
