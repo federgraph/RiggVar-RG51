@@ -1,5 +1,21 @@
 ﻿unit RiggVar.FD.Chart;
 
+(*
+-
+-     F
+-    * * *
+-   *   *   G
+-  *     * *   *
+- E - - - H - - - I
+-  *     * *         *
+-   *   *   *           *
+-    * *     *             *
+-     D-------A---------------B
+-              *
+-              (C) federgraph.de
+-
+*)
+
 interface
 
 {$ifdef fpc}
@@ -54,6 +70,8 @@ type
 
 implementation
 
+{ TRggChart }
+
 procedure TRggChart.LookForYMinMax;
 var
   i: Integer;
@@ -75,6 +93,7 @@ constructor TRggChart.Create(ACount: Integer = 20);
 begin
   inherited Create;
   TypeName := 'Chart';
+  IndentItem := True;
 
   LNr := ACount;
   if ACount > 9 then
@@ -169,7 +188,7 @@ var
 begin
   for i := 0 to LNr do
   begin
-    Poly[i] := sin(i / LNr * 2 * PI);
+    Poly[i] := sin(i / LNr * 2 * Pi);
   end;
   LookForYMinMax;
 end;

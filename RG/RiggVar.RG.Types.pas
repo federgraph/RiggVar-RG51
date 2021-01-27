@@ -205,9 +205,9 @@ type
 
   TRiggPointIndexRange = 0 .. 15;
   TRiggPoints = record
-    class function CoordShortName(Index: TRiggPoint): string; static;
     class function CoordName(Index: TRiggPoint): string; static;
-    class function CoordNameEN(Index: TRiggPoint): string; static;
+    class function CoordLongNameDE(Index: TRiggPoint): string; static;
+    class function CoordLongNameEN(Index: TRiggPoint): string; static;
     case Integer of
       0: (V: array [TRiggPoint] of TPoint3D);
       1: (
@@ -235,7 +235,7 @@ type
   TRiggRodIndexRange = 0 .. 19;
   TRiggRods = record
     class function AbstandShortName(Index: TRiggRodIndexRange): string; static;
-    class function AbstandName(Index: TRiggRodIndexRange): string; static;
+    class function AbstandNameDE(Index: TRiggRodIndexRange): string; static;
     class function AbstandNameEN(Index: TRiggRodIndexRange): string; static;
     case Integer of
       0: (V: array [0 .. 19] of single);
@@ -456,24 +456,24 @@ const
     x2: 1000
     );
 
-  KoordLabels: TKoordLabels = (
-    'Basispunkt',
-    'Pütting Stb',
-    'Pütting Bb',
-    'Vorstag Boot',
-    'Mastfuß',
-    'Controller E0',
-    'SpiegelPunkt',
-    'Punkt P0',
-    'Saling Stb',
-    'Saling Bb',
-    'Vorstag',
-    'Saling Mast',
-    'Controller',
-    'Masttop',
-    'Punkt P',
-    'Punkt M'
-    );
+//  KoordLabels: TKoordLabels = (
+//    'Basispunkt',
+//    'Pütting Stb',
+//    'Pütting Bb',
+//    'Vorstag Boot',
+//    'Mastfuß',
+//    'Controller E0',
+//    'SpiegelPunkt',
+//    'Punkt P0',
+//    'Saling Stb',
+//    'Saling Bb',
+//    'Vorstag',
+//    'Saling Mast',
+//    'Controller',
+//    'Masttop',
+//    'Punkt P',
+//    'Punkt M'
+//    );
 
   XMLKoordLabels: TKoordLabels = (
     'Basispunkt',
@@ -504,41 +504,41 @@ const
     'A', 'B', 'C', 'D', 'E', 'F', 'P', 'M'
     );
 
-  AbstandLabels: array[0..19] of string = (
-    'D0C Mast',
-    'C0D0 Vorstag - Mastfuß',
-    'B0C0 Pütting Bb - Vorstag',
-    'A0C0 Pütting Stb - Vorstag',
-    'B0D0 Pütting Bb - Mastfuß',
-    'A0D0 Pütting Stb - Mastfuß',
-    'A0B0 Püttingabstand',
-    'B0B Wante unten Bb',
-    'A0A Wante unten Stb',
-    'BD Saling Bb',
-    'AD Saling Stb',
-    'AB Saling-Verbindung',
-    'BC Wante oben Bb',
-    'AC Wante oben Stb',
-    'C0C Vorstag',
-    'DC Mast',
-    'D0D Mast',
-    'ED Mast',
-    'D0E Mast',
-    'E0E Controller'
-    );
+//  AbstandLabels: array[0..19] of string = (
+//    'D0C Mast',
+//    'C0D0 Vorstag - Mastfuß',
+//    'B0C0 Pütting Bb - Vorstag',
+//    'A0C0 Pütting Stb - Vorstag',
+//    'B0D0 Pütting Bb - Mastfuß',
+//    'A0D0 Pütting Stb - Mastfuß',
+//    'A0B0 Püttingabstand',
+//    'B0B Wante unten Bb',
+//    'A0A Wante unten Stb',
+//    'BD Saling Bb',
+//    'AD Saling Stb',
+//    'AB Saling-Verbindung',
+//    'BC Wante oben Bb',
+//    'AC Wante oben Stb',
+//    'C0C Vorstag',
+//    'DC Mast',
+//    'D0D Mast',
+//    'ED Mast',
+//    'D0E Mast',
+//    'E0E Controller'
+//    );
 
-  ParamLabels: TsbLabelArray = (
-    { Controller: } 'Zustellung Mast-Controller [mm]',
-    { Winkel: } 'Winkel [Grad]',
-    { Vorstag: } 'Vorstaglänge [mm]',
-    { Wante: } 'Wantenlänge [mm]',
-    { Woben: } 'Länge des oberen Wantenabschnitts [mm]',
-    { SalingH: } 'Höhe des Salingdreiecks [mm]',
-    { SalingA: } 'Saling-Abstand [mm]',
-    { SalingL: } 'Saling-Länge [mm]',
-    { VorstagOS: } 'Vorstaglänge [mm]', { not used }
-    { WPowerOS: } 'Wantenspannung [N]' { not used }
-    );
+//  ParamLabels: TsbLabelArray = (
+//    { Controller: } 'Zustellung Mast-Controller [mm]',
+//    { Winkel: } 'Winkel [Grad]',
+//    { Vorstag: } 'Vorstaglänge [mm]',
+//    { Wante: } 'Wantenlänge [mm]',
+//    { Woben: } 'Länge des oberen Wantenabschnitts [mm]',
+//    { SalingH: } 'Höhe des Salingdreiecks [mm]',
+//    { SalingA: } 'Saling-Abstand [mm]',
+//    { SalingL: } 'Saling-Länge [mm]',
+//    { VorstagOS: } 'Vorstaglänge [mm]', { not used }
+//    { WPowerOS: } 'Wantenspannung [N]' { not used }
+//    );
 
   XMLSBName: array[TsbName] of string = (
     'E0E',
@@ -739,7 +739,7 @@ begin
   end;
 end;
 
-class function TRiggRods.AbstandName(Index: TRiggRodIndexRange): string;
+class function TRiggRods.AbstandNameDE(Index: TRiggRodIndexRange): string;
 begin
   case Index of
     0: result := 'D0C Mast';
@@ -945,7 +945,7 @@ begin
   end;
 end;
 
-class function TRiggPoints.CoordNameEN(Index: TRiggPoint): string;
+class function TRiggPoints.CoordLongNameEN(Index: TRiggPoint): string;
 begin
   case Index of
     ooN0: result := 'Base Point N0';
@@ -959,7 +959,7 @@ begin
     ooA: result := 'Spreader Stb';
     ooB: result := 'Spreader Bb';
     ooC: result := 'Headstay';
-    ooD: result := 'Sreader Mast';
+    ooD: result := 'Spreader Mast';
     ooE: result := 'Controller';
     ooF: result := 'Mast Top';
     ooP: result := 'Point P';
@@ -967,7 +967,7 @@ begin
   end;
 end;
 
-class function TRiggPoints.CoordShortName(Index: TRiggPoint): string;
+class function TRiggPoints.CoordLongNameDE(Index: TRiggPoint): string;
 begin
   case Index of
     ooN0: result := 'Basispunkt';
