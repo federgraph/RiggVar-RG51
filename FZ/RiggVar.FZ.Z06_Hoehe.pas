@@ -168,6 +168,7 @@ begin
 
   L := TRggLine.Create;
   L.Caption := '(k) * a';
+  L.IsComputed := True;
   L.StrokeColor := CssRed;
   L.Point1 := C;
   L.Point2 := D;
@@ -175,7 +176,8 @@ begin
 
   L := TRggLine.Create;
   L.Caption := '(1-k) * a';
-  L.StrokeColor := CssRed;
+    L.IsComputed := True;
+L.StrokeColor := CssRed;
   L.Point1 := D;
   L.Point2 := B;
   Add(L);
@@ -183,6 +185,7 @@ begin
   { --- }
 
   L := TRggLine.Create('h');
+  L.IsComputed := True;
   L.StrokeColor := CssBlack;
   L.Point1 := A;
   L.Point2 := D;
@@ -244,8 +247,6 @@ begin
   ML.Add('    result := 0');
   ML.Add('  else');
   ML.Add('    result := sqrt(t);');
-  ML.Add('  if IsNan(result) then');
-  ML.Add('    result := 0;');
   ML.Add('end;');
 
   result := ML.Text;
