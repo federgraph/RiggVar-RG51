@@ -70,7 +70,7 @@ begin
 
   D.Center.C := A.Center.C + (B.Center.C - A.Center.C) * 0.5;
 
-  ff := 0.75 * Param.Value / Param.OriginalValue;
+  ff := 0.75 * Param.PixelValue / Param.OriginValue;
   F.Center.C := C.Center.C + (D.Center.C - C.Center.C) * ff;
   E.Center.C := C.Center.C + (F.Center.C - C.Center.C) * 0.5;
 

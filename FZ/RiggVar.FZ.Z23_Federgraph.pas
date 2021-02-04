@@ -66,11 +66,8 @@ var
   ox, oy, oz: single;
   r, t: single;
 begin
-  ParamA.Scale := 1;
-  ParamA.BaseValue := 0;
-
-  ParamR.Scale := 1;
-  ParamR.BaseValue := 100;
+  ParamA.ParamValue := ParamA.BaseValue;
+  ParamR.ParamValue := ParamR.BaseValue;
 
   ox := 400;
   oy := 400;
@@ -201,12 +198,16 @@ begin
   ParamA.Caption := 'Probe Angle';
   ParamA.StrokeColor := CssTeal;
   ParamA.StartPoint.Y := 3 * Raster;
+  ParamA.Scale := 1;
+  ParamA.BaseValue := 0;
   Add(ParamA);
 
   ParamR := TRggParam.Create;
   ParamR.Caption := 'Probe Radius';
   ParamR.StrokeColor := CssTeal;
   ParamR.StartPoint.Y := 5 * Raster;
+  ParamR.Scale := 1;
+  ParamR.BaseValue := 100;
   Add(ParamR);
 
   InitDefaultPos;
@@ -243,8 +244,8 @@ end;
 
 procedure TRggDrawingZ23.Compute;
 begin
-  FederModel.ParamBahnAngle := ParamA.RelativeValue;
-  FederModel.ParamBahnRadius := ParamR.RelativeValue;
+  FederModel.ParamBahnAngle := ParamA.ParamValue;
+  FederModel.ParamBahnRadius := ParamR.ParamValue;
 
   Circle.Center := D.Center;
   Circle.Radius := FederModel.ParamBahnRadius;
@@ -276,8 +277,8 @@ begin
     Poly.AssignPoly(FederModel.LL);
   end;
 
-  ParamA.Text := Format('Param A = %.2f', [ParamA.RelativeValue]);
-  ParamR.Text := Format('Param R = %.2f', [ParamR.RelativeValue]);
+  ParamA.Text := Format('Param A = %.2f', [ParamA.ParamValue]);
+  ParamR.Text := Format('Param R = %.2f', [ParamR.ParamValue]);
 end;
 
 procedure TRggDrawingZ23.InitButtons(BG: TRggButtonGroup);
